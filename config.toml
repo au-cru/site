@@ -29,12 +29,6 @@ paginate = 10
     weight = 2
 
 [[menu.main]]
-    identifier = "faq"
-    name = "FAQ"
-    url  = "/faq/"
-    weight = 3
-
-[[menu.main]]
     identifier = "contact"
     name = "Contact"
     url  = "/contact/"
