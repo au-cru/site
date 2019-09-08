@@ -63,14 +63,14 @@ paginate = 10
     defaultDescription = "Site for the AU Community of Research Software Users."
 
     # Twitter
-    twitter = "GoHugoIO"
-    twitterImage = "img/twitter-default.png"
+    twitter = ""
+    twitterImage = ""
 
     # Google Maps API key (if not set will default to not passing a key.)
     googleMapsApiKey = "AIzaSyCFhtWLJcE30xOAjcbSFi-0fnoVmQZPb1Y"
 
-    # Style options: default (light-blue), blue, green, marsala, pink, red, turquoise, violet
-    style = "default"
+    # Style options: default (light-blue), blue, green, marsala, pink, red, turquoise, violet
+    style = "blue"
 
     # Since this template is static, the contact form uses www.formspree.io as a
     # proxy. The form makes a POST request to their servers to send the actual
