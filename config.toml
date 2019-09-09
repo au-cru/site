@@ -25,9 +25,9 @@ paginate = 10
     weight = 1
 
 [[menu.main]]
-    identifier="blog"
-    name = "Blog"
-    url  = "/blog/"
+    identifier="material"
+    name = "Content"
+    url  = "/material/"
     weight = 2
 
 [[menu.main]]
@@ -57,7 +57,7 @@ paginate = 10
     pre = "<i class='fa fa-2x fa-twitter'></i>"
 
 [params]
-    viewMorePostLink = "/blog/"
+    viewMorePostLink = "/material/"
     author = "AU CRU"
     defaultKeywords = ["au-cru", "programming", "rstats", "r", ""]
     defaultDescription = "Site for the AU Community of Research Software Users."
@@ -101,7 +101,7 @@ paginate = 10
     longitude = "-77.028333"
 
 [Permalinks]
-    blog = "/blog/:year/:month/:day/:filename/"
+    blog = "/material/:year/:month/:day/:filename/"
 
 # Enable or disable top bar with social icons
 [params.topbar]
