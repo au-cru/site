@@ -1,3 +1,8 @@
 weight: 1
 title: "AU Community of Research Software Users"
-description: ""
+description: >
+  <ul class="list-style-none">
+    <li>Use open source software?</li>
+    <li>Come to our events!</li>
+    <li>Learn, get support, or help others.</li>
+  </ul>
