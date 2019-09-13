@@ -101,12 +101,14 @@ function sliders () {
       itemsMobile: [480, 1]
     })
 
-    $('.testimonials').owlCarousel({
+    /*
+    $('.events').owlCarousel({
       items: 4,
       itemsDesktopSmall: [990, 3],
       itemsTablet: [768, 2],
       itemsMobile: [480, 1]
     })
+    */
 
     $('.project').owlCarousel({
       navigation: true, // Show next and prev buttons
