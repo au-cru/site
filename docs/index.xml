@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>AU CRU</title>
+    <link>/</link>
+    <description>Recent content on AU CRU</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Contact</title>
+      <link>/contact/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/contact/</guid>
+      <description>Still under construction.
+ See the License page for details on re-use and attribution.</description>
+    </item>
+    
+    <item>
+      <title>Licensing and other acknowledgements</title>
+      <link>/license/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/license/</guid>
+      <description>Images Images on the front page are all freely available from Unsplash. Each artist is listed below:
+unsplash-logoAvel Chuklanov unsplash-logoChristin Hume unsplash-logoJohn Schnobrich unsplash-logoBrooke Cagle unsplash-logoAnnie Spratt unsplash-logoCoWomen</description>
+    </item>
+    
+  </channel>
+</rss>
