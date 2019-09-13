@@ -19,10 +19,18 @@
                   <br>
                   <li class="item">
                       <div class="event">
-                        <p>
+                          {{ if isset . "software" }}
+                            {{ range .software}}
+                              <span class="badge">{{ . }}</span>
+                            {{ end }}
+                          {{ end }}
+                          {{ if isset . "type" }}
+                            <span class="badge">{{ .type | humanize }}</span>
+                          {{ end }}
                           {{ if isset . "level" }}
                             <span class="badge">{{ .level | humanize }}</span>
                           {{ end }}
+                        <p>
                           <strong>{{ .name | upper }} on {{ dateFormat $DateFormat .start_date }}</strong>
                         </p>
                         <p>{{ .description | markdownify }}</p>
