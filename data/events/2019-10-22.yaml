@@ -1,0 +1,14 @@
+type: "workshop"
+name: "2-day Software Carpentry Workshop"
+description: >
+  This workshop aims to help researchers get their work done in less time and
+  with less pain by teaching them basic research computing skills. This hands-on
+  workshop will cover basic concepts and tools, including program design, version
+  control, data management, and task automation. Participants will be encouraged to
+  help one another and to apply what they have learned to their own research problems.
+location: "Building 5361, room 144, Finlandsgade 27, 8200 Aarhus N"
+start_date: 2019-10-22T09:00:00+01:00
+# Must be array for with []
+software: ["R", "Shell", "Git"]
+level: "beginners"
+link: "https://au-cru.github.io/2019-10-22-aarhus/"
