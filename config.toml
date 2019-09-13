@@ -44,17 +44,17 @@ paginate = 10
     url = "https://github.com/au-cru"
     pre = "<i class='fa fa-2x fa-github'></i>"
 
-[[menu.topbar]]
-    weight = 2
-    name = "Facebook"
-    url = "http://facebook.com"
-    pre = "<i class='fa fa-2x fa-facebook'></i>"
+#[[menu.topbar]]
+#    weight = 2
+#    name = "Facebook"
+#    url = "http://facebook.com"
+#    pre = "<i class='fa fa-2x fa-facebook'></i>"
 
-[[menu.topbar]]
-    weight = 3
-    name = "Twitter"
-    url = "http://twitter.com"
-    pre = "<i class='fa fa-2x fa-twitter'></i>"
+#[[menu.topbar]]
+#    weight = 3
+#    name = "Twitter"
+#    url = "http://twitter.com"
+#    pre = "<i class='fa fa-2x fa-twitter'></i>"
 
 [params]
     viewMorePostLink = "/material/"
