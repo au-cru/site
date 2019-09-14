@@ -2,31 +2,33 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>AU CRU</title>
-    <link>/</link>
+    <link>https://au-cru.github.io/site/</link>
     <description>Recent content on AU CRU</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://au-cru.github.io/site/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Contact</title>
-      <link>/contact/</link>
+      <link>https://au-cru.github.io/site/contact/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/contact/</guid>
+      <guid>https://au-cru.github.io/site/contact/</guid>
       <description>Still under construction.
  See the License page for details on re-use and attribution.</description>
     </item>
     
     <item>
-      <title>Licensing and other acknowledgements</title>
-      <link>/license/</link>
+      <title>Licensing and attribution</title>
+      <link>https://au-cru.github.io/site/license/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/license/</guid>
-      <description>Images Images on the front page are all freely available from Unsplash. Each artist is listed below:
+      <guid>https://au-cru.github.io/site/license/</guid>
+      <description>The website content is licensed under the Creative Commons Attribution 4.0 International License and the code is licensed under a MIT License.
+Website The website layout was modified from a template by Bootstrapious and ported to Hugo by DevCows.
+Images Images on the front page are all freely available from Unsplash. Each artist is listed below:
 unsplash-logoAvel Chuklanov unsplash-logoChristin Hume unsplash-logoJohn Schnobrich unsplash-logoBrooke Cagle unsplash-logoAnnie Spratt unsplash-logoCoWomen</description>
     </item>
     

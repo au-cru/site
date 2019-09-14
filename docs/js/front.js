@@ -94,22 +94,6 @@ function sliderHomepage () {
 /* sliders */
 function sliders () {
   if ($('.owl-carousel').length) {
-    $('.customers').owlCarousel({
-      items: 6,
-      itemsDesktopSmall: [990, 4],
-      itemsTablet: [768, 2],
-      itemsMobile: [480, 1]
-    })
-
-    /*
-    $('.events').owlCarousel({
-      items: 4,
-      itemsDesktopSmall: [990, 3],
-      itemsTablet: [768, 2],
-      itemsMobile: [480, 1]
-    })
-    */
-
     $('.project').owlCarousel({
       navigation: true, // Show next and prev buttons
       navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],

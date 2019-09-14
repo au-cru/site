@@ -8,3 +8,8 @@
 .box-simple {
   min-height: 230px;
 }
+
+.badge {
+  color: #ffffff;
+  background-color: #467fbf;
+}
