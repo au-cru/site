@@ -1,4 +1,6 @@
 weight: 1
 name: "Community building"
-icon: "fa fa-users"
-description: "Meet other people interested in building new skills, sharing their knowledge and collaborate."
+icon: "fas fa-users"
+description: >
+  Meet other people interested in building new skills, sharing their knowledge,
+  and collaborating.

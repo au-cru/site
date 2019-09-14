@@ -1,4 +1,6 @@
 weight: 2
 name: "Training sessions"
-icon: "fa fa-cogs"
-description: "Hands-on and practical learning on software such as R or Python. We run basic to advanced workshops to expand or refine your skills."
+icon: "fas fa-chalkboard-teacher"
+description: >
+  Hands-on and practical learning on (open) software such as R or Python. We run basic
+  to advanced workshops to expand or refine your skills.
