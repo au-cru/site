@@ -90,7 +90,7 @@ paginate = 10
     email = ""
     contact_form_ajax = false
 
-    about_us = "<p>We are a community of AU researchers who use (open) software.</p>"
+    about_us = "<p>We are a community of AU researchers using (open) software, who come together to learn, teach, and share.</p>"
     copyright = "Copyright (c) 2019, AU CRU; all rights reserved. See <a href='license/'>license</a>."
 
     # Format dates with Go's time formatting
