@@ -1,4 +1,5 @@
-baseurl = "/"
+#baseurl = "/"
+baseurl = "https://au-cru.github.io/site/"
 title = "AU CRU"
 publishDir = "docs"
 theme = "hugo-universal-theme"
