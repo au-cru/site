@@ -585,10 +585,6 @@ fieldset[disabled] .btn-template-main.active {
   color: #ffffff;
   background-color: #467fbf;
 }
-.badge {
-  color: #ffffff;
-  background-color: #467fbf;
-}
 .btn-template-main:hover,
 .btn-template-main:focus,
 .btn-template-main:active,
