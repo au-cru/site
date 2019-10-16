@@ -32,15 +32,13 @@ paginate = 10
     weight = 2
 
 [[menu.main]]
-    identifier = "about"
     name = "About"
     url  = "/about/"
     weight = 3
 
 [[menu.main]]
-    identifier = "contact"
-    name = "Contact"
-    url  = "/contact/"
+    name = "Surveys"
+    url  = "/surveys/"
     weight = 4
 
 # Top bar social links menu
@@ -130,4 +128,4 @@ paginate = 10
 [params.events]
     enable = true
     title = "Upcoming events"
-    subtitle = ""
+    subtitle = "Tell us more about what you want from this community, fill out our <a href='surveys/'>surveys</a>."
