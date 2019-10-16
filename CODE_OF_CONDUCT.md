@@ -1,16 +1,15 @@
 # Code of Conduct
 
 Science thrives on diversity of thought and origin and we value the participation
-of every member of the scientific community and want all participants to have an
-enjoyable and fulfilling experience. Accordingly, all participants are expected
-to show respect and courtesy to other members throughout any events and in
-and any activity associated with this community (e.g. online activity).
+of every member of the scientific community and want all members of any event to
+have an enjoyable and fulfilling experience. Accordingly, all members are
+expected to show respect and courtesy to other members at any in-person event, 
+online space, and any other activity associated with the community.
 
-To make clear what is expected, everyone taking part in any events, including
-instructors, helpers, organizers, and participants, is required to conform to
-the following Code of Conduct. Organizers will enforce this code throughout
-events, but you may also contact us privately; all communication will be treated
-as confidential.
+To make clear what is expected, everyone involved in any aspect of this
+community, is required to conform to the following Code of Conduct. Organizers
+and lead community members will enforce this code, but you may also contact us
+privately; all communication will be treated as confidential.
 
 We are dedicated to providing a welcoming and supportive environment
 for all people, regardless of background or identity. As such, we do not
@@ -24,11 +23,12 @@ religion or belief (or lack thereof), membership of a national minority,
 property, age, education, socio-economic status, technical choices, and
 experience level.
 
+<<<<<<< HEAD
 Everyone who participates in this community's activities is required to conform to
 this Code of Conduct. It applies to all spaces associated with this community
-including, but not limited to, teaching sessions, contributions, emails, and any online forums such as
-GitHub and Twitter. By participating, participants indicate their acceptance of
-the procedures by which the instructors and organizers resolves any Code of
+including, but not limited to, emails and any online forums such as
+GitHub, Twitter, or Slack. By participating, members indicate their acceptance of
+the procedures by which the instructors and organizers resolve any Code of
 Conduct incidents.
 
 ## Expected Behavior
@@ -69,17 +69,20 @@ Examples of unacceptable behavior by participants include:
 
 ## Consequences of Unacceptable Behavior
 
-Participants who are asked, either in person or online, to stop any
-inappropriate behavior are expected to comply immediately. If a participant
-engages in behaviour that violates this code of conduct, the organizers,
-instructors, or helpers may take any action they deem appropriate, including
-warning the offender or expulsion from the community and/or event.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be
+reported by emailing any of the lead Community members. All complaints will be
+reviewed and investigated and will result in a response that is deemed necessary
+and appropriate to the circumstances. The lead members are obligated to maintain
+confidentiality with regard to the reporter of an incident. Further details of
+specific enforcement policies may be posted separately.
 
-Thank you for helping make this a welcoming, friendly event for all :smile:
+Thank you for helping make this a welcoming, friendly community for all :smile:
 
 -----
 
-**Acknowledgements**: Large portions of this Code of Conduct were taken and modified
-from other Codes of Conduct, specifically
-[Software Carpentry](https://docs.carpentries.org/topic_folders/policies/code-of-conduct.html)
+**Acknowledgements**: 
+Large portions of this Code of Conduct were adapted from the [Contributor Covenant][covenant]
+version 1.4, [Software Carpentry](https://docs.carpentries.org/topic_folders/policies/code-of-conduct.html),
 and [UofTCoders](https://github.com/UofTCoders/studyGroup/blob/gh-pages/codeOfConduct.md).
+
+[covenant]: https://www.contributor-covenant.org

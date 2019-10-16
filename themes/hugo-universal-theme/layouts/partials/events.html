@@ -34,11 +34,10 @@
                           {{ if isset . "level" }}
                             <span class="badge">{{ .level | humanize }}</span>
                           {{ end }}
-                        <p>
-                          <strong>{{ .name | upper }} on {{ dateFormat $DateFormat .start_date }}</strong>
-                        </p>
+                        <p><strong>{{ .name | upper }}</strong></p>
+                        <p><strong>Date:</strong> {{ dateFormat $DateFormat .start_date }}</p>
+                        <p><strong>Location:</strong> {{ .location }}</p>
                         <p>{{ .description | markdownify }}</p>
-                        <p><strong>Location:</strong> {{ .location }}.</p>
                         <br>
                         {{ if isset . "link" }}
                         <p class="buttons" align="center"><a href="{{ .link }}" class="btn btn-template-main">More Details</a>
