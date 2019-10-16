@@ -42,6 +42,8 @@ which renders the R Markdown documents and converts the source material into
 a static website. A few things to consider when contributing to the lesson 
 material:
 
+TODO: Add information on creating new material.
+
 1. All lesson material that contains R code chunks needs to be in R Markdown
 format. 
 1. Lessons include a mix of code chunks and text, organized using Markdown
