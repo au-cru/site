@@ -16,8 +16,18 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://au-cru.github.io/site/contact/</guid>
-      <description>Still under construction.
- See the License page for details on re-use and attribution.</description>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Installation instructions</title>
+      <link>https://au-cru.github.io/site/installation/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://au-cru.github.io/site/installation/</guid>
+      <description>R For R, install from here. For RStudio, install from here. We recommend you have the latest versions of both R and RStudio:
+ R version 3.6.1 (2019-07-05) RStudio version 1.1.456   Git Only for Git sessions, install Git from here.
+ Bash Only for Bash/shell/terminal sessions. Mac OSX and Linux users will already have bash installed. For Windows users, install the Windows version of Git above to install Git Bash.</description>
     </item>
     
     <item>
@@ -26,10 +36,31 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://au-cru.github.io/site/license/</guid>
-      <description>The website content is licensed under the Creative Commons Attribution 4.0 International License and the code is licensed under a MIT License.
+      <description>Use and re-use 
+The website content is licensed under the Creative Commons Attribution 4.0 International License and the code is licensed under a MIT License.
+This means that any content or code on this website can be used, copied, modified, and so on anywhere, as long as there is attribution.
 Website The website layout was modified from a template by Bootstrapious and ported to Hugo by DevCows.
-Images Images on the front page are all freely available from Unsplash. Each artist is listed below:
-unsplash-logoAvel Chuklanov unsplash-logoChristin Hume unsplash-logoJohn Schnobrich unsplash-logoBrooke Cagle unsplash-logoAnnie Spratt unsplash-logoCoWomen</description>
+Images Images on the front page are all freely available from Unsplash.</description>
+    </item>
+    
+    <item>
+      <title>More information</title>
+      <link>https://au-cru.github.io/site/more-info/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://au-cru.github.io/site/more-info/</guid>
+      <description>  Still under construction.
+ See the License page for details on re-use and attribution.
+Vision Mission Adding calendar to Outlook </description>
+    </item>
+    
+    <item>
+      <title>Surveys</title>
+      <link>https://au-cru.github.io/site/surveys/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://au-cru.github.io/site/surveys/</guid>
+      <description> Help us understand what the community needs, tell us when and what you want to learn, or if you want to instruct a session! What works for you? Loading… What do you want to learn? Loading… Want to instruct? Loading… </description>
     </item>
     
   </channel>
