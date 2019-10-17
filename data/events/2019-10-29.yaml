@@ -1,0 +1,28 @@
+type: "Rhus"
+name: "Rhus first meeting"
+description: >
+  The very first Rhus useR meeting in a long time, we are proud to present 2 speakers.
+  The meeting will hopefully end with some light drinks and snacks.
+
+
+  **Using R to fail fast: Driving data acceptance in industry**
+
+
+  Using data in a traditional value based company can be taunting task.
+  In this talk, I will present some of the approaches I used for pushing data tools to my colleagues,
+  and why failing to produce the perfect tools is important.
+
+
+  Stefan Høj-Edwards, Production Data Analyst, Kamstrup A/S [@iysik_com](https://twitter.com/iysik_com)
+
+
+  **(To be announced)**
+
+
+  Florian Privé
+
+
+location: "AU Library in Nobelparken, main floor, left from entrance behind glass wall"
+start_date: 2019-10-29T17:00:00+01:00
+level: "advanced"
+software: ["R"]

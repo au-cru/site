@@ -13,3 +13,8 @@
   color: #ffffff;
   background-color: #467fbf;
 }
+
+div, iframe {
+  margin: 0 auto;
+  display:block;
+}
