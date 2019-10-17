@@ -128,4 +128,11 @@ paginate = 10
 [params.events]
     enable = true
     title = "Upcoming events"
-    subtitle = "Tell us more about what you want from this community, fill out our <a href='surveys/'>surveys</a>."
+    subtitle = """
+Add the events calendar to your Google account easily by clicking the blue '+' button on the bottom of the calendar. Use Outlook?  Check out the instructions on the <a href="more-info/#calendar-outlook">'More Info'</a> page.
+<br><br>We are always looking for instructors, so please
+<a href='https://docs.google.com/spreadsheets/d/15QptbsH4z1efB_LFG6vTq631iy_lUoQccdYWVm389QU/edit?usp=sharing'>sign yourself up</a> if you are interested.
+Sessions are subject to change depending on instructor or room availability and any other unforeseen events, but we'll send out emails about any changes a week before the event.
+<br><br>Tell us what you want from this community by fill out our <a href='surveys/'>surveys</a>.
+<!--Want to stay updated on the events? Subscribe to the mailing list!<br><br>-->
+    """
