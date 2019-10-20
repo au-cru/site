@@ -32,7 +32,7 @@
                             <span class="badge">{{ .type | humanize }}</span>
                           {{ end }}
                           {{ if isset . "level" }}
-                            <span class="badge">{{ .level | humanize }}</span>
+                            <span class="badge">{{ .level | title }}</span>
                           {{ end }}
                         <p><strong>{{ .name | upper }}</strong></p>
                         <p><strong>Date:</strong> {{ dateFormat $DateFormat .start_date }}</p>
