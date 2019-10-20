@@ -24,12 +24,11 @@ events <- tibble::tribble(
 
 # Do some data wrangling of the pasted in schedule.
 events_prep <- events %>%
-  rename(name = Topic) %>%
+  rename(name = Topic, level = Level) %>%
   mutate(
     date_ymd = lubridate::dmy(Date),
     start_date = str_c(date_ymd, "T13:00:00+01:00"),
     type = "code-along",
-    level = str_remove(Level, "-"),
     location = "AU Library, Main Floor, Nobelparken, Universitetsparken 461, 8000 Aarhus",
     software = "R"
   )
