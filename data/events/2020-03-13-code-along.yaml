@@ -1,0 +1,10 @@
+type: "code-along"
+name: "Data visualization with ggplot2, part 2"
+description: >
+  Dig deeper into making the most of making data visualizations with ggplot2.
+  We'll show you how to make use of data wrangling to make easy and comprehensive
+  graphics.
+location: "AU Library, Main Floor, Nobelparken, Universitetsparken 461, 8000 Aarhus"
+start_date: 2020-03-13T13:00:00+01:00
+level: "beginner-intermediate"
+software: ["R"]

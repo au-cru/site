@@ -1,0 +1,10 @@
+type: "code-along"
+name: "Create websites with R (blogdown)"
+description: >
+  Want to make a website that includes R code and its output, but don't want to
+  copy and paste the output into the website? Learn how to make websites easily
+  with blogdown by writing R Markdown documents that can be converted into a webpage!
+location: "AU Library, Main Floor, Nobelparken, Universitetsparken 461, 8000 Aarhus"
+start_date: 2020-04-24T13:00:00+01:00
+level: "intermediate"
+software: ["R"]

@@ -1,0 +1,10 @@
+type: "code-along"
+name: "Efficient coding and best practices"
+description: >
+  Do you repeat yourself often when writing code? Do you make use of loops? Come
+  to this session to learn how to write more efficient R code and for some best
+  practices to follow.
+location: "AU Library, Main Floor, Nobelparken, Universitetsparken 461, 8000 Aarhus"
+start_date: 2020-02-28T13:00:00+01:00
+level: "beginner-intermediate"
+software: ["R"]

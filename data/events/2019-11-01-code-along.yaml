@@ -1,0 +1,8 @@
+type: "code-along"
+name: "Data visualization with ggplot2, part 1"
+description: >
+  Learn the basics of creating visualizations of your data using the ggplot2 package.
+location: "AU Library, Main Floor, Nobelparken, Universitetsparken 461, 8000 Aarhus"
+start_date: 2019-11-01T13:00:00+01:00
+level: "beginner"
+software: ["R"]

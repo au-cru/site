@@ -1,0 +1,9 @@
+type: "code-along"
+name: "Reproducible reports with R Markdown"
+description: >
+  Do you copy and paste your R output like figures or numbers into Word? Learn
+  how to use R Markdown so you no longer have to copy and paste... let R do it for you!
+location: "AU Library, Main Floor, Nobelparken, Universitetsparken 461, 8000 Aarhus"
+start_date: 2019-12-13T13:00:00+01:00
+level: "beginner"
+software: ["R"]

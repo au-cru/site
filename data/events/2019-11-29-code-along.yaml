@@ -1,0 +1,10 @@
+type: "code-along"
+name: "Creating functions"
+description: >
+  Do you write code multiple times that only slightly changes each time you write
+  (or copy and paste) it? Learn how to not repeat yourself by writing your own
+  functions!
+location: "AU Library, Main Floor, Nobelparken, Universitetsparken 461, 8000 Aarhus"
+start_date: 2019-11-29T13:00:00+01:00
+level: "beginner-intermediate"
+software: ["R"]
