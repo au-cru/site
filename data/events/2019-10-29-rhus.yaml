@@ -24,5 +24,6 @@ description: >
 
 location: "AU Library in Nobelparken, main floor, left from entrance behind glass wall"
 start_date: 2019-10-29T17:00:00+01:00
+end_date: 2019-10-29T18:00:00+01:00
 level: "advanced"
 software: ["R"]
