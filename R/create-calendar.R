@@ -35,7 +35,7 @@ event_data <-
     LOCATION = location
   )
 
-ic_write(ical(event_data[2:4, ]), here::here("R/calendar.ics"))
+ic_write(ical(event_data), here::here("R/calendar.ics"))
 
 # TODO: Fix this up so calendar is imported, results are compared to new schedule,
 # and new events are added.
