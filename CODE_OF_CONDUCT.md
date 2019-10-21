@@ -23,7 +23,6 @@ religion or belief (or lack thereof), membership of a national minority,
 property, age, education, socio-economic status, technical choices, and
 experience level.
 
-<<<<<<< HEAD
 Everyone who participates in this community's activities is required to conform to
 this Code of Conduct. It applies to all spaces associated with this community
 including, but not limited to, emails and any online forums such as
