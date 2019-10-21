@@ -26,8 +26,8 @@ event_data <-
   ) %>%
   transmute(
     UID = map_chr(1:n(), ~ ic_guid()),
-    DTSTART = lubridate::as_datetime(start_date),
-    DTEND = lubridate::as_datetime(end_date),
+    DTSTART = lubridate::as_datetime(start_date, tz = "Europe/Copenhagen"),
+    DTEND = lubridate::as_datetime(end_date, tz = "Europe/Copenhagen"),
     DESCRIPTION = as.character(glue(
       "A {type} for {str_to_lower(level)}"
     )),
@@ -35,7 +35,7 @@ event_data <-
     LOCATION = location
   )
 
-ic_write(ical(event_data), here::here("R/calendar.ics"))
+ic_write(ical(event_data[2:4, ]), here::here("R/calendar.ics"))
 
 # TODO: Fix this up so calendar is imported, results are compared to new schedule,
 # and new events are added.

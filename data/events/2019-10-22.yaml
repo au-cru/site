@@ -7,8 +7,8 @@ description: >
   control, data management, and task automation. Participants will be encouraged to
   help one another and to apply what they have learned to their own research problems.
 location: "Building 5361, room 144, Finlandsgade 27, 8200 Aarhus N"
-start_date: 2019-10-22T09:00:00+01:00
-end_date: 2019-10-23T16:30:00+01:00
+start_date: 2019-10-22T09:00:00+02:00
+end_date: 2019-10-23T16:30:00+02:00
 # Must be array for with []
 software: ["R", "Shell", "Git"]
 level: "beginners"
