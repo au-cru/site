@@ -6,6 +6,7 @@ description: >
   other likeminded researchers who also use (open) research software for their work.
 location: "Studiecaféen, Studenterhus, Nordre Ringgade 3, 8000 Aarhus"
 start_date: 2019-11-01T14:30:00+01:00
+end_date: 2019-11-01T15:30:00+01:00
 # Must be array for with []
 software: [""]
 level: "everyone"
