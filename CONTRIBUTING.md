@@ -6,25 +6,14 @@ The following is a set of guidelines for contributing to the AU CRU community,
 whether it be by teaching a lesson, fixing the website, helping to plan and
 organize our various events, or taking on a leadership role.
 
-### Table of Contents
-
-1. [About AU CRU](#about)
-    - [Code of Conduct](#code-of-conduct)
-
-2. [How You Can Contribute](#how-you-can-contribute)
-    - [Leading a Lesson](#leading-a-lesson)
-        - [Creating the Content](#creating-the-content)
-        - [Teaching in Class](#teaching-in-class)
-    - [Fixing and Updating the Website](#fixing-and-updating-the-website)
-    - [Other Ways to Get Involved](#other-ways-to-get-involved)
-
 -----
 
-# About AU CRU {#about}
+# About AU CRU
 
-The AU CRU group was formed to share and learn about techniques and
-best practices for working with and coding in open software languages. We hold frequent sessions
-in the format of mainly short code-alongs, but also longer workshops.
+The AU CRU group was formed to share and learn about techniques and best
+practices for working with and coding in open software languages. We hold
+frequent sessions in the format of mainly short code-alongs, but also longer
+workshops.
 
 ## Code of Conduct
 
@@ -33,9 +22,9 @@ and by participating, you agree to also uphold this code.
 
 -----
 
-# How You Can Contribute {#how-to-contribute}
+# How You Can Contribute
 
-## Adding teaching material :pencil: :computer: {#add-material}
+## Adding teaching material :pencil: :computer:
 
 The lesson material and website are created using [blogdown](https://bookdown.org/yihui/blogdown/),
 which renders the R Markdown documents and converts the source material into 
