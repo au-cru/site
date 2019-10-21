@@ -1,0 +1,11 @@
+type: "coworking"
+name: "Hacky hour hang out"
+description: >
+  Come to this informal hangout to ask for feedback on problems you are experiencing,
+  to give advice or help others out with their problems, or just co-work with
+  other likeminded researchers who also use (open) research software for their work.
+location: "Studiecaféen, Studenterhus, Nordre Ringgade 3, 8000 Aarhus"
+start_date: 2019-11-29T14:30:00+01:00
+end_date: 2019-11-29T15:30:00+01:00
+software: [""]
+level: "everyone"
