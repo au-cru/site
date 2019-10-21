@@ -28,6 +28,7 @@ events_prep <- events %>%
   mutate(
     date_ymd = lubridate::dmy(Date),
     start_date = str_c(date_ymd, "T13:00:00+01:00"),
+    end_date = str_c(date_ymd, "T14:15:00+01:00"),
     type = "code-along",
     location = "AU Library, Main Floor, Nobelparken, Universitetsparken 461, 8000 Aarhus",
     software = "R"
@@ -41,6 +42,7 @@ description: >
   FILL IN
 location: "{location}"
 start_date: {start_date}
+end_date: {end_date}
 level: "{level}"
 software: ["{software}"]
 '
@@ -68,8 +70,8 @@ description: >
   to give advice or help others out with their problems, or just co-work with
   other likeminded researchers who also use (open) research software for their work.
 location: "Studiecaféen, Studenterhus, Nordre Ringgade 3, 8000 Aarhus"
-start_date: {date}T14:30:00+01:00
-# Must be array for with []
+start_date: {date_ymd}T14:30:00+01:00
+end_date: {date_ymd}T15:30:00+01:00
 software: [""]
 level: "everyone"
 '
@@ -81,6 +83,5 @@ hacky_files <- here::here("data", "events", str_c(hacky_dates$date_ymd, "-hacky-
 hacky_file_contents <- hacky_dates %>%
   glue::glue_data(hacky_hours_template)
 
-# TODO: Finish these up.
 # Create the event files.
-# walk2(hacky_file_contents, hacky_files, write_lines)
+walk2(hacky_file_contents, hacky_files, write_lines)

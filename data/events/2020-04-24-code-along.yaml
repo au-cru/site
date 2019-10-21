@@ -6,5 +6,6 @@ description: >
   with blogdown by writing R Markdown documents that can be converted into a webpage!
 location: "AU Library, Main Floor, Nobelparken, Universitetsparken 461, 8000 Aarhus"
 start_date: 2020-04-24T13:00:00+01:00
-level: "intermediate"
+end_date: 2020-04-24T14:15:00+01:00
+level: "Intermediate"
 software: ["R"]
