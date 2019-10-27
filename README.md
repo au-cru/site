@@ -1,7 +1,10 @@
 # Aarhus University Community of Research Software Users
 
+<!-- badges: start -->
+[![Travis build status](https://travis-ci.org/au-cru/site.svg?branch=master)](https://travis-ci.org/au-cru/site)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+<!-- badges: end -->
 
 <!-- TODO: Add link to Slack? -->
 
