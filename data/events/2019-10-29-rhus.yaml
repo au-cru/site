@@ -18,10 +18,12 @@ description: >
 
   **bigstatsr: Out-of-memory matrices**
 
+
   R package {bigstatsr} provides a special class of matrix that can be used to store some data in a matrix-like format __on disk__
-  but to access it almost as if it were in memory. 
-  It is particularly useful when you analyze large matrices and when you want to parallelize your code. 
+  but to access it almost as if it were in memory.
+  It is particularly useful when you analyze large matrices and when you want to parallelize your code.
   Various efficient statistical and helper functions are provided for this data format.
+
 
   Florian Privé
 
