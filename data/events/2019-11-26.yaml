@@ -1,0 +1,15 @@
+type: "workshop"
+name: "3-day CodeRefinery Workshop"
+description: >
+  The aim of this course is to demonstrate to and familiarize the workshop participants
+  with best practices and tools in modern research software development. The main focus
+  is on professional tools for efficiently writing and maintaining research software.
+  Since most research code is developed in a collaborative setting, we will discuss tools and
+  workflows which facilitate this process. Most of the content is also relevant to a single researcher.
+location: "Building 5361, room 144, Finlandsgade 27, 8200 Aarhus N"
+start_date: 2019-11-26T09:00:00+02:00
+end_date: 2019-11-28T17:00:00+02:00
+# Must be array for with []
+software: ["Python", "Shell", "Git"]
+level: "intermediate"
+link: "https://coderefinery.org/workshops/2019-11-26-aarhus/"
