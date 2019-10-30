@@ -275,7 +275,6 @@ easier to continue your package development!
 1. To learn and apply the typical workflow for creating functions in packages
 (and in general).
 1. To properly document and name functions so you don't forget what they do! 
-`r emo::ji("winking_face_with_tongue")`
 
 **At the end of this session you will be able:**
 
