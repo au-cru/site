@@ -64,10 +64,6 @@ We recommend you have the latest versions of both R and RStudio:
 have bash installed. For Windows users, install the Windows version of Git above
 to install Git Bash.
 
-## Content Use and Re-Use
-
-See the [License](../license/) page for details on re-use and attribution.
-
 ## Resources for learning and getting help {#resources}
 
 ### For learning
@@ -119,3 +115,7 @@ See the [License](../license/) page for details on re-use and attribution.
 - While in RStudio:
     - Using `?` for help with specific functions, e.g. `?mean`
     - Using `??` for help with key terms or words, e.g. `??ggplot2` for anything related to ggplot2
+
+## Content Use and Re-Use
+
+See the [License](../license/) page for details on re-use and attribution.
