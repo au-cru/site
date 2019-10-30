@@ -1,10 +1,10 @@
 type: "code-along"
-name: "Reproducibility and project management"
+name: "Data wrangling with dplyr and tidyr, part 2"
 description: >
-  Reproducibility is increasingly a requirement to have for scientific studies.
-  Learn how to manage your analysis project in a reproducible and structured way.
+  Go deeper into learning more about and using the powerful packages dplyr and tidyr
+  for rearranging, wrangling, and subsetting your data.
 location: "AU Library, Main Floor, Nobelparken, Universitetsparken 461, 8000 Aarhus"
-start_date: 2020-01-17T13:00:00+01:00
-end_date: 2020-01-17T14:15:00+01:00
-level: "Beginner"
+start_date: 2020-05-22T13:00:00+01:00
+end_date: 2020-05-22T14:15:00+01:00
+level: "Beginner-Intermediate"
 software: ["R"]
