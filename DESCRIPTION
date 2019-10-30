@@ -3,4 +3,5 @@ Title: Dependency Management and Website Creation for AU CRU.
 Version: 0.0.1
 Encoding: UTF-8
 Imports: 
-    blogdown
+    blogdown,
+    here
