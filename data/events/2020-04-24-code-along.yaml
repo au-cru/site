@@ -1,11 +1,11 @@
 type: "code-along"
-name: "Create websites with R (blogdown)"
+name: "Reproducibility and project management"
 description: >
-  Want to make a website that includes R code and its output, but don't want to
-  copy and paste the output into the website? Learn how to make websites easily
-  with blogdown by writing R Markdown documents that can be converted into a webpage!
+  Reproducibility is increasingly a requirement to have for scientific studies.
+  Learn how to manage your analysis project in a reproducible and structured way.
 location: "AU Library, Main Floor, Nobelparken, Universitetsparken 461, 8000 Aarhus"
 start_date: 2020-04-24T13:00:00+01:00
 end_date: 2020-04-24T14:15:00+01:00
-level: "Intermediate"
+level: "Beginner"
 software: ["R"]
+link: "/material/2020-04-24-proj-management/"

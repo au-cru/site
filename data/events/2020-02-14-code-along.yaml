@@ -1,11 +1,10 @@
 type: "code-along"
-name: "Version control with Git"
+name: "Creating interactive apps with Shiny"
 description: >
-  Do you store versions of your files by adding "V01" or "draft2" to the end of your
-  files? Learn how to use an formal version control system to manage your files
-  and track changes to these files over time.
+  Learn how to make web applications with the Shiny package that allow others to
+  interact and explore data more easily.
 location: "AU Library, Main Floor, Nobelparken, Universitetsparken 461, 8000 Aarhus"
 start_date: 2020-02-14T13:00:00+01:00
 end_date: 2020-02-14T14:15:00+01:00
-level: "Beginner"
-software: ["Git"]
+level: "Intermediate"
+software: ["R"]
