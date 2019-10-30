@@ -1,0 +1,149 @@
+---
+title: "Keeping track of changes to your files with version control using Git"
+author:
+  - "Luke W. Johnston"
+date: "2020-04-10"
+categories:
+  - Beginner
+  - R
+  - Code-along
+tags:
+  - version control
+  - Git
+  - GitHub
+  - collaboration
+---
+
+> NOTE: This is still in development.
+
+```{r setup, echo=FALSE}
+source(here::here("R/utils-for-content.R"))
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+```{r, eval=FALSE}
+library(DiagrammeR)
+install.packages("rmarkdown")
+```
+
+## Session details
+
+### Objectives
+
+1. To become aware of what "formal" version control is and looks like.
+1. To learn about the tools integrated into RStudio to make use of Git.
+1. To know the basic, and most commonly used, tools for Git.
+1. To know ... Git and version control is **not**, *not*, easy. It is hard. But 
+it gets easier and it is *very worth it to learn*.
+
+But! No expectation to actually start using it... :) It took me months after I
+learned it before I started actually using it.
+
+**At the end of this session you will be able:**
+
+- Generally, just knowing how to navigate the Git interface in RStudio.
+- Since you now know Git and version control exists, you can start talking about
+it... and find others who are more experienced so you can start working with
+them and learning too!
+
+## Resources for learning and help
+
+[Here for resources](/more-info/#resources)
+
+## Lesson content
+
+### What is version control?[^uoftcoders]
+
+[^uoftcoders]: Many parts of this were taken from my lessons given while with the
+UofTCoders. Material [here](https://uoftcoders.github.io/studyGroup/lessons/git/intro/lesson/).
+
+![Common "version control"](./images/phd-comics-versions-small.jpg)
+
+Version control is a system that manages changes to a file or files.
+These changes are kept as logs in a history, with detailed information
+on what file(s) was changed, what was changed within the file, who
+changed it, and a message on why the change was made.  This is
+extremely useful, especially when working in teams or for yourself 6
+months in the future (because you *will* forget things)!
+
+To understand how incredibly powerful version control is, think about
+these questions (or refer to the comic above!): How many files of different
+versions of a manuscript or thesis do you have laying around after getting
+feedback from your supervisor or co-authors? Have you ever wanted to experiment
+with your code or your manuscript and need to make a new file so that the
+original is not touched? Have you ever deleted something and wish you hadn't?
+Have you ever forgotten what you were doing on a project?  All these problems
+are fixed by using version control (git)!
+
+We are going to go over a typical workflow. This could be either a solo workflow
+or a collaborative workflow. All of this will be done through RStudio.
+
+![From [xkcd](https://xkcd.com/1597/)](xkcd-git.png)
+
+### Why should you learn and use it? Why use Git?
+
+- *Big reasons for the sciences*
+    - Claim to first discovery
+    - Defend against fraud
+    - Evidence of contributions and work
+- *Day-to-day reasons*
+    - Easily keep track of changes to files
+    - Easy collaboration
+    - Organized files
+    - Less time findings things
+
+### Setting up your Git configuration
+
+```{bash, eval=FALSE}
+git config --global user.name "Your Name"
+git config --global user.email "you@some.domain"
+git config --global core.editor "nano"
+```
+
+### Four (five) concepts in Git (and ~7 commands)
+
+- **Start repository**: `git init`, `git clone` (GitHub)
+- **Check activity**: `git status`, `git log`, `git diff`
+- **Save to history**: `git add`, `git commit`
+- **Move through the history**: `git checkout`, `git branch` (may be covered)
+- (Note discussed) **Using with GitHub**: `git push`, `git pull`
+
+Can also all be done through the RStudio Git interface!
+
+All the commands and exercises will be done during the code-along.
+
+### Graphic: Git stages overview
+
+```{r, echo=FALSE, out.width="95%"}
+mermaid("
+sequenceDiagram
+    participant U as Untracked
+    participant W as Working
+    participant S as Staged
+    participant H as History
+    U->>S: git add
+    W->>S: git add
+    W->>H: git commit filename
+    S->>H: git commit
+    H->>W: git checkout
+")
+```
+
+### Graphic: Git "remotes" (GitHub) overview
+
+```{r, echo=FALSE, out.width="95%"}
+mermaid("
+sequenceDiagram
+    participant W as Working
+    participant S as Staged
+    participant H as History
+    participant R as GitHub
+    W->>S: git add
+    W->>H: git commit filename
+    S->>H: git commit
+    H->>W: git checkout
+    H->>R: git push
+    R->>W: git pull
+")
+```
+

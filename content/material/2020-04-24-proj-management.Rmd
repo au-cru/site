@@ -1,0 +1,316 @@
+---
+title: "Best practices in data analysis workflow and project management in R"
+author:
+  - "Luke W. Johnston"
+  - "Maria Izabel Cavassim Alves (contributed)"
+date: "2020-04-24"
+categories:
+  - Beginner
+  - R
+  - Code-along
+tags:
+  - project management
+  - R Projects
+  - reproducibility
+  - workflow management
+  - reproducible data analysis
+  - usethis
+  - prodigenr
+  - style guide
+  - styler
+---
+
+> NOTE: This is still in development.
+
+```{r setup, echo=FALSE}
+source(here::here("R/utils-for-content.R"))
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+## Session details
+
+```{r, eval=FALSE}
+install.packages(c("usethis", "prodigenr", "drake", "styler"))
+```
+
+### Objectives
+
+1. To become aware of and learn some "best practices" (or "good enough practices") for project organization.
+1. To use RStudio to create and manage projects with a consistent structure.
+
+**At the end of this session you will be able**:
+
+- To apply the best practices in using R for data analysis.
+- To create a new RStudio project with a consistent folder structure.
+- To use styler for formatting your code.
+- To organise folders in a consistent, structured and systematic way.
+
+## Resources for learning and help
+
+[Here for resources](/more-info/#resources)
+
+## Best practices overview[^note]
+
+[^note]: Many of the best practices are taken from the "best practices" articles
+listed in the "Resources".
+
+The ability to read, understand, modify and write simple pieces of code is an
+essential skill for modern data analysis. Here we introduce you to some of the
+best practices one should have while writing their codes:
+
+- Organise all source files in the same directory (use a common and consistent folder and file structure)
+- Use version control (to track changes to files)
+- Make data "read-only" (don't edit it directly) and use code to show what was done
+- Write and describe code for people to read (be descriptive and use a [style guide](https://style.tidyverse.org/))
+- Don't repeat yourself (use and create functions)
+
+## Project management
+
+Managing your projects in a reproducible fashion doesn't just make your science
+reproducible, it also makes your life easier! RStudio is here to help us with
+that by using projects!! RStudio projects make it straightforward to divide your
+work into multiple contexts, each with their own working directory, workspace,
+history, and source documents.
+
+It is strongly recommended that you store *all* the necessary files that will
+be used/sourced in your code in the **same directory**. You can then use the
+respective relative path to access them. This makes the directory and R
+Project a "product", or "bundle/package". Like a tiny machine, that needs to have
+all it's component parts in the same place.
+
+Let's create our first project!
+
+### Creating your first project
+
+RStudio projects are associated with R working directories. You can create an
+RStudio project:
+
+- In a brand new directory
+- In an existing directory where you already have R code and data
+- By cloning a version control (Git or Subversion) repository
+
+There are many ways one could organise a project folder. We can set up a project
+directory folder using [prodigenr](http://prodigenr.lukewjohnston.com/index.html),
+using:
+
+```{r, eval=FALSE}
+prodigenr::setup_project("ProjectName")
+```
+
+...which will have the following folders and files:
+
+```
+ProjectName
+├── R
+│   ├── README.md
+│   ├── fetch_data.R
+│   └── setup.R
+├── data
+│   └── README.md
+├── doc
+│   └── README.md
+├── .Rbuildignore
+├── .gitignore
+├── DESCRIPTION
+├── ProjectName.Rproj
+└── README.md
+```
+
+This forces a specific, and consistent, folder structure to all your work. Think 
+of this like the "introduction", "methods", "results", and "discussion" sections 
+of your paper. Each project is then like a single manuscript or report, that
+contains everything relevant to that specific project. There is a lot of
+powerful in something as simple as a consistent structure.
+
+The README in each folder explains a bit about what should be placed there. But
+briefly:
+
+1. Documents are in the `doc/` directory.
+1. Data, raw data, and metadata should be in either the `data/` directory (or
+`data-raw/` for the very raw data).
+1. All R files and code should be in the `R/` directory.
+1. Name all new files to reflect their content or function. Follow the tidyverse 
+[style guide](https://style.tidyverse.org/files.html) for file naming.
+
+And make sure to use version control (Git! See the [AUOC Git
+material](https://au-oc.github.io/content/intro-git.html) for more details).
+
+### Exercise: Better file naming
+
+Time: 2 min
+
+Think about these file names. Which file names should you use?
+
+```
+fit models.R
+fit-models.R
+foo.r
+stuff.r
+get_data.R
+Manuscript version 10.docx
+manuscript.docx
+new version of analysis.R
+trying.something.here.R
+plotting-regression.R
+utility_functions.R
+code.R
+```
+
+### Advantages of this project setup
+
+Projects are used to make life easier. Once a project is opened within RStudio
+the following actions are taken:
+
+- A new R session (process) is started.
+- The `.Rprofile` file in the project's main directory (if any) is sourced by R.
+- The current working directory is set to the project directory.
+- RStudio project options are loaded.
+- Consistent structure, so easier to remember where things are, and easier for
+computers to do what they do best.
+
+## Writing code
+
+### Use a syntax style guide
+
+Even though R doesn't care about naming, spacing, and indenting, it really matters
+how your code looks. Coding is just like writing. Even though you may go through
+a brainstorming note taking stage of writing, you eventually need to write correctly
+so others can understand what you are trying to say. In coding, brainstorming is
+fine, but eventually you need to code in a readable way.
+
+#### Exercise: Make code more readable
+
+Time: 6 min
+
+Before we go more into this section, try to make these code more readable.
+Edit the code so it's easier to understand what is going on.
+
+```{r, eval=FALSE}
+# Variable names
+DayOne
+dayone
+T <- FALSE
+c <- 9
+mean <- function(x) sum(x)
+
+# Spacing
+x[,1]
+x[ ,1]
+x[ , 1]
+mean (x, na.rm = TRUE)
+mean( x, na.rm = TRUE )
+function (x) {}
+function(x){}
+height<-feet*12+inches
+mean(x, na.rm=10)
+sqrt(x ^ 2 + y ^ 2)
+df $ z
+x <- 1 : 10
+
+# Indenting
+if (y < 0 && debug)
+message("Y is negative")
+```
+
+### Automatic styling with styler
+
+You have organised it by hand, however it is also possible to do it
+automatically. The [tidyverse style guide](https://style.tidyverse.org/) has
+helped people to follow standards styles and automatically re-style chunks of
+code using an R package: [styler](http://styler.r-lib.org/). The styler snippets
+can be found in the Addins function on the top of your R document.
+
+![From styler website.](images/styler_0.1.gif)
+
+Now, let's try using styler on the exercise code above.
+
+### DRY and describing your code
+
+DRY or "don't repeat yourself" is another way of saying, "make your own
+functions"! That way you don't need to copy and paste code you've used multiple
+times. Using functions also can make your code more readable and descriptive,
+since a function is a bundle of code that does a specific task... and usually
+the function name should describe what you are doing.
+
+It is very important for your future self, and for any person that will be
+reading/using your code to be able to understand what the **code**, **function**,
+or **R Mardown** will generate. So it's crucial to describe what the code does,
+acknowledge the author (if necessary), and give an example on how to execute it.
+If your function name is well decriptive, then you don't need to spend much time
+describing what the code does! In the AUOC session on [creating functions for
+packages](https://au-oc.github.io/content/pkg-functions.html), we went into
+detail about function documentation and creation. Here we will briefly cover the
+core concepts.
+
+Example:
+
+```{r}
+# Code developed by Maria Izabel
+# The following function outputs the sum of two numeric variables (a and b). 
+# usage: summing(a = 2, b = 3)
+summing <- function(a, b) {
+    return(a + b)
+}
+
+summing(a = 2, b = 3)
+```
+
+The example above is summing up two different numeric variables. Note that the
+name for this function was chosen as **summing**, instead of **sum**. This is
+because we know that R already has a built-in function called **sum** and
+so we don't want to overwrite it!
+
+### Loading packages
+
+At the top of each script, you should put all your library calls for loading
+your packages. Better yet, put all the library calls in a new file and `source()`
+that file in each R script.
+
+<!--
+{{TODO: expand on this at later sessions}}
+
+It is also very important to record in what package version the code was
+executed. In order to avoid bugs due to package modification, one can always
+install a specific version:
+
+```{r, eval=F}
+install_version("ggplot2", version = "0.9.1", repos = "http://cran.us.r-project.org")
+```
+
+
+comment on what possible functions important lines of the code would have. You can use the symbol **#** to make comments:
+
+```{r}
+# This function converts temperature in fahrenheit to kelvin
+fahrenheit_to_kelvin <- function(temp_F) {
+  temp_K <- ((temp_F - 32) * (5 / 9)) + 273.15
+  return(temp_K) # it returns a numeric value
+}
+
+# The following function converts kelvin to celsius
+kelvin_to_celsius <- function(temp_K) {
+  temp_C <- temp_K - 273.15 # The 273.15 value is based on the Charle's Law.
+  return(temp_C)
+}
+
+# The following function converts fahrenheit to celsius
+fahrenheit_to_celsius <- function(fahrenheit_temperature) {
+  kelvin_temperature <- fahrenheit_to_kelvin(fahrenheit_temperature) # first to kelvin
+  celsius_temperature <- kelvin_to_celsius(kelvin_temperature) # And then kelvin to Celsius
+  return(celsius_temperature)
+}
+
+```
+
+I am over commenting it, since the name of the functions are quite self explanatory, one wouldn't need to comment as much.
+
+
+### Data cleaning
+
+In many cases your data will be "messy": it will need significant preprocessing to get into a format R (or any other programming language) will find useful. This task is sometimes called "data munging". I find it useful to store these scripts in a separate folder, and create a second "read-only" data folder to hold the "cleaned" data sets. 
+
+-->
+
+## Workflow and script management with drake
+
+We'll cover this more during the session, but mainly at the end.
