@@ -4,7 +4,7 @@ description: >
   Learn how to make web applications with the Shiny package that allow others to
   interact and explore data more easily.
 location: "AU Library, Main Floor, Nobelparken, Universitetsparken 461, 8000 Aarhus"
-start_date: 2020-05-08T13:00:00+01:00
-end_date: 2020-05-08T14:15:00+01:00
+start_date: 2020-02-14T13:00:00+01:00
+end_date: 2020-02-14T14:15:00+01:00
 level: "Intermediate"
 software: ["R"]
