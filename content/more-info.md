@@ -23,6 +23,27 @@ Do you use **Outlink?** Follow these steps (taken from and described on the [Off
 6. Under **Calendar name**, type the name you want to use for the calendar.
 7. Select **Import**.
 
+## Installation instructions {#install}
+
+### R
+
+For R, install from [here](https://cloud.r-project.org/index.html). For RStudio,
+install from [here](https://www.rstudio.com/products/rstudio/download/#download).
+We recommend you have the latest versions of both R and RStudio:
+
+- `r version$version.string`
+- RStudio version `r rstudioapi::versionInfo()$version`
+
+### Git
+
+**Only for Git sessions**, install Git from [here](https://git-scm.com/downloads).
+
+### Bash
+
+**Only for Bash/shell/terminal sessions**. Mac OSX and Linux users will already
+have bash installed. For Windows users, install the Windows version of Git above
+to install Git Bash.
+
 ## Content Use and Re-Use
 
 See the [License](../license/) page for details on re-use and attribution.
