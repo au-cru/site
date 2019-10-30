@@ -1,4 +1,5 @@
 library(tidyverse)
+library(lubridate)
 library(calendar)
 library(assertr)
 library(glue)
@@ -26,8 +27,8 @@ event_data <-
   ) %>%
   transmute(
     UID = map_chr(1:n(), ~ ic_guid()),
-    DTSTART = lubridate::as_datetime(start_date, tz = "Europe/Copenhagen"),
-    DTEND = lubridate::as_datetime(end_date, tz = "Europe/Copenhagen"),
+    DTSTART = ymd_hms(start_date, tz = "Europe/Copenhagen"),
+    DTEND = ymd_hms(end_date, tz = "Europe/Copenhagen"),
     DESCRIPTION = as.character(glue(
       "A {type} for {str_to_lower(level)}"
     )),
@@ -35,10 +36,31 @@ event_data <-
     LOCATION = location
   )
 
-ic_write(ical(event_data), here::here("R/calendar.ics"))
+public_calendar_link <- "https://calendar.google.com/calendar/ical/2ss4h917ttbik93jp4n7kkto5o%40group.calendar.google.com/public/basic.ics"
+current_calendar <- ic_read(public_calendar_link) %>%
+  View()
+  mutate(
+    # Don't know why the time gets imported one hour behind...
+    # need to fix by adding an hour.
+    DTSTART = ymd_hms(DTSTART, tz = "Europe/Copenhagen") + hours(1),
+    DTEND = ymd_hms(DTEND, tz = "Europe/Copenhagen") + hours(1)
+  ) %>%
+  select(UID, DTSTART, DTEND, DESCRIPTION, SUMMARY, LOCATION) %>%
+  mutate_at(
+    vars(DESCRIPTION, SUMMARY, LOCATION),
+    ~ str_replace_all(., "\\\\,", ",") %>%
+      str_replace_all("\\\\", "")
+  ) %>%
+  arrange(DTSTART)
 
-# TODO: Fix this up so calendar is imported, results are compared to new schedule,
-# and new events are added.
-# public_calendar_link <- "https://calendar.google.com/calendar/ical/2ss4h917ttbik93jp4n7kkto5o%40group.calendar.google.com/public/basic.ics"
-# ic_read(public_calendar_link) %>%
-#   glimpse()
+dplyr::bind_rows(event_data %>%
+            select(-UID),
+          current_calendar %>%
+            select(-UID)) %>%
+  distinct() %>%
+  View()
+  glimpse()
+
+
+
+ic_write(ical(event_data), here::here("R/calendar.ics"))
