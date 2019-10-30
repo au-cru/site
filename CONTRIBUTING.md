@@ -74,6 +74,7 @@ and [**here**](https://mozillascience.github.io/studyGroupHandbook/event-types.h
 has several very good points about making a lesson. This section summarizes bits
 of the handbook, but also adds pieces that are missing from it. Check out the
 [lesson bank too](https://github.com/mozillascience/studyGroupLessons/issues).
+There's also some resources on how to teach R [here](https://github.com/rstudio/cheatsheets/raw/master/teachR.pdf).
 
 Here are some steps and guidelines when you instruct a class:
 
