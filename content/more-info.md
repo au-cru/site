@@ -2,11 +2,31 @@
 title: More information
 ---
 
-> Still under construction.
+## About
 
+### Vision
 
-## Vision
-## Mission
+Reproducibility, open scientific practices, and analytic transparency are
+increasingly being requested or required of scientists and researchers, but
+training on these on topics is severely lacking. Nor has the culture around
+sharing of code and skills, or even the recognition that these concepts are
+important for the health of science, dramatically changed. 
+
+Our *vision* is to create a community of (open) research software users
+at Aarhus University and the surrounding area to share, learn, and support each
+other, so that we may better use our tools in our research. We hope to start
+forming a culture of sharing, openness, and improvement in scientific
+activities, so that we may start bridging the gaps in knowledge and skills
+around making scientific practices more reproducible, transparent, and rigorous.
+
+### Mission
+
+To acheive our vision, our mission is to:
+
+- Host and organize peer-led teaching sessions to share skills and knowledge of using open software for research.
+- Advertise and promote events and activities related to training and learning on using open software.
+- Provide a support network for new and experienced users.
+- Provide lists of recommended and high quality resources for learning.
 
 ## Calendar Integration {#add-calendar}
 
