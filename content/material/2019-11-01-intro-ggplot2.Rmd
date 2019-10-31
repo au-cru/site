@@ -37,11 +37,22 @@ fairly simple, visually-appealing graph that shows:
 
 - At least three data values, ie. "aesthetics" or `aes()`, such as what to put
 on the x-axis, the y-axis, and or using `colour` or `size`.
-- At least two layers, ie "geometries" or `geom_`, such as points, lines, or
+- Two layers, ie "geometries" or `geom_`, such as points, lines, or
 boxplots.
 - That has clearly labelled x and y axes, ie. `labs()`.
 - That has some changes to the look and feel of the plot, ie. `theme()`, so that
 it is publication ready.
+
+## Best practices for creating graphs in R
+
+It is relatively easy to create complex graphs in R, but all the features available can become quite distracting and lead to overly complicated and confusing graphs.
+
+When creating graphs there are a few golden rules that should be kept in mind:
+- When possible use raw data
+
+- Avoid / remove unnecessary information
+
+- Use colour in a meaningful way
 
 ## Resources for learning and help
 
@@ -52,6 +63,12 @@ it is publication ready.
 
 <!-- Quickly go over RStudio IDE in relation to plotting -->
 <!-- Get them to open two R scripts, name and save as "code-along" and "exercise" -->
+
+## Create a project
+
+A simple way to create a self-contained project in R is to make use of the function "Projects" in R Studio.
+Create a new project, name it "Code_along_sessions" and create two R scripts in it.
+
 
 ## Quickly get familiar with data to plot
 
@@ -64,6 +81,9 @@ names(CO2)
 
 # Quick summary
 summary(CO2)
+
+# Content
+str(CO2)
 ```
 
 ### Exercise: Choose a dataset and check it out
@@ -94,6 +114,7 @@ str(___)
 # summary of dataset
 summary(___)
 ```
+
 
 ## Basic structure of using ggplot2
 
@@ -169,8 +190,6 @@ co2_plot_nums + geom_point()
 # Connect all the data with a line
 co2_plot_nums + geom_line()
 
-# Put overlapping data into "hexes".. useful for massive datasets
-co2_plot_nums + geom_hex()
 
 # Connects data as they appear in the dataset
 co2_plot_nums + geom_path()
@@ -192,6 +211,11 @@ co2_plot_mixed + geom_jitter()
 
 # Give more distance between groups
 co2_plot_mixed + geom_jitter(width = 0.2)
+
+# We can overlap multiple geometries
+co2_plot_mixed + 
+  geom_boxplot() +
+  geom_jitter(width = 0.2)
 ```
 
 
@@ -202,12 +226,12 @@ Time: 8 min
 ```{r, eval=FALSE}
 # use dataset with two continuous variables
 ggplot(___, aes(x = ___, y = ___)) +
-    # finish the geom to create either a point, line, hex, smooth, or abline layer
+    # chose an appropriate geom to represent the data 
     ___
     
 # use dataset with one continuous and one discrete variable
 ggplot(___, aes(x = ___, y = ___)) +
-    # finish the geom to create either a boxplot, jitter, or col layer
+    # finish the geom to create either a boxplot, jitter
     ___
 ```
 
@@ -239,8 +263,9 @@ Or add a fourth variable.
 # Scatter plot
 co2_plot_colour + geom_point(aes(shape = Type))
 
-# Line plot
-co2_plot_colour + geom_line(aes(linetype = Type))
+# Scatter plot jitter
+co2_plot_colour + geom_jitter(aes(alpha = Type))
+ #discuss the warning here: alpha better used for continuous variables
 
 # Another line plot
 co2_plot_colour + geom_path(aes(linetype = Type))
@@ -252,11 +277,12 @@ co2_plot_colour + geom_smooth(aes(linetype = Type))
 And it's easy to add another geoms!
 
 ```{r}
-# Three layers
+# Multiple layers
 co2_plot_colour + 
     geom_point(aes(shape = Type)) +
-    geom_line(aes(linetype = Plant)) +
-    geom_smooth(aes(size = Type))
+    geom_line(aes(linetype = Plant))
+
+
 ```
 
 ### Exercise: Three variable plots
@@ -329,7 +355,7 @@ ggplot(___, aes(x = ___, y = ___)) +
         # choose size from 2 to 8
         panel.grid.major = element_line(colour = ___, size = ___),
         # choose family such as sans, serif, Arial, Times New Romans
-        axis.text = element_text(colour = ___, size = ___, familyl = ___)
+        axis.text = element_text(colour = ___, size = ___, family = ___)
     )
 ```
 
