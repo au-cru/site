@@ -1,0 +1,372 @@
+---
+title: "Reproducible reports with R Markdown"
+author:
+  - "TBD"
+  - "Luke W. Johnston"
+  - "Maria Izabel Cavassim Alves (contributed)"
+date: "2019-12-13"
+categories:
+  - Beginner
+  - R
+  - Code-along
+tags:
+  - R Markdown
+  - rmarkdown
+  - reproducibility
+  - reproducible documents
+  - dynamic document generation
+  - markdown
+  - report writing
+---
+
+> NOTE: This is still in development.
+
+```{r setup, echo=FALSE}
+source(here::here("R/utils-for-content.R"))
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+```{r, eval=FALSE}
+install.packages("rmarkdown")
+```
+
+
+### Objectives
+
+1. To become aware of the importance of reproducibility of data analyses.
+1. To learn how to generate high quality reports that can be shared with a broader audience.
+1. To create reproducible documents interwoven with R code that can be run on updated or different data sets.
+1. To use Rstudio not as a data science tool but also as a text editor and compiler!
+1. To know where to go for continued learning.
+
+**At the end of this session you will be able**:
+
+- Create a new RMarkdown document.
+- Write text, headers, citations, and other report writing tasks in Markdown.
+- Insert R code chunks that will create figures, tables, or numbers.
+- Generate an analytically reproducible Word or HTML document.
+
+## Resources for learning and help
+
+[Here for resources](/more-info/#resources)
+
+## Why try to be reproducible?
+
+Well, first thing, reproducibility and replicability is a cornerstone of doing
+science. However, the current concept of reproducibility relates more to
+computational reproducibility: Hypothetically, if you gave someone your data,
+your code, and your paper, would they be able to generate the exact same numbers
+you report in your manuscript and in your tables and figures? Research shows
+that this is not at all the case... even when the same researcher tries to
+reproducible their own paper!
+
+Being reproducible and writing a reproducible document/manuscript does several
+things for you:
+
+1. Makes your science better.
+1. Makes you more efficient and productive, since less time is spent between
+coding and putting your results in the document.
+1. Makes you more confident in your results, since what you report is what you 
+actually got from the analysis.
+1. Its actually a lot of fun! ;)
+
+Let's get to learning about R Markdown!
+
+## Markdown syntax
+
+### Headers 
+
+Such as for a section, subsection, subsubsection, etc.
+
+> `# Header 1`
+> 
+> gives...
+> 
+> # Header 1
+
+> `## Header 2`
+> 
+> gives...
+> 
+> ## Header 2
+
+> `### Header 3`
+> 
+> gives...
+> 
+> ### Header 3
+
+### Text formatting
+
+- `**bold**` gives **bold**. 
+- `*italics*` gives *italics*.
+- `super^script^` gives super^script^.
+- `sub~script~` gives sub~script~.
+
+### Lists
+
+Unnumbered list:
+
+> ```
+> - item 1
+> - item 2
+> - item 3
+> ```
+>
+> gives...
+>
+> - item 1
+> - item 2
+> - item 3
+
+Numbered list:
+
+> ```
+> 1. item 1
+> 2. item 2
+> 3. item 3
+> ```
+>
+> gives...
+>
+> 1. item 1
+> 2. item 2
+> 3. item 3
+
+### Block quotes
+
+One can also create quotes:
+
+> ```
+> > Block quote 
+> ```
+>
+> gives...
+>
+> > Block quote 
+
+
+### Exercise: Construct an outline for a (hypthetical) paper
+
+Time: 10 min
+
+Open RStudio and create an `R Markdown` document:
+
+**File -> New File -> R Markdown**
+
+Save the file and call the file `exercise.Rmd`. In the R Markdown document,
+include the following "Header 1" `#` sections:
+
+- Abstract
+- Introduction
+- Material and Methods
+- Results
+- Discussion
+- Conclusion
+
+Compile it by pressing the icon `Knit to HTML` or by typing `Ctrl-Shift-K`. Then:
+
+- Write some random words below the **Abstract section**, while using bold and
+italics.
+- Include an unnumbered list below **Introduction** listing two or three fake
+objectives.
+- Include a "Header 2" (`##`) called "Statistical analysis" below "Material and
+Methods".
+
+Compile ("knit"") the document again and see what happens.
+
+### Adding footnotes, pictures, and links to your document
+
+Footnotes can be done using the following command:
+
+> ```
+> Footnote[^1]
+>
+> [^1]: Footnote content
+> ```
+>
+> gives...
+>
+> Footnote[^1]
+>
+> [^1]: Footnote content
+
+A .png .jpeg or .pdf image can be attached in the following way:
+
+> ```
+> ![image caption](images/au_coders.jpeg)
+> ```
+>
+> gives...
+>
+> ![image caption](images/au_coders.jpeg)
+
+And a link can be linked in the following format:
+
+> ```
+> [Link](https://google.com)
+> ```
+>
+> gives...
+>
+> [Link](https://google.com)
+
+### Exercise: Add more to your Markdown document!
+
+Time: 8 min
+
+Now you are asked to include in your "skecthed article" what we just have learned.
+
+1. Include a random picture with caption (of your research or of any .png you
+find in your PC).
+2. Include a footnote.
+3. Include the link of the AUOC webpage (`https://au-oc.github.io`) in your document.
+ 
+## The best part! Inserting R code
+
+One of the most powerful and useful features of Rmarkdown, is its ability to
+combine text and code in the same document! You can insert plots by including a
+code chunk like below. The options added to the code chunk tell it to add a
+caption, and set the height and width of the figure.
+
+<pre class="markdown"><code>&#96;&#96;&#96;{r plot_sepal, fig.cap="Figure title here", fig.height=8, fig.width=8, echo=FALSE}
+plot(Sepal.Length ~ Sepal.Width, data = iris)
+&#96;&#96;&#96;
+</code></pre>
+
+```{r intro_rmd_plot_sepal, fig.cap="Figure title here", fig.height=8, fig.width=8, echo=FALSE}
+plot(Sepal.Length ~ Sepal.Width, data = iris)
+```
+
+
+You can also create tables by using the `kable()` function in the knitr package.
+
+<pre class="markdown"><code>&#96;&#96;&#96;{r}
+knitr::kable(head(iris), caption = "Table caption here")
+&#96;&#96;&#96;
+</code></pre>
+
+```{r, echo=FALSE}
+knitr::kable(head(iris), caption = "Table caption here")
+```
+
+The `knitr::` part of the code tells R where the `kable` function comes from. So
+the `::` is telling R "hey, look in the knitr package for the kable function".
+
+For small and not too complex tables, you can also create it outside of a R
+chunk using the Markdown syntax:
+
+```
+|       &nbsp;       | diverged | polymorphic |
+|:------------------:|:--------:|:-----------:|
+|   **synonymous**   |   1300   |    2109     |
+| **non-synonymous** |   700    |     891     |
+```
+
+gives...
+
+|       &nbsp;       | diverged | polymorphic |
+|:------------------:|:--------:|:-----------:|
+|   **synonymous**   |   1300   |    2109     |
+| **non-synonymous** |   700    |     891     |
+
+You can hide the code chunk but keep the output by using the `echo=FALSE` option:
+
+<pre class="markdown"><code>&#96;&#96;&#96;{r, echo=FALSE}
+cor(iris$Sepal.Length, iris$Sepal.Width)
+&#96;&#96;&#96;
+</code></pre>
+
+```{r, echo=FALSE}
+cor(iris$Sepal.Length, iris$Sepal.Width)
+```
+
+### Inline R code
+
+You can also include R code within the text. You can use this to directly insert
+numbers into the text of the document. By using something like:
+
+> The mean of the sepal length is <code>&#96;r round(mean(iris$Sepal.Length), 2)&#96;</code>.
+>
+> Gives...
+>
+> The mean of the sepal length is `r round(mean(iris$Sepal.Length), 2)`.
+
+### Exercise: Add a plot and table to "Results"
+
+Time: 10 min
+
+You now need to create a chunck of code in the **Results section**. If you have
+any plot from your own research that you want to create feel free to do it so.
+Otherwise you can just use the iris data:
+
+1. Use `names(CO2)` to find the names of columns from the CO2 dataset. Choose
+two columns. Create a code chunk with a caption `fig.cap` option and the
+`fig.width` of 10 and a `fig.height` of 6. Include in the code chunk the
+function, replacing the `__` with the two columns you chose:
+
+    ```{r, eval=FALSE}
+    plot(___ ~ ___, data = CO2)
+    ```
+
+2. Create a table of the `head()` of the `CO2` dataset using the R function
+`knitr::kable()`.
+3. Create an inline R code that shows the sum of 2 plus 2 (`2 + 2`).
+4. Try to make a similar table as the one below, but using your own Markdown
+syntax in your document.
+
+| Weather | Activity |
+|---------|----------|
+| Sunny | Beach or biking |
+| Snowy | Movies or reading |
+
+## Other features
+
+### Citing literature with Rmarkdown
+
+If you want to insert a citation use `[@Hoejsgaard2006a]` to get it to look
+like: [@Hoejsgaard2006a]... the reference is then inserted onto the bottom of
+the document. You need to add a line to the YAML header like this:
+
+```
+---
+title: "My report"
+author: "Me!"
+bibliography: my_references.bib
+---
+```
+
+### Making your report prettier
+
+This really only applies to HTML and PDF[^tinytex] documents. If you want to change the 
+theme, add an option to the YAML header so it looks like:
+
+```
+---
+title: "My report"
+output:
+    html_document:
+        theme: sandstone
+---
+```
+
+Check out the R Markdown
+[documentation](https://bookdown.org/yihui/rmarkdown/html-document.html#appearance-and-style)
+for more types of themes you can use for HTML documents.
+
+[^tinytex]: Knitting to PDF will require that you install LaTeX using the
+[tinytex](https://yihui.name/tinytex/r/) R package. After you install LaTeX you
+can create truly beautifully typeset PDF documents.
+
+## Ending remarks
+
+We hope that we've shown the power that comes with using R Markdown and that
+we've convinced you enough to try using R Markdown for writing your reports! 
+Believe us, it can save soooo much time in the end after you've learned how to
+incorporate text with R code when writing any type of document that relies on 
+results from data analysis or presentation. R Markdown is a powerful tool for
+reproducibility and for creating beautiful reports! There are many other amazing
+features of R Markdown that you can learn about from the resources above. Try it
+out and learn more about it!
+
+# References (add this at end to separate the ref list)

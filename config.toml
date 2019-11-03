@@ -1,6 +1,6 @@
 baseurl = "https://au-cru.github.io/site/"
 title = "AU CRU"
-publishDir = "docs"
+publishDir = "public"
 theme = "hugo-universal-theme"
 languageCode = "en-us"
 # Site language. Available translations in the theme's `/i18n` directory.
@@ -10,7 +10,7 @@ disqusShortname = ""
 # Enable Google Analytics by entering your tracking code
 googleAnalytics = ""
 # Ignore these files
-ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$", "R/.*"]
 
 # Define the number of posts per page
 paginate = 10
@@ -26,15 +26,19 @@ paginate = 10
     weight = 1
 
 [[menu.main]]
-    identifier="material"
+    identifier = "material"
     name = "Content"
     url  = "/material/"
     weight = 2
 
 [[menu.main]]
-    identifier = "contact"
-    name = "Contact"
-    url  = "/contact/"
+    name = "More Info"
+    url  = "/more-info/"
+    weight = 3
+
+[[menu.main]]
+    name = "Surveys"
+    url  = "/surveys/"
     weight = 4
 
 # Top bar social links menu
@@ -124,4 +128,9 @@ paginate = 10
 [params.events]
     enable = true
     title = "Upcoming events"
-    subtitle = ""
+    subtitle = """
+NOTE: We're still updating this website, so please bare with us :)
+<br><br>Sessions are subject to change depending on instructor or room availability and any other unforeseen events, but we'll send out emails about any changes about the event as soon as we are able.
+<br><br>We are always looking for instructors, so please
+<a href='https://docs.google.com/spreadsheets/d/15QptbsH4z1efB_LFG6vTq631iy_lUoQccdYWVm389QU/edit?usp=sharing'>sign yourself up</a> if you are interested.
+    """

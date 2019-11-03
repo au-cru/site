@@ -2,3 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
+public
+docs
+content/material/*.html
+static/material/
+

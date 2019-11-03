@@ -1,0 +1,22 @@
+type: "Rhus"
+name: "Rhus meeting: H2O modelling"
+description: >
+  The meeting will hopefully end with some light drinks and snacks.
+
+
+  **Modelling with H20**
+
+
+  John Westberg
+
+
+  **(To be announced)**
+
+
+  Per Møldrup-Dalum
+
+location: "AU Library in Nobelparken, main floor, left from entrance behind glass wall"
+start_date: 2019-12-03T19:30:00+01:00
+end_date: 2019-12-03T21:00:00+01:00
+level: "advanced"
+software: ["R"]

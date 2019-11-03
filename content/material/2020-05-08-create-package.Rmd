@@ -1,0 +1,602 @@
+---
+title: "First steps in creating R packages"
+author:
+  - "Luke W. Johnston"
+date: "2020-05-08"
+categories:
+  - Intermediate
+  - R
+  - Code-along
+tags:
+  - package development
+  - R packages
+  - usethis
+  - devtools
+  - workflow management
+  - reproducible data analysis
+---
+
+> NOTE: This is still in development.
+
+```{r setup, echo=FALSE}
+source(here::here("R/utils-for-content.R"))
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+```{r, eval=FALSE}
+install.packages(c("devtools", "usethis"))
+```
+
+### Objectives
+
+1. To see that making packages is not as difficult as it seems.
+1. To learn about and use the tools to simplify and automate package development.
+1. To provide the resources to expand your knowledge on package development.
+
+**At the end of this session you will be able:**
+
+1. Setup up the necessary folders and files for making a package.
+1. Fill out some package description information (in the `DESCRIPTION` and `README.md` files).
+1. Include some functions in your package (in the `R/` folder).
+1. Install your package.
+
+## Resources for learning and help
+
+[Here for resources](/more-info/#resources)
+
+## List of functions and files covered
+
+**Functions**:
+
+- `usethis::create_package()`
+- `usethis::use_r()`
+- `usethis::use_readme_md()`
+- `usethis::use_mit_license()`
+- `devtools::load_all()` (Ctrl-Shift-L)
+- `devtools::build()` / `devtools::install()` (Ctrl-Shift-B)
+- `usethis::use_usethis()`
+
+**Files**:
+
+- `DESCRIPTION`
+- `NAMESPACE`
+- `R/`
+- `README.md`
+- `LICENSE`
+
+## Creating and naming a package
+
+First thing is first: An R package is simply a collection of R functions saved
+on your computer that make it easy to access by using the `library()` command.
+When you make an R package, it does *not* get uploaded online, it does *not* mean
+other people can use it right away. At the beginning, the R package is only available
+to you and to your computer. That's it. So why would you want to create a package?
+Well, it can save time later with other data analyses since you can access your
+functions across files by using `library(<yourpackagename>)`. A package bundles
+related code together, simplifying your life! Alright, that's done with, next step!
+
+Creating the initial setup of files and folders necessary for an R package is 
+incredibly easy with the usethis package! But! Before we begin, it's a good idea
+to think about what the name of the package should be. You can name it whatever
+you want, as long as it is not "base", "stats", "graphics", "utils", "tools",
+"methods", or any other default base R package. Generally, name it something that
+is pretty unique or specific to you. For this session, let's call it by your
+initials (or mine "lwj") and add "helpers"... so:
+
+```{r, eval=FALSE}
+usethis::create_package("lwj.helpers")
+```
+
+```{r, echo=FALSE}
+pkg_name <- file.path(tempdir(), "lwj.helpers")
+usethis::create_package(pkg_name)
+```
+
+A bunch of things are shown on your console. These are just some information
+that usethis is telling you that it has done. Otherwise, you now have the beginning
+of an R package! Pretty easy eh??
+
+## RStudio project options
+
+Before we get into the package details more, let's make some edits to the project
+options. We'll change the "General" options to all "No" and check that the "Build
+Tools" has correctly set the project as a package.
+
+## Files and folders
+
+There are many things that make an R package, well, an R package. One of them is
+the folder and file structure. All R packages must have certain files and folders
+in order to properly install. 
+
+**Required**:
+
+- `R/`: This folder contains the code that is available when the package is
+installed. R files should only be in this folder, hence why it is called the
+`R/` folder! Covered more below.
+- `DESCRIPTION`: Contains all the necessary information about the package, such
+as author, version number, name, brief description, and the package dependencies. 
+This file is more of the "machine-readable" metadata of the package. Covered more
+below.
+- `NAMESPACE`: Tells R which functions are available to use from the package. 
+At first, this file contains a command to list all functions that are in the `R/` 
+folder. We won't cover this file too much during this session.
+
+**Optional, but very helpful**:
+
+- `.Rbuildignore`: This file let's R know what to ignore when you install your
+package (for instance, the `.Rproj` file).
+- The `.Rproj` file: Let's RStudio know that the directory is an [RStudio
+Project](https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects)
+and that it is a package. Adds some package development functionality to RStudio.
+
+## Package metadata
+
+As mentioned above, there are two main files for providing package "metadata".
+Firstly, there is the `DESCRIPTION`, which is required for making a package.
+There are several data-fields in the file:
+
+```{r, echo=FALSE}
+withr::with_dir(pkg_name, desc::desc())
+```
+
+The important data-fields are the `Title`, `Authors`, `Description`, and
+`License` (get to this more later). Ok, let's open up the file and make the edits.
+
+> **Exercise** (3-5 min): Open the `DESCRIPTION` file and change the title, author,
+and description fields.
+
+The next optional, but important file to have as "human-readable metadata" is the 
+`README.md` file. Right now it doesn't exist. But we can create it using:
+
+```{r, eval=FALSE}
+usethis::use_readme_md()
+```
+
+```{r, echo=FALSE}
+withr::with_dir(pkg_name, {
+    capture.output(usethis::proj_set(pkg_name))
+    usethis::use_readme_md()
+})
+```
+
+The file looks like this:
+
+```{r, comment="", echo=FALSE}
+cat(readr::read_lines(file.path(pkg_name, "README.md")), sep = "\n")
+# cat(file = file.path(pkg_name, "README.md"))
+```
+
+The `README.md` file is a [markdown](https://rmarkdown.rstudio.com/authoring_basics.html) 
+file. We covered [markdown in a previous session](intro-rmarkdown.html).
+Generally, this file is a brief documentation containing a high level summary of
+what the package does, how to install it, and sometimes a simple example of how
+to use it. It should be written and targetted to other (potential) users, or
+yourself 9 months in the future (you'll thank yourself). Ok, this file right now 
+has some things that need to be changed. Let's edit it.
+
+> **Exercise** (5 min): Write a (fake) goal and description of the package in the
+`README.md` file. Remove the text in the "Installation" section for now. Delete
+the "Example" section.
+
+Next we want to add the license. The license is really important, even if you 
+never put your package online. The license gives information about how other people
+can use and modify your code. We won't cover the legal details about licensing,
+but for now, I would recommend using an [MIT License](https://en.wikipedia.org/wiki/MIT_License):
+
+```{r, eval=FALSE}
+# usethis::use_mit_license("<your name>")
+usethis::use_mit_license("Luke Johnston")
+```
+
+```{r, echo=FALSE}
+withr::with_dir(pkg_name, {
+    capture.output(usethis::proj_set(pkg_name))
+    usethis::use_mit_license("Luke Johnston")
+})
+```
+
+The contents of the LICENSE file are:
+
+```{r, comment="", echo=FALSE}
+cat(readr::read_lines(file.path(pkg_name, "LICENSE")), sep = "\n")
+```
+
+## Adding R code
+
+Now for the main reason you have created a package! To put your R code in it so
+you can use the code easily in other scripts! To create an R script in the package,
+use:
+
+```{r, eval=FALSE}
+# usethis::use_r("<filename>")
+usethis::use_r("addition")
+```
+
+```{r, echo=FALSE}
+# usethis::use_r("<filename>")
+withr::with_dir(pkg_name, {
+    capture.output(usethis::proj_set(pkg_name))
+    usethis::use_r("addition")
+})
+```
+
+An R script will open in RStudio. Now, let's add a function to it. We'll use a
+very simple function in file:
+
+```{r}
+addition <- function(x, y) {
+    x + y
+}
+```
+
+Now save. To test that it works, now we run the next command:
+
+```{r, eval=FALSE}
+devtools::load_all()
+```
+
+Or type "Ctrl-Shift-L". In the console, test if the function works:
+
+```{r, comment="#>"}
+addition(2, 2)
+```
+
+It should work! We'll add some more functions and play around with the R scripts.
+
+## Building and installing
+
+Now, the final step! Let's build and install the package! When you feel your package
+is ready, time to install it for you to use with `library()`! And you can install it
+by using...:
+
+```{r, eval=FALSE}
+devtools::install()
+```
+
+Or by typing "Ctrl-Shift-B". It does some quick checks, and if all goes well, you
+now have installed your package!
+
+## Other useful functions
+
+If you end up developing R packages often, I would recommend running this command:
+
+```{r, eval=FALSE}
+usethis::use_usethis()
+```
+
+This let's you add some code to automatically load when you open up R, to make it
+easier to continue your package development!
+
+<!--
+> NOTE: Try to incorporate this content in or maybe make a new session out of it.
+### Objectives
+
+1. To learn how functions are structured and created.
+1. To learn and apply the typical workflow for creating functions in packages
+(and in general).
+1. To properly document and name functions so you don't forget what they do! 
+
+**At the end of this session you will be able:**
+
+- Create a function with several arguments.
+- Add and fill out roxygen documentation to the function.
+    - Using the "Code"->"Insert Roxygen Skeleton" (`Ctrl-Shift-Alt-R`)
+    - Then creating the documentation using `devtools::
+- Cycle between testing the function out in the `@example` section and developing 
+the function.
+    - Using `devtools::load_all()` (`Ctrl-Shift-L`).
+    - Run the code in the `@example` by typing `Ctrl-Enter`.
+    - Repeat until the function does what you want!
+
+**Ultimately**, I hope you will try to create a function from your own code by
+the end of this session!
+
+## Resources for learning and help
+
+- Generally, the [R Packages](http://r-pkgs.had.co.nz/) book is great for
+anything related to making packages.
+- [`R/` chapter in R Packages](http://r-pkgs.had.co.nz/r.html) book (online and
+free).
+- [Documenting functions chapter](http://r-pkgs.had.co.nz/man.html) in R
+Packages book.
+- [Functions chapter in R for Data Science](https://r4ds.had.co.nz/functions.html)
+book, also online and free.
+- [Intro to functions](https://swcarpentry.github.io/r-novice-inflammation/02-func-R/)
+from [Software Carpentry](https://software-carpentry.org/).
+- [STAT545](http://stat545.com/block011_write-your-own-function-01.html)
+on writing functions from University of British Columbia, Canada.
+- Very advanced (for those interested) details about functions from [Advanced
+R](http://adv-r.had.co.nz/Functions.html) book (again, online and free).
+
+## Initial setup
+
+First we need to create a package layout and create an R script. See the
+[Package Creation](pkg-creation.html) session for more details on this.
+
+1. Create a package using `usethis::create_package("<pkgname>")`
+1. Add an R script using `usethis::use_r("<scriptname>.R")`.
+
+## All actions in R are functions
+
+The `+` is a function, `mean()` is a function, `[]` is a function... everything 
+that does something is called a function in R. So to add 1 with 1:
+
+```{r}
+1 + 1
+```
+
+... is a function that takes 1 and adds 1 to it. It is actually a short form for:
+
+```{r}
+`+`(1, 1)
+```
+
+When creating a function, there is always the basic structure of:
+
+1. Name of the function (e.g. `mean`).
+2. The function call using `function()` being assigned `<-` to the name. This
+tells R that the name is a function object... that it does some action.
+3. The arguments within the function call, `function(arg1, arg2, arg3)`. These
+are the options given to the function (e.g. `sum(arg1, arg2)`).
+4. The body of the function, that takes the arguments, if any, does some action,
+and finishes by outputting some result or object at the end (using `return()`).
+
+There is no minimum or maximum number of arguments you can provide for a function.
+E.g. you can have zero arguments or you can have 100s. To keep things sane, try
+to keep the number of arguments low, like not more than 4 or 5.
+
+So, the structure is:
+
+```{r, eval=FALSE}
+name <- function(arg1, arg2) {
+    # body of function
+    return(output)
+}
+```
+
+... and an example:
+
+```{r}
+add_nums <- function(num1, num2) {
+    added <- num1 + num2
+    return(added)
+}
+```
+
+You can use the new function by running the above code and writing out your new 
+function, with arguments to give it.
+
+```{r}
+add_nums(1, 2)
+```
+
+The function name is fairly good... `add_nums` can be read as "add numbers". But
+we need to also add some formal documentation to the function. Using the "Insert
+Roxygen Skeleton" in the "Code" menu list (or by typing `Ctrl-Shift-Alt-R`) you 
+can add template documentation right above the function. It looks like:
+
+```{r}
+#' Title
+#'
+#' @param num1 
+#' @param num2 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+add_nums <- function(num1, num2) {
+    added <- num1 + num2
+    return(added)
+}
+```
+
+In the `Title` area, this is where you type out a brief sentence or several words 
+that describe the function. Creating a new paragraph below this line allows you 
+to add a more detailed description. The other items are:
+
+- `@param num` lines are to describe what each argument is for.
+- `@return` describes what output the function provides. Is it a data.frame? A plot? 
+What else does the output give?
+- `@export` this is to tell R that this function should be accessible to the user
+of your package. Keep it in for now.
+- `@examples` lines below this are used to show examples of how to use the function.
+This is also the area where you write and test that the function does what you want.
+You can run code here as if it was regular R code and not a commented out code by
+using `Ctrl-Enter`.
+
+```{r}
+#' Add two numbers together.
+#'
+#' This is just an example function to show how to create one.
+#'
+#' @param num1 A number here.
+#' @param num2 A number here.
+#'
+#' @return Returns the sum of the two numbers.
+#' @export
+#'
+#' @examples
+#'
+#' add_nums(1, 1)
+add_nums <- function(num1, num2) {
+    added <- num1 + num2
+    return(added)
+}
+```
+
+Now, when we run `devtools::document()` (or `Ctrl-Shift-D`), a file will be added
+to the `man/` folder. Now, when you type out `?add_nums` in the console, the help
+documentation will pop up on the "Help" tab.
+
+Ok, let's get to something a bit more interesting. A common thing that people do
+(at least I do) is to create a similar plot on different variables and datasets.
+So this is a great example of using a function to simplify your code. We can also
+cover... package/function dependencies! Since we will use ggplot2 to make the plot,
+we need some way to tell R that the functions come from ggplot2... It's **very bad
+practice** to use `library()` in your function and in your package. A function from
+usethis comes to the rescue! Use `usethis::use_package("ggplot2")` in the
+console. Some text will appear saying that "ggplot2 has been added to DESCRIPTION" 
+and that "please refer to functions using ggplot2::fun". So let's do that!
+
+```{r}
+scatter_plot <- function(data, xvar, yvar) {
+    graph <- ggplot2::ggplot(data = data, ggplot2::aes(x = xvar, y = yvar)) +
+        ggplot2::geom_point()
+    return(graph)
+}
+```
+
+Ok, we have the base for making a scatter plot. But! There are few things to talk
+about here first. First, ggplot2 will be confused by the `x = xvar` since it will
+think[^nse] you are asking for the `xvar` column in the dataset. So, we need to change
+`aes` to `aes_string` to force ggplot2 to read `xvar` as a character string that
+is the name of the column you want to plot. Next, it is useful in many cases to 
+put a dot before your function arguments to differentiate your function arguments
+from other R objects. Let's also add the Roxygen documentation. So:
+
+[^nse]: The reason it won't work is because ggplot2 is using what is called
+non-standard evaluation (NSE; check out
+[here](https://cran.r-project.org/web/packages/lazyeval/vignettes/lazyeval.html)
+or [here](https://dplyr.tidyverse.org/articles/programming.html) for more
+indepth look at what non-standard evaluation is). Because ggplot2 uses NSE, you
+will have to do things slightly differently, hence using `aes_string`.
+
+```{r}
+#' Create a scatter plot of two variables.
+#'
+#' @param .data The dataset.
+#' @param .xvar The x-axis variable.
+#' @param .yvar The y-axis variable.
+#'
+#' @return A scatter plot.
+#' @export
+#'
+#' @examples
+#'
+#' scatter_plot(swiss, "Education", "Agriculture")
+scatter_plot <- function(.data, .xvar, .yvar) {
+    graph <- ggplot2::ggplot(data = .data, ggplot2::aes_string(x = .xvar, y = .yvar)) +
+        ggplot2::geom_point()
+    return(graph)
+}
+```
+
+```{r, echo=FALSE}
+scatter_plot(swiss, "Education", "Agriculture")
+```
+
+Now we do `devtools::load_all()` (`Ctrl-Shift-L`) and run the code in the
+example (`Ctrl-Enter`). A quick note: Running code in the `@examples` section *only*
+works if you are in an R package project (the RStudio `.Rproj` file). If you are
+not in an R package, you can instead include the code to run the function below
+your new function, like so:
+
+```{r, eval=FALSE}
+#' Create a scatter plot of two variables.
+#'
+#' @param .data The dataset.
+#' @param .xvar The x-axis variable.
+#' @param .yvar The y-axis variable.
+#'
+#' @return A scatter plot.
+#' @export
+#'
+#' @examples
+#'
+scatter_plot <- function(.data, .xvar, .yvar) {
+    graph <- ggplot2::ggplot(data = .data, ggplot2::aes_string(x = .xvar, y = .yvar)) +
+        ggplot2::geom_point()
+    return(graph)
+}
+scatter_plot(swiss, "Education", "Agriculture")
+```
+
+Now, if we want to add some theme items, all graphs created from this function 
+will get the new theme and appearance!
+
+```{r}
+#' Create a scatter plot of two variables.
+#'
+#' @param .data The dataset.
+#' @param .xvar The x-axis variable.
+#' @param .yvar The y-axis variable.
+#'
+#' @return A scatter plot.
+#' @export
+#'
+#' @examples
+#'
+#' scatter_plot(swiss, "Education", "Agriculture")
+scatter_plot <- function(.data, .xvar, .yvar) {
+    graph <- ggplot2::ggplot(data = .data, ggplot2::aes_string(x = .xvar, y = .yvar)) +
+        ggplot2::geom_point() +
+        ggplot2::theme_minimal()
+    return(graph)
+}
+```
+
+```{r, echo=FALSE}
+scatter_plot(swiss, "Education", "Agriculture")
+```
+
+If you want to make sure that who ever uses your function will not use a wrong 
+argument, you can use "defensive programming" via the `stopifnot()` function.
+This forces the code to only work if `xvar` and `yvar` are character (e.g. `"this"`)
+argument.
+
+```{r}
+#' Create a scatter plot of two variables.
+#'
+#' @param .data The dataset.
+#' @param .xvar The x-axis variable.
+#' @param .yvar The y-axis variable.
+#'
+#' @return A scatter plot.
+#' @export
+#'
+#' @examples
+#'
+#' scatter_plot(swiss, "Education", "Agriculture")
+scatter_plot <- function(.data, .xvar, .yvar) {
+    stopifnot(is.character(.xvar), is.character(.yvar))
+    graph <- ggplot2::ggplot(data = .data, ggplot2::aes_string(x = .xvar, y = .yvar)) +
+        ggplot2::geom_point() +
+        ggplot2::theme_minimal()
+    return(graph)
+}
+```
+
+## Exercise: Make your own function!
+
+Using this workflow, try to create, document, and test your own function! If you
+have some code that you already use repeatedly by copy and pasting, try to convert
+that code into a function. If you don't have your own code, try converting these
+pieces of code into their own function:
+
+```{r, eval=FALSE}
+# Code chunk 1:
+one_species <- iris[iris['Species'] == "setosa", ]
+sepal_one_species <- one_species[c("Sepal.Length", "Sepal.Width")]
+means_sepal_one_species <- sapply(sepal_one_species, mean)
+means_sepal_one_species
+```
+
+## Other notes
+
+There are a few other things to consider. In R there are different "methods" of
+functions. This is way above what is necessary for this session, but if you are
+curious [this website](http://adv-r.had.co.nz/S3.html) has a great explanation
+of the different methods (e.g. S3 methods). Be warned, the website is fairly
+advanced!
+
+You can always look at the contents of all functions in R. So an example of an
+S3 function:
+
+```{r}
+# Generic S3
+print
+# Printing for data.frames
+print.data.frame
+```
+-->

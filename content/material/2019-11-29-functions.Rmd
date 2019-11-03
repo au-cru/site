@@ -1,0 +1,248 @@
+---
+title: "Creating your own functions in R"
+author:
+  - "Luke W. Johnston"
+date: "2019-11-29"
+categories:
+  - Beginner-Intermediate
+  - R
+  - Code-along
+tags:
+  - functions
+  - productivity
+  - efficiency
+  - tidy code
+  - don't repeat yourself
+---
+
+> NOTE: This is still in development.
+
+```{r setup, echo=FALSE}
+source(here::here("R/utils-for-content.R"))
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+## Resources for learning and help
+
+[Here for resources](/more-info/#resources)
+
+
+## Session content
+
+> This is the code used during the session. I've added some comments and more 
+explanation to the code.
+
+### All actions in R are functions
+
+The `+` is a function, `mean()` is a function, `[]` is a function... everything 
+that does something is called a function in R. So this to add 1 with 1:
+
+```{r}
+1 + 1
+```
+
+... is a function that takes 1 and adds 1 to it. Functions have the basic 
+structure of:
+
+- the name of the new function `add_nums <-`
+- the function to create the new function `function()`, along with the arguments
+`num1`, `num2`
+- the code to do the action of the function, everything between `{}`
+    - should have a `return()` at the bottom that says what the function creates
+
+```{r}
+add_nums <- function(num1, num2) {
+    stopifnot(is.numeric(num1), is.numeric(num2))
+    added <- num1 + num2
+    return(added)
+}
+```
+
+You can use the new function by running the above code and writing out your new 
+function, with arguments to give it.
+
+```{r}
+add_nums(1, 2)
+add_nums(c(1:10), 2)
+# Two numbers should be the same length vector (same number of numbers) or one
+# should be only one number.
+add_nums(c(1:10), c(1, 4, 6))
+add_nums(c(1:10), c(11:20))
+```
+
+There are a few things to consider. In R there are different "methods" of functions.
+This is way above what is necessary for this session, but if you are curious
+[this website](http://adv-r.had.co.nz/S3.html) has a great explanation of the
+different methods (e.g. S3 methods). Be warned, the website is fairly advanced!
+
+You can always look at the contents of all functions in R. So an example of an
+S3 function:
+
+```{r}
+# Generic S3
+print
+# Printing for data.frames
+print.data.frame
+```
+
+Ok, let's get to something a bit more interesting. Usually we create plots that
+are more or less the same each time, but with different variables or data.
+So this is a great example of using a function to simplify your code. Let's load
+up the ggplot2 package for plotting and the
+[gapminder](https://github.com/jennybc/gapminder) dataset.
+
+```{r}
+library(ggplot2)
+library(gapminder)
+head(gapminder)
+```
+
+Let's plot year by life expectancy:
+
+```{r}
+ggplot(gapminder, aes(x = year, y = lifeExp)) +
+    geom_smooth()
+```
+
+What if we wanted to see another plot by pop over time:
+
+```{r}
+ggplot(gapminder, aes(x = year, y = pop)) +
+    geom_smooth()
+```
+
+Or another plot... and so on. This starts getting a bit tedious, as you are just
+copying and pasting. There is a better way! Convert it into a function! The
+typical process for converting code into a function is first to write the code
+and make sure it works. Then wrap it in a function. And start replacing the
+variable names with the arguments. So:
+
+```{r, eval=FALSE}
+# First this:
+ggplot(gapminder, aes(x = year, y = pop)) +
+    geom_smooth()
+
+# Then this:
+plot_smooth <- function() {
+    plot <- ggplot(gapminder, aes(x = year, y = pop)) +
+        geom_smooth()
+    return(plot)
+}
+
+# Then lastly this:
+plot_smooth <- function(data, xvar, yvar) {
+    plot <- ggplot(data, aes(x = xvar, y = yvar)) +
+        geom_smooth()
+    return(plot)
+}
+```
+
+But, this function won't work! That's because there is a tricky bit that you
+will quickly encounter in R... And that is called non-standard evaluation (NSE; check
+out [here](https://cran.r-project.org/web/packages/lazyeval/vignettes/lazyeval.html)
+or [here](https://dplyr.tidyverse.org/articles/programming.html) for more indepth
+look at what non-standard evaluation is). Because ggplot2 uses NSE, you will
+have to do things slightly differently. The `aes` in ggplot2 uses NSE. So you have 
+to use `aes_string` instead.
+
+```{r}
+plot_smooth <- function(data, xvar, yvar) {
+    plot <- ggplot(data, aes_string(x = xvar, y = yvar)) +
+        geom_smooth()
+    return(plot)
+}
+plot_smooth(gapminder, "year", "lifeExp")
+plot_smooth(gapminder, "year", "pop")
+```
+
+If you want to make sure that who ever uses your function will not use a wrong 
+argument, you can use "defensive programming" via the `stopifnot()` function.
+This forces the code to only work if `xvar` and `yvar` are character (e.g. `"this"`)
+argument.
+
+```{r}
+plot_smooth <- function(data, xvar, yvar) {
+    stopifnot(is.character(xvar), is.character(yvar))
+    plot <- ggplot(data, aes_string(x = xvar, y = yvar)) +
+        geom_smooth()
+    return(plot)
+}
+```
+
+This NSE evaluation also happens in a popular package called dplyr. If we wanted
+to do a common analysis or data wrangling like so:
+
+```{r}
+library(dplyr)
+gapminder %>% 
+    select(continent, year, pop) %>% 
+    group_by(continent, year) %>% 
+    summarise(mean(pop))
+```
+
+... and do this again but change `pop` to another variable, we can create a function.
+
+```{r}
+# First:
+gapminder %>% 
+    select(continent, year, pop) %>% 
+    group_by(continent, year) %>% 
+    summarise(mean(pop))
+
+# Then:
+mean_by_continent <- function() {
+    by_continent <- gapminder %>%
+        select(continent, year, pop) %>%
+        group_by(continent, year) %>%
+        summarise(mean(pop))
+    return(by_continent)
+}
+
+# Finally:
+mean_by_continent <- function(data, variable) {
+    by_continent <- data %>%
+        select(continent, year, variable) %>%
+        group_by(continent, year) %>%
+        summarise(mean(variable))
+    return(by_continent)
+}
+```
+
+... then use dplyr's standard evaluation functions, which are usually the function
+with a `_at` or `_if` or other variation of that at the end...
+
+```{r}
+mean_by_continent <- function(data, variable) {
+    by_continent <- data %>%
+        select_at(c("continent", "year", variable)) %>%
+        group_by(continent, year) %>%
+        # This needs to change order a bit, since the mean will be applied to
+        # the variable.
+        summarise_at(variable, mean)
+    return(by_continent)
+}
+```
+
+And we can use it:
+
+```{r}
+mean_by_continent(gapminder, "lifeExp")
+mean_by_continent(gapminder, "pop")
+mean_by_continent(gapminder, c("pop", "lifeExp"))
+```
+
+Send the output to create a table!
+
+```{r}
+mean_by_continent(gapminder, "lifeExp") %>% 
+    head() %>% 
+    knitr::kable(caption = "Table caption here")
+```
+
+We can even use both our functions together!
+
+```{r}
+mean_by_continent(gapminder, "lifeExp") %>% 
+    plot_smooth("year", "lifeExp")
+```
+

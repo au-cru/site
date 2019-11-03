@@ -1,0 +1,12 @@
+type: "code-along"
+name: "First steps in creating R packages"
+description: >
+  Have a few functions that you use over and over again? Convert those simple
+  functions and scripts into an easily reusable R package. Learn how to take the
+  first steps towards making the R package.
+location: "AU Library, Main Floor, Nobelparken, Universitetsparken 461, 8000 Aarhus"
+start_date: 2020-05-08T13:00:00+01:00
+end_date: 2020-05-08T14:15:00+01:00
+level: "Intermediate"
+software: ["R"]
+link: "material/2020-05-08-create-packages/"

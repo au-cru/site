@@ -1,0 +1,375 @@
+---
+title: "Data visualization with ggplot2, part 1"
+author:
+  - "Sara Tomiolo"
+  - "Luke W. Johnston"
+date: "2019-11-01"
+categories:
+  - Beginner
+  - R
+  - Code-along
+tags:
+  - ggplot2
+  - data visualization
+---
+
+```{r setup, echo=FALSE}
+source(here::here("R/utils-for-content.R"))
+```
+
+## Preparation
+
+Please install the ggplot2 package:
+
+```{r, eval=FALSE}
+install.packages("ggplot2")
+```
+
+## Objectives
+
+1. To become aware of the powerful features of ggplot2.
+2. To learn about some of the fundamentals of easily creating amazing graphics.
+3. To know about some resources to continue learning.
+
+At the end of this session, you will achieve this objective by creating a
+fairly simple, visually-appealing graph that shows:
+
+- At least three data values, ie. "aesthetics" or `aes()`, such as what to put
+on the x-axis, the y-axis, and or using `colour` or `size`.
+- Two layers, ie "geometries" or `geom_`, such as points, lines, or
+boxplots.
+- That has clearly labelled x and y axes, ie. `labs()`.
+- That has some changes to the look and feel of the plot, ie. `theme()`, so that
+it is publication ready.
+
+**Resources** for continuing learning and help are available on
+the [More Info](/more-info/#resources) page.
+
+## Best practices for creating graphs in R
+
+It is relatively easy to create complex graphs in R, but all the features available can become quite distracting and lead to overly complicated and confusing graphs.
+
+When creating graphs there are a few golden rules that should be kept in mind:
+- When possible use raw data
+
+- Avoid / remove unnecessary information
+
+- Use colour in a meaningful way
+
+<!-- Quickly go over RStudio IDE in relation to plotting -->
+<!-- Get them to open two R scripts, name and save as "code-along" and "exercise" -->
+
+## Create a project
+
+A simple way to create a self-contained project in R is to make use of the function "Projects" in R Studio.
+Create a new project, name it "Code_along_sessions" and create two R scripts in it.
+
+## Quickly get familiar with data to plot
+
+For this session we will be using the `CO2` dataset. Here is some code to get a
+sense of the data.
+
+```{r}
+# Variables
+names(CO2)
+
+# Quick summary
+summary(CO2)
+
+# Content
+str(CO2)
+```
+
+### Exercise: Choose a dataset and check it out
+
+There are several exercises in this session. Choose one of the below datasets
+and use that dataset for all later exercises.
+
+For complete R beginners, use:
+
+- `mpg`
+
+For more confident R users, use one of these:
+
+- `economics`
+- `diamonds`
+- `msleep`
+- `txhousing`
+
+Check out the contents of the dataset you choose using:
+
+```{r, eval=FALSE}
+# variable names of dataset
+names(___)
+
+# contents of dataset
+str(___)
+
+# summary of dataset
+summary(___)
+```
+
+## Basic structure of using ggplot2
+
+ggplot2 uses the "Grammar of Graphics" (gg). This is a powerful approach to
+creating plots because it provides a consistent way of telling ggplot2 what to
+do. There are at least three aspects to using ggplot2 that relate to the grammar:
+
+- Aesthetics, `aes()`: How data should be mapped to the plot. Includes what to
+put on x axis, on the y axis, colours, size, etc.
+- Geometries, `geom_`: The visual representation of the data, as a layer. This
+tells ggplot2 how to show the aesthetics. Includes points, lines, boxes, etc.
+- Themes, `theme_` or `theme()`: How the plot should look like. Includes the
+text, axis lines, etc.
+
+To maximise the power of ggplot2, make heavy use of autocompletion. You can do 
+this by typing, for instance, `geom_` and then hitting the TAB key to see a list
+of all the geoms. Or after typing `theme(`, hit TAB to see all the options inside
+theme.
+
+## Visualise 1-dimensional (x axis) data
+
+There are many ways of showing plotting continuous (e.g. weight, height)
+variables in ggplot2. For discrete (e.g. terrain type: mountain, plains, or sex:
+woman, man) variables, there is really only one way.
+
+```{r}
+library(ggplot2)
+
+# Continuous
+ggplot(CO2, aes(x = conc)) +
+    geom_density()
+
+# Discrete
+ggplot(CO2, aes(x = Treatment)) +
+    geom_bar()
+```
+
+### Exercise: One variable plots
+
+Time: 10 min
+
+```{r, eval=FALSE}
+# put name of dataset below
+names(___)
+
+# use dataset with one continuous variable
+ggplot(___, aes(x = ___)) +
+    # finish the geom to create either a histogram, freqpoly, or density layer
+    ___
+    
+# use dataset with one discrete variable
+ggplot(___, aes(x = ___)) +
+    # finish the geom to create a bar layer
+    ___
+```
+
+## Visualise 2-dimensional (x and y axis) data
+
+You can of course include data on the y axis too! This is usually what you use
+graphs for! There are many more types of "geoms" to use for having data on both
+axes, and which one you choose depends on what you are trying to show and what the
+data is like. Usually you put the variable that you can influence (the
+independent variable) on the x axis and the variable that responds (the
+dependent variable) on the y axis.
+
+```{r}
+# Using continuous data
+co2_plot_nums <- ggplot(CO2, aes(x = conc, y = uptake))
+    
+# Standard scatter plot
+co2_plot_nums + geom_point()
+
+# Connect all the data with a line
+co2_plot_nums + geom_line()
+
+
+# Connects data as they appear in the dataset
+co2_plot_nums + geom_path()
+
+# Runs a smoothing line with confidence interval
+co2_plot_nums + geom_smooth()
+
+# Using mixed data
+co2_plot_mixed <- ggplot(CO2, aes(x = Type, y = uptake))
+
+# Standard boxplot
+co2_plot_mixed + geom_boxplot()
+
+# Bar plot, showing total sum of uptake
+co2_plot_mixed + geom_col()
+
+# Better than boxplot, show the actual data!
+co2_plot_mixed + geom_jitter()
+
+# Give more distance between groups
+co2_plot_mixed + geom_jitter(width = 0.2)
+
+# We can overlap multiple geometries
+co2_plot_mixed + 
+  geom_boxplot() +
+  geom_jitter(width = 0.2)
+```
+
+
+### Exercise: Two variable plots
+
+Time: 8 min
+
+```{r, eval=FALSE}
+# use dataset with two continuous variables
+ggplot(___, aes(x = ___, y = ___)) +
+    # chose an appropriate geom to represent the data 
+    ___
+    
+# use dataset with one continuous and one discrete variable
+ggplot(___, aes(x = ___, y = ___)) +
+    # finish the geom to create either a boxplot, jitter
+    ___
+```
+
+## Using a third (or more) variable
+
+You can also add an additional dimension to the data by using other elements
+(colours, size, transparency, etc) of the graph to represent another variable.
+This is *NOT* the same thing as using 3-dimensionl (aka x, y, z axis) plots,
+which should be avoided unless absolutely necessary! Using colours to represent
+discrete groups is useful, or for using shading to represent a range in
+continuous values.
+
+```{r}
+co2_plot_colour <- ggplot(CO2, aes(x = conc, y = uptake, colour = Treatment)) 
+
+# Scatter plot
+co2_plot_colour + geom_point()
+
+# Line plot
+co2_plot_colour + geom_line()
+
+# Smoothing
+co2_plot_colour + geom_smooth()
+```
+
+Or add a fourth variable.
+
+```{r}
+# Scatter plot
+co2_plot_colour + geom_point(aes(shape = Type))
+
+# Scatter plot jitter
+co2_plot_colour + geom_jitter(aes(alpha = Type))
+ #discuss the warning here: alpha better used for continuous variables
+
+# Another line plot
+co2_plot_colour + geom_path(aes(linetype = Type))
+
+# Smoothing plot
+co2_plot_colour + geom_smooth(aes(linetype = Type))
+```
+
+And it's easy to add another geoms!
+
+```{r}
+# Multiple layers
+co2_plot_colour + 
+    geom_point(aes(shape = Type)) +
+    geom_line(aes(linetype = Plant))
+
+
+```
+
+### Exercise: Three variable plots
+
+Time: 8 min
+
+```{r, eval=FALSE}
+# use dataset with either:
+# - two continuous variables and one discrete
+# - three continuous variables
+# for last argument, choose either size, colour, alpha
+ggplot(___, aes(x = ___, y = ___, ___ = ___)) +
+    # finish the geom to create either a point or line layer
+    ___
+    
+```
+
+## Axis titles and the theme
+
+Let's get to making the plot prettier. There are many many options to customise
+the plot using the `theme()`. 
+
+```{r}
+co2_plot_prettying <-
+    ggplot(CO2, aes(
+        x = conc,
+        y = uptake,
+        colour = paste(Treatment, Type)
+        )
+    ) +
+    geom_point() +
+    geom_smooth()
+
+# Some pre-defined themes
+co2_plot_prettying + theme_bw()
+co2_plot_prettying + theme_minimal()
+```
+
+```{r, fig.width=7}
+pretty_plot <- co2_plot_prettying +
+    theme_classic() +
+    scale_color_brewer(name = "Treatment and origin", palette = "Dark2") +
+    # Find this information in ?CO2
+    labs(x = "CO2 concentration (mL/L)",
+         y = "CO2 update rate (umol/m2)") +
+    theme(
+        # all axis lines, must use element_line
+        axis.line = element_line(colour = "grey50", size = 0.5),
+        # all axis text, must use element_text
+        axis.text = element_text(family = "sans"),
+        # all axis tick marks, use element_blank to remove
+        axis.ticks = element_blank()
+    )
+pretty_plot
+```
+
+### Exercise: Change theme items of the plot
+
+Time: 10 min
+
+```{r, eval=FALSE}
+# use dataset with two continuous variables
+ggplot(___, aes(x = ___, y = ___)) +
+    # finish the geom to create either a point, smooth, or line layer
+    ___ +
+    # choose either a minimal, dark, light, or classic defined theme
+    ___ +
+    theme(
+        # choose colours such as red, blue, black, grey, yellow, green
+        # choose size from 2 to 8
+        panel.grid.major = element_line(colour = ___, size = ___),
+        # choose family such as sans, serif, Arial, Times New Romans
+        axis.text = element_text(colour = ___, size = ___, family = ___)
+    )
+```
+
+## Saving the plot
+
+Now, if you want to save the plot, you can do that pretty easily!
+
+```{r, eval=FALSE}
+ggsave("plant_co2_uptake.pdf", pretty_plot, width = 7, height = 5)
+```
+
+## Exercise: Putting it all together
+
+Time: Until end of session
+
+1. Create a ggplot, choosing three variables for the `aes()`, one for:
+    - the `x`-axis
+    - the `y`-axis
+    - either `size`, `colour`, `alpha`, `stroke`, or `fill`
+2. Create two `geom_` layers. The geom you use will depend on the variables and
+the specific `aes()` you choose above.
+3. Properly label the x and y axis with `labs()`.
+4. Choose a pre-defined theme (`theme_`) and make two changes to it using `theme()`.
+5. Save the plot with `ggsave()`.

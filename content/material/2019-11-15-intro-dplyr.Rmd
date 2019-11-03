@@ -1,0 +1,379 @@
+---
+title: "Data wrangling with dplyr, part 1"
+author:
+  - "Sara Tomiolo"
+  - "Luke W. Johnston"
+date: "2019-11-15"
+categories:
+  - Beginner
+  - R
+  - Code-along
+tags:
+  - dplyr
+  - data wrangling
+  - data management
+---
+
+> NOTE: This is still in development.
+
+```{r setup, echo=FALSE}
+source(here::here("R/utils-for-content.R"))
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+```{r, eval=FALSE}
+install.packages("dplyr")
+```
+
+### Objectives
+
+1. To learn the difference between "messy" and "tidy" data and see the advantages of using data that are consistently structured.
+1. To perform simple data transformations and create summaries.
+1. To get to know the tools that help tidying up and reshaping the data.
+    
+**At the end of this session you will be able:**
+
+1. To write code using the `%>%` operator.
+1. To perform simple data transformations using dplyr function `mutate()`.
+1. To select variables and observations to work with using dplyr functions `filter()`and `select()`.
+1. To order data by variable using dplyr function `arrange()`.
+1. To provide a simple data summary using dplyr functions `group_by()` and `summarise()`.
+1. To change the structure of the data using tidyr functions `gather()` (and optionally `spread()`).
+
+## Resources for learning and help
+
+[Here for resources](/more-info/#resources)
+
+## Quickly look over the data we will use
+
+We'll be using a very simple dataset that is built-in to the tidyr package. This dataset contains data on tuberculosis cases in Afghanistan, Brazil, and China from 1999 and 2000.
+
+```{r}
+library(dplyr)
+
+names(table1)
+
+str(table1)
+
+summary(table1)
+
+# a tibble is a modified data.frame, making it slightly easier to use
+as_tibble(table1)
+```
+
+## Exercise: Choose and look at a dataset
+
+Create an `exercise.R` file (we will have done that in class) and put these code into the file. Then choose one of the below datasets that you will use for **only the exercises**:
+
+- `airquality` (*recommended for complete beginners*)
+- `swiss` (*recommended for complete beginners*)
+- `population`
+- `storms`
+- `starwars`
+
+Copy the code below, replacing the `___` with the relevant dataset. This format is used throughout the session.
+
+```{r, eval=FALSE}
+# load the packages
+library(dplyr)
+library(tidyr)
+
+# variables
+names(___)
+
+# general contents
+str(___)
+
+# using the dplyr function
+glimpse(___)
+
+# quick summary
+summary(___)
+
+# compare a data.frame with a tibble
+as.data.frame(___)
+as_tibble(___)
+
+# convert your dataset into a tibble
+___ <- as_tibble(___)
+```
+
+## "Messy" vs. "tidy" data
+
+**The dataset is tidy when:**
+
+- Each variable has its own column.
+- Each observation has its own row
+- Each value has its own cell
+
+```{r}
+library(tidyr)
+library(dplyr)
+```
+
+Look at the structure of the toy tidyr datasets `table1`, `table3`, and `table4a`. Which is tidy? 
+
+```{r}
+table1
+table3
+table4a
+```
+
+More or less, `table1` is tidy while the others are not. That's because in `table1`, each column has specific and unique information and each row represents a single observation from a single location at a single point in time.
+
+**Benefits of tidy data and tidy code**:
+
+1. Time spent preparing your data at the beginning can save hours of frustration in the long run.
+2. "Tidy data" provides a concept and the package tidyr provides the functions for this work.
+3. Tibbles makes datasets efficient to work with.
+4. dplyr provides fast and intuitive data processing functions.
+    - For *very very large* datasets, the data.table package is very fast and powerful
+5. The `%>%` pipe operator can help clarify complex data processing workflows.
+
+## Pipe operator: `%>%`
+
+- This operator allows you to pipe the output from one function to the input of another function.
+- Instead of nesting functions (reading from the inside to the outside), the idea of piping is to read the functions from left to right.
+- The `%>%` pipe operator can help clarify complex data processing workflows.
+
+```{r piping}
+# normal R way of nesting functions
+head(glimpse(table1))
+
+# the pipe way of linking functions
+table1 %>% glimpse() %>% head()
+```
+
+## Transforming or adding variables: `mutate()`
+
+The `mutate()` function adds or replaces a variable/column in a dataset. To add
+
+```{r}
+# Replace an existing variable
+table1 %>%
+    mutate(population = population / 1000000)
+
+# Or create a new variable based on a condition
+table1 %>%
+    mutate(after_2000 = if_else(year >= 2000, "yes", "no"))
+
+# Create or replace multiple variables by using the ","
+table1 %>%
+    mutate(new_column = "only one value",
+           population = population / 1000000)
+
+# Create a new variable using existing variables and save a new dataframe
+table1_rate <- table1 %>%
+    mutate(rate = (cases / population) * 100000)
+table1_rate
+```
+
+## Exercise: Piping, transforming, and adding
+
+Time: 10 min
+
+```{r, eval=FALSE}
+# explore the structure of the data
+names(___)
+
+# pipe the data into mutate function and:
+new_dataset <- ___ %>% # dataset
+    mutate(
+        # 1. create a new variable
+        ___ = ___,
+        # 2. transform/replace an existing variable
+        ___ = ___,
+        # 3. create a new variable using a conditional
+        ___ = if_else(___, TRUE, FALSE)
+    )
+new_dataset
+```
+
+## Select specific data by the variables: `select()`
+
+```{r}
+# select columns/variables by name, without quotes
+table1_rate %>%
+    select(country, year, rate)
+
+# to *not* select a variable, us minus (-)
+table1_rate %>%
+    select(-country)
+
+# when you have many variables with similar names, use "matching" functions
+table1_rate %>%
+    select(starts_with("c"), ends_with("e"), contains("pop"))
+```
+
+## Filter/subset the data by row based on values and conditions: `filter()`
+
+**Warning**: Filter using logic... and humans are very bad at logic... Make sure to be very certain that you think your logic is what the code reads as logic... Lots of mistakes can be made at this stage! Especially with complex logic situations.
+
+```{r}
+# when country is equal to
+table1_rate %>%
+    filter(country == "Brazil")
+
+# when country is *not* equal to
+table1_rate %>%
+    filter(country != "Brazil")
+
+# when year is equal to
+table1_rate %>%
+    filter(year == 1999)
+
+# Or when year is equal to or more than
+table1_rate %>%
+    filter(year >= 1999)
+
+# when year is 1999 *and* country is Brazil
+table1_rate %>%
+    filter(year == 1999 & country == "Brazil")
+
+# when year is 1999 *or* country is Brazil
+table1_rate %>%
+    filter(year == 1999 | country == "Brazil")
+```
+
+## Sorting/(re)arranging your data by column/variable: `arrange()`
+
+```{r}
+# ascending order by rate
+table1_rate %>%
+    arrange(rate)
+
+# descending order by rate
+table1_rate %>%
+    arrange(desc(rate))
+
+# ascending order by year and rate
+table1_rate %>%
+    arrange(year, rate)
+```
+
+## Exercise: Filtering and logic, arranging, and selecting
+
+Time: 10 min
+
+```{r, eval=FALSE}
+# filter the rows by two variables
+# choose two numeric variables and two numbers
+___ %>%
+    # format: variable >= number
+    # example: weight >= 50
+    filter(___ >= ___ & ___ <= ___)
+
+# note the "&" above, compare with "|" below
+# how do they differ?
+___ %>%
+    filter(___ >= ___ | ___ <= ___)
+
+# pipe the data and continue piping
+___ %>%
+    # filter a variable, preferably a character variable,
+    filter(______  ==  ______) %>%
+    # sort by two variables
+    arrange(___,   ___) %>%
+    # now keep only three variables
+    select(___,  ___,  ___) 
+```
+
+If you are familiar with ggplot2 from the ggplot2 session, then you can optional try to visualize the dataset.
+
+## Create a summary of the data, alone or by a group(s): `group_by()`, `summarise()`
+
+```{r}
+# summarise on its own
+# summarise only can output one (1) value, eg. a max or an average
+table1_rate %>%
+    summarise(cum_cases = sum(cases),
+              max = max(cases))
+
+# grouping by country, on its own, does nothing
+table1_rate %>%
+    group_by(country) 
+
+# group_by combined with summarise is powerful
+table1_rate %>%
+    group_by(country) %>%
+    summarise(cum_cases = sum(cases),
+              max = max(cases))
+
+# grouping by year
+table1_rate %>%
+    group_by(year) %>%
+    summarise(cum_cases = sum(cases),
+              max = max(cases))
+```
+
+## Converting to long form: `gather()`
+
+Compare how `table1` looks normally and after converting to the long form with `gather()`.
+
+```{r}
+table1
+
+# convert to long form by stacking all cases with all population
+table1 %>% 
+    gather(variable, value, -country, -year)
+
+# this does the same:
+table1 %>%
+    gather(variable, value, cases, population)
+```
+
+Converting to long form makes other types of exploration much much easier. For instance, combined with `group_by()` and `summarise()`:
+
+```{r}
+table1 %>% 
+    gather(variables, values, cases, population) %>% 
+    group_by(year, variables) %>% 
+    summarise(cum_sum = sum(values),
+              max = sum(values))
+```
+
+## Final exercise: Try to replicate an output.
+
+Time: Until end of the session.
+
+Copy the code below and run it to get the dataset to use for this exercise. Using everything you learned in this session, try to recreate the table below from the dataset given.
+
+```{r}
+library(ggplot2)
+economics_data <- economics %>% 
+    # get the year information
+    mutate(year = as.numeric(substr(date, 0, 4))) %>% 
+    as_tibble()
+economics_data
+```
+
+
+```{r, echo=FALSE}
+economics_data %>% 
+    filter(year >= 1990, year <= 2000) %>% 
+    mutate(unemploy_rate = unemploy / pop) %>% 
+    select(year, unemploy_rate, uempmed) %>% 
+    gather(variable, value, -year) %>% 
+    group_by(year, variable) %>% 
+    summarise(
+        Max = max(value),
+        Median = median(value),
+        Min = min(value)
+    ) %>% 
+    arrange(desc(year)) %>% 
+    knitr::kable(caption = "From the data above, try to recreate this data below in this table.")
+```
+
+
+## (If time) Converting to wide form with `spread()`
+
+To convert from long to wide, you use `spread()`.
+
+```{r}
+# original
+table2
+
+# after spread
+table2 %>% 
+    spread(type, count)
+```

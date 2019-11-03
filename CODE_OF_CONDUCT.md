@@ -2,12 +2,12 @@
 
 Science thrives on diversity of thought and origin and we value the participation
 of every member of the scientific community and want all members of any event to
-have an enjoyable and fulfilling experience. Accordingly, all participants are
+have an enjoyable and fulfilling experience. Accordingly, all members are
 expected to show respect and courtesy to other members at any in-person event, 
-online space, and any other activity associated with the AU CRU.
+online space, and any other activity associated with the community.
 
 To make clear what is expected, everyone involved in any aspect of this
-Community, is required to conform to the following Code of Conduct. Organizers
+community, is required to conform to the following Code of Conduct. Organizers
 and lead community members will enforce this code, but you may also contact us
 privately; all communication will be treated as confidential.
 
@@ -23,27 +23,27 @@ religion or belief (or lack thereof), membership of a national minority,
 property, age, education, socio-economic status, technical choices, and
 experience level.
 
-Everyone who participates in this Community's activities is required to conform to
-this Code of Conduct. It applies to all spaces associated with this Community
+Everyone who participates in this community's activities is required to conform to
+this Code of Conduct. It applies to all spaces associated with this community
 including, but not limited to, emails and any online forums such as
-GitHub, Twitter, or Slack. By participating, participants indicate their
-acceptance of the procedures by which organizers resolve any Code of Conduct
-incidents.
+GitHub, Twitter, or Slack. By participating, members indicate their acceptance of
+the procedures by which the instructors and organizers resolve any Code of
+Conduct incidents.
 
 ## Expected Behavior
 
-All participants are expected to show respect and courtesy to others. All
+All community members are expected to show respect and courtesy to others. All
 interactions should be professional regardless of platform: either online or
-in-person. In order to foster a positive and professional learning and collegial
-environment we encourage the following kinds of behaviours in all interactions
-within this Community:
+in-person. In order to foster a positive and professional learning environment
+we encourage the following kinds of behaviours in all interactions during this
+communities events:
 
 - Be kind and aware of your words
 - Use welcoming and inclusive language
 - Be respectful of different viewpoints and experiences
 - Gracefully accept constructive criticism
-- Focus on what is best for the course members and the community overall
-- Show courtesy and respect towards other course members
+- Focus on what is best for the community members and the community overall
+- Show courtesy and respect towards other community members
 
 See the [four social rules](https://www.recurse.com/manual#sub-sec-social-rules)
 for further recommendations and details on proper behaviour.
@@ -72,13 +72,14 @@ Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported by emailing any of the lead Community members. All complaints will be
 reviewed and investigated and will result in a response that is deemed necessary
 and appropriate to the circumstances. The lead members are obligated to maintain
-confidentiality with regard to the reporter of an incident.  Further details of
+confidentiality with regard to the reporter of an incident. Further details of
 specific enforcement policies may be posted separately.
 
 Thank you for helping make this a welcoming, friendly community for all :smile:
 
-## Attribution {#conduct-attribution}
+-----
 
+**Acknowledgements**: 
 Large portions of this Code of Conduct were adapted from the [Contributor Covenant][covenant]
 version 1.4, [Software Carpentry](https://docs.carpentries.org/topic_folders/policies/code-of-conduct.html),
 and [UofTCoders](https://github.com/UofTCoders/studyGroup/blob/gh-pages/codeOfConduct.md).

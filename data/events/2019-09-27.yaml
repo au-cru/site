@@ -1,4 +1,4 @@
-type: ""
+type: "meetup"
 name: "Introduction to the community"
 description: >
   We're starting up a community of researchers who use (open) software in their
@@ -8,5 +8,7 @@ description: >
   and what we want or are planning to do. We'd love to have you join us and
   get involved!
 location: "AU Library in Nobelparken, main floor, left from entrance behind glass wall"
-start_date: 2019-09-27T13:00:00+01:00
+start_date: 2019-09-27T13:00:00+02:00
+end_date: 2019-09-27T15:00:00+02:00
 level: "everyone"
+software: ["R"]
