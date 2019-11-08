@@ -174,14 +174,14 @@ The `mutate()` function adds or replaces a variable/column in a dataset. To add
 table1 %>%
     mutate(population = population / 1000000)
 
-# Or create a new variable based on a condition
-table1 %>%
-    mutate(after_2000 = if_else(year >= 2000, "yes", "no"))
-
 # Create or replace multiple variables by using the ","
 table1 %>%
     mutate(new_column = "only one value",
            population = population / 1000000)
+
+# Or create a new variable based on a condition
+table1 %>%
+    mutate(after_2000 = if_else(year >= 2000, "yes", "no"))
 
 # Create a new variable using existing variables and save a new dataframe
 table1_rate <- table1 %>%
@@ -211,6 +211,8 @@ new_dataset
 ```
 
 ## Select specific data by the variables: `select()`
+
+select() works on columns
 
 ```{r}
 # select columns/variables by name, without quotes
