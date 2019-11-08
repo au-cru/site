@@ -57,6 +57,8 @@ str(table1)
 
 summary(table1)
 
+View(table1)
+
 # a tibble is a modified data.frame, making it slightly easier to use
 as_tibble(table1)
 ```
@@ -70,6 +72,7 @@ Create an `exercise.R` file (we will have done that in class) and put these code
 - `population`
 - `storms`
 - `starwars`
+
 
 Copy the code below, replacing the `___` with the relevant dataset. This format is used throughout the session.
 
@@ -132,9 +135,27 @@ More or less, `table1` is tidy while the others are not. That's because in `tabl
 
 ## Pipe operator: `%>%`
 
-- This operator allows you to pipe the output from one function to the input of another function.
-- Instead of nesting functions (reading from the inside to the outside), the idea of piping is to read the functions from left to right.
-- The `%>%` pipe operator can help clarify complex data processing workflows.
+- What if you want to run multiple operations on your dataframe at the same time? 
+
+You can run multiple lines of code, which may clutter your workspace.
+
+You can nest multiple operations using parentheses, which is doable but may become complicated to read and follow
+
+```{r piping}
+
+# normal R way of nesting functions
+head(glimpse(table1))
+
+# the pipe way of linking functions
+table1 %>% glimpse() %>% head()
+```
+
+- This operator, called pipe, takes the output of one function  and sends it directly to the next one. This is particularly useful when you are doing many operations on the same dataset.
+
+- The `%>%` pipe operator can help clarify complex data processing workflows. In RStudio you can use the shortcut `Ctrl + Shift + M` or `Cmd + Shift + M` if you work on a Mac.
+
+- You can read the function pipe like the word "then".
+In this case glimpse table1 and **then** visualize the first 10 lines.
 
 ```{r piping}
 # normal R way of nesting functions
