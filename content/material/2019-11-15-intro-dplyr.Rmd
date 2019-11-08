@@ -230,6 +230,8 @@ table1_rate %>%
 
 ## Filter/subset the data by row based on values and conditions: `filter()`
 
+filter() works on rows 
+
 **Warning**: Filter using logic... and humans are very bad at logic... Make sure to be very certain that you think your logic is what the code reads as logic... Lots of mistakes can be made at this stage! Especially with complex logic situations.
 
 ```{r}
