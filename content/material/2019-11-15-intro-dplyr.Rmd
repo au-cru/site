@@ -329,6 +329,12 @@ table1_rate %>%
     group_by(year) %>%
     summarise(cum_cases = sum(cases),
               max = max(cases))
+
+# What happens if you group by year and country? How is this different from your table?
+table1_rate %>%
+    group_by(year, country) %>%
+    summarise(cum_cases = sum(cases),
+              max = max(cases))
 ```
 
 ## Converting to long form: `gather()`
