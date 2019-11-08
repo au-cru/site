@@ -49,7 +49,7 @@ install.packages("dplyr")
 We'll be using a very simple dataset that is built-in to the tidyr package. This dataset contains data on tuberculosis cases in Afghanistan, Brazil, and China from 1999 and 2000.
 
 ```{r}
-library(dplyr)
+library(tidyverse)
 
 names(table1)
 
