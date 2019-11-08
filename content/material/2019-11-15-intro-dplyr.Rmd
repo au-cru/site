@@ -28,17 +28,17 @@ install.packages("dplyr")
 ### Objectives
 
 1. To learn the difference between "messy" and "tidy" data and see the advantages of using data that are consistently structured.
-1. To perform simple data transformations and create summaries.
-1. To get to know the tools that help tidying up and reshaping the data.
+2. To perform simple data transformations and create summaries.
+3. To get started with the tools that help tidying up and reshaping the data, and to learn where to find additional information and resources.
     
 **At the end of this session you will be able:**
 
 1. To write code using the `%>%` operator.
-1. To perform simple data transformations using dplyr function `mutate()`.
-1. To select variables and observations to work with using dplyr functions `filter()`and `select()`.
-1. To order data by variable using dplyr function `arrange()`.
-1. To provide a simple data summary using dplyr functions `group_by()` and `summarise()`.
-1. To change the structure of the data using tidyr functions `gather()` (and optionally `spread()`).
+2. To perform simple data transformations using dplyr function `mutate()`.
+3. To select variables and observations to work with using dplyr functions `filter()`and `select()`.
+4. To order data by variable using dplyr function `arrange()`.
+5. To provide a simple data summary using dplyr functions `group_by()` and `summarise()`.
+
 
 ## Resources for learning and help
 
