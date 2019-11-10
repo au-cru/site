@@ -32,35 +32,25 @@ event_data <-
     DESCRIPTION = as.character(glue(
       "A {type} for {str_to_lower(level)}"
     )),
+    # For next round, add beginner level to summary
     SUMMARY = as.character(glue("{name}{software}")),
     LOCATION = location
   )
 
 public_calendar_link <- "https://calendar.google.com/calendar/ical/2ss4h917ttbik93jp4n7kkto5o%40group.calendar.google.com/public/basic.ics"
 current_calendar <- ic_read(public_calendar_link) %>%
-  View()
   mutate(
-    # Don't know why the time gets imported one hour behind...
-    # need to fix by adding an hour.
-    DTSTART = ymd_hms(DTSTART, tz = "Europe/Copenhagen") + hours(1),
-    DTEND = ymd_hms(DTEND, tz = "Europe/Copenhagen") + hours(1)
+    DTSTART = with_tz(ymd_hms(DTSTART), "Europe/Copenhagen"),
+    DTEND = with_tz(ymd_hms(DTEND), "Europe/Copenhagen")
   ) %>%
-  select(UID, DTSTART, DTEND, DESCRIPTION, SUMMARY, LOCATION) %>%
+  arrange(DTSTART) %>%
+  select(DTSTART, DTEND, SUMMARY) %>%
   mutate_at(
-    vars(DESCRIPTION, SUMMARY, LOCATION),
+    vars(SUMMARY),
     ~ str_replace_all(., "\\\\,", ",") %>%
       str_replace_all("\\\\", "")
-  ) %>%
-  arrange(DTSTART)
+  )
 
-dplyr::bind_rows(event_data %>%
-            select(-UID),
-          current_calendar %>%
-            select(-UID)) %>%
-  distinct() %>%
-  View()
-  glimpse()
+new_calendar_data <- anti_join(event_data, current_calendar)
 
-
-
-ic_write(ical(event_data), here::here("R/calendar.ics"))
+ic_write(ical(new_calendar_data), here::here("R/calendar.ics"))
