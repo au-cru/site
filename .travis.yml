@@ -15,7 +15,8 @@ cache:
 
 script:
   - Rscript -e 'blogdown::install_hugo()'
-  - Rscript -e 'blogdown::build_site()'
+  - Rscript -e 'blogdown::build_site(run_hugo = FALSE)'
+  - Rscript -e 'blogdown::hugo_cmd("--buildFuture")'
 
 deploy:
   provider: pages
