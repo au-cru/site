@@ -1,7 +1,6 @@
 ---
 title: "Reproducible reports with R Markdown"
 author:
-  - "TBD"
   - "Luke W. Johnston"
   - "Maria Izabel Cavassim Alves (contributed)"
 date: "2019-12-13"
