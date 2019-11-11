@@ -337,31 +337,6 @@ table1_rate %>%
               max = max(cases))
 ```
 
-## Converting to long form: `gather()`
-
-Compare how `table1` looks normally and after converting to the long form with `gather()`.
-
-```{r}
-table1
-
-# convert to long form by stacking all cases with all population
-table1 %>% 
-    gather(variable, value, -country, -year)
-
-# this does the same:
-table1 %>%
-    gather(variable, value, cases, population)
-```
-
-Converting to long form makes other types of exploration much much easier. For instance, combined with `group_by()` and `summarise()`:
-
-```{r}
-table1 %>% 
-    gather(variables, values, cases, population) %>% 
-    group_by(year, variables) %>% 
-    summarise(cum_sum = sum(values),
-              max = sum(values))
-```
 
 ## Final exercise: Try to replicate an output.
 
