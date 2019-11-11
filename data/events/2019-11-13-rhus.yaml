@@ -4,8 +4,13 @@ description: >
   The meeting will hopefully end with some light drinks and snacks.
 
 
-  **(To be announced)**
+  **Accessing digital cultural heritage as data – Solr and R**
 
+  Digitalisation of cultural heritage is a part of almost all cultural institutions strategies. 
+  This typically results in graphic search interfaces making the cultural heritage accessible for everyone with an internet connection.  
+  But what if we want to access our digital cultural heritage as data? 
+  What options do we then have? Downloads? APIs? 
+  This presentation's focus lies on extracting data from Solr-databases into R with the package "solrium".
 
   Max Odsbjerg Pedersen
 
