@@ -371,15 +371,3 @@ economics_data %>%
 ```
 
 
-## (If time) Converting to wide form with `spread()`
-
-To convert from long to wide, you use `spread()`.
-
-```{r}
-# original
-table2
-
-# after spread
-table2 %>% 
-    spread(type, count)
-```
