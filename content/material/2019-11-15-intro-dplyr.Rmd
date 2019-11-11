@@ -341,8 +341,8 @@ table1_rate %>%
 ## Final exercise: Try to replicate an output.
 
 Time: Until end of the session.
+Copy and paste the following code to obtain the database economics data. 
 
-Copy the code below and run it to get the dataset to use for this exercise. Using everything you learned in this session, try to recreate the table below from the dataset given.
 
 ```{r}
 library(ggplot2)
@@ -353,20 +353,28 @@ economics_data <- economics %>%
 economics_data
 ```
 
+-Explore the variables in the dataset by querying the economics dataframe (`?economics`)
+
+-Using what you have learned today try to:
+1. Create a new variable called `unemploy_rate` that calculates the unemployment rate (i.e. proportion of the population that is unemployed)
+2. For the same decade, calculate the maximum, minimum and mean values for duration of unemployment and unemployment rate per year, then arrange these values in descending order by year
 
 ```{r, echo=FALSE}
 economics_data %>% 
     filter(year >= 1990, year <= 2000) %>% 
     mutate(unemploy_rate = unemploy / pop) %>% 
     select(year, unemploy_rate, uempmed) %>% 
-    gather(variable, value, -year) %>% 
-    group_by(year, variable) %>% 
+    #gather(variable, value, -year) %>% 
+    group_by(year) %>% 
     summarise(
-        Max = max(value),
-        Median = median(value),
-        Min = min(value)
+        Max_rate = max(unemploy_rate),
+        Median_rate = median(unemploy_rate),
+        Min_rate = min(unemploy_rate),
+        Max_duration = max(uempmed),
+        Median_duration = median(uempmed),
+        Min_duration = min(uempmed)
     ) %>% 
-    arrange(desc(year)) %>% 
+    arrange(desc(year)) %>%  
     knitr::kable(caption = "From the data above, try to recreate this data below in this table.")
 ```
 
