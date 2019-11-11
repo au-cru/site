@@ -1,10 +1,12 @@
 ---
 title: "First Rhus meeting"
 author: "Stefan McKinnon Høj-Edwards <smhe@kamstrup.dk>"
-date: "29th oct 2019"
+date: "2019-10-29"
 output: 
   ioslides_presentation: 
-    logo: Rhus logo.png
+    logo: Rhus_logo.png
+categories:
+  - Rhus meeting
 ---
 
 ```{r setup, include=FALSE}
@@ -72,5 +74,5 @@ Two questionnaires:
 <div class="smaller">
 Snacks and refreshments sponsored by Kamstrup.
 
-![](kamstrup.png)
+![](/img/kamstrup.png)
 </div>
