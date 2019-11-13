@@ -49,7 +49,9 @@ install.packages("dplyr")
 We'll be using a very simple dataset that is built-in to the tidyr package. This dataset contains data on tuberculosis cases in Afghanistan, Brazil, and China from 1999 and 2000.
 
 ```{r}
-library(tidyverse)
+# Or library(tidyverse)
+library(dplyr)
+library(tidyr)
 
 names(table1)
 
@@ -57,7 +59,7 @@ str(table1)
 
 summary(table1)
 
-View(table1)
+# View(table1)
 
 # a tibble is a modified data.frame, making it slightly easier to use
 as_tibble(table1)
@@ -141,7 +143,7 @@ You can run multiple lines of code, which may clutter your workspace.
 
 You can nest multiple operations using parentheses, which is doable but may become complicated to read and follow
 
-```{r piping}
+```{r}
 
 # normal R way of nesting functions
 head(glimpse(table1))
@@ -212,7 +214,7 @@ new_dataset
 
 ## Select specific data by the variables: `select()`
 
-select() works on columns
+`select()` works on columns of a data.frame.
 
 ```{r}
 # select columns/variables by name, without quotes
@@ -230,7 +232,7 @@ table1_rate %>%
 
 ## Filter/subset the data by row based on values and conditions: `filter()`
 
-filter() works on rows 
+`filter()` works on rows of a data.frame.
 
 **Warning**: Filter using logic... and humans are very bad at logic... Make sure to be very certain that you think your logic is what the code reads as logic... Lots of mistakes can be made at this stage! Especially with complex logic situations.
 
@@ -353,18 +355,17 @@ economics_data <- economics %>%
 economics_data
 ```
 
--Explore the variables in the dataset by querying the economics dataframe (`?economics`)
+- Explore the variables in the dataset by querying the economics dataframe (`?economics`).
 
--Using what you have learned today try to:
-1. Create a new variable called `unemploy_rate` that calculates the unemployment rate (i.e. proportion of the population that is unemployed)
-2. For the same decade, calculate the maximum, minimum and mean values for duration of unemployment and unemployment rate per year, then arrange these values in descending order by year
+- Using what you have learned today try to:
+    1. Create a new variable called `unemploy_rate` that calculates the unemployment rate (i.e. proportion of the population that is unemployed).
+    2. For the same decade, calculate the maximum, minimum and mean values for duration of unemployment and unemployment rate per year, then arrange these values in descending order by year.
 
 ```{r, echo=FALSE}
 economics_data %>% 
     filter(year >= 1990, year <= 2000) %>% 
     mutate(unemploy_rate = unemploy / pop) %>% 
     select(year, unemploy_rate, uempmed) %>% 
-    #gather(variable, value, -year) %>% 
     group_by(year) %>% 
     summarise(
         Max_rate = max(unemploy_rate),
