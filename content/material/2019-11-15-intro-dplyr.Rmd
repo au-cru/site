@@ -28,17 +28,17 @@ install.packages("dplyr")
 ### Objectives
 
 1. To learn the difference between "messy" and "tidy" data and see the advantages of using data that are consistently structured.
-1. To perform simple data transformations and create summaries.
-1. To get to know the tools that help tidying up and reshaping the data.
+2. To perform simple data transformations and create summaries.
+3. To get started with the tools that help tidying up and reshaping the data, and to learn where to find additional information and resources.
     
 **At the end of this session you will be able:**
 
 1. To write code using the `%>%` operator.
-1. To perform simple data transformations using dplyr function `mutate()`.
-1. To select variables and observations to work with using dplyr functions `filter()`and `select()`.
-1. To order data by variable using dplyr function `arrange()`.
-1. To provide a simple data summary using dplyr functions `group_by()` and `summarise()`.
-1. To change the structure of the data using tidyr functions `gather()` (and optionally `spread()`).
+2. To perform simple data transformations using dplyr function `mutate()`.
+3. To select variables and observations to work with using dplyr functions `filter()`and `select()`.
+4. To order data by variable using dplyr function `arrange()`.
+5. To provide a simple data summary using dplyr functions `group_by()` and `summarise()`.
+
 
 ## Resources for learning and help
 
@@ -49,13 +49,17 @@ install.packages("dplyr")
 We'll be using a very simple dataset that is built-in to the tidyr package. This dataset contains data on tuberculosis cases in Afghanistan, Brazil, and China from 1999 and 2000.
 
 ```{r}
+# Or library(tidyverse)
 library(dplyr)
+library(tidyr)
 
 names(table1)
 
 str(table1)
 
 summary(table1)
+
+# View(table1)
 
 # a tibble is a modified data.frame, making it slightly easier to use
 as_tibble(table1)
@@ -70,6 +74,7 @@ Create an `exercise.R` file (we will have done that in class) and put these code
 - `population`
 - `storms`
 - `starwars`
+
 
 Copy the code below, replacing the `___` with the relevant dataset. This format is used throughout the session.
 
@@ -132,9 +137,27 @@ More or less, `table1` is tidy while the others are not. That's because in `tabl
 
 ## Pipe operator: `%>%`
 
-- This operator allows you to pipe the output from one function to the input of another function.
-- Instead of nesting functions (reading from the inside to the outside), the idea of piping is to read the functions from left to right.
-- The `%>%` pipe operator can help clarify complex data processing workflows.
+- What if you want to run multiple operations on your dataframe at the same time? 
+
+You can run multiple lines of code, which may clutter your workspace.
+
+You can nest multiple operations using parentheses, which is doable but may become complicated to read and follow
+
+```{r}
+
+# normal R way of nesting functions
+head(glimpse(table1))
+
+# the pipe way of linking functions
+table1 %>% glimpse() %>% head()
+```
+
+- This operator, called pipe, takes the output of one function  and sends it directly to the next one. This is particularly useful when you are doing many operations on the same dataset.
+
+- The `%>%` pipe operator can help clarify complex data processing workflows. In RStudio you can use the shortcut `Ctrl + Shift + M` or `Cmd + Shift + M` if you work on a Mac.
+
+- You can read the function pipe like the word "then".
+In this case glimpse table1 and **then** visualize the first 10 lines.
 
 ```{r piping}
 # normal R way of nesting functions
@@ -153,14 +176,14 @@ The `mutate()` function adds or replaces a variable/column in a dataset. To add
 table1 %>%
     mutate(population = population / 1000000)
 
-# Or create a new variable based on a condition
-table1 %>%
-    mutate(after_2000 = if_else(year >= 2000, "yes", "no"))
-
 # Create or replace multiple variables by using the ","
 table1 %>%
     mutate(new_column = "only one value",
            population = population / 1000000)
+
+# Or create a new variable based on a condition
+table1 %>%
+    mutate(after_2000 = if_else(year >= 2000, "yes", "no"))
 
 # Create a new variable using existing variables and save a new dataframe
 table1_rate <- table1 %>%
@@ -191,6 +214,8 @@ new_dataset
 
 ## Select specific data by the variables: `select()`
 
+`select()` works on columns of a data.frame.
+
 ```{r}
 # select columns/variables by name, without quotes
 table1_rate %>%
@@ -206,6 +231,8 @@ table1_rate %>%
 ```
 
 ## Filter/subset the data by row based on values and conditions: `filter()`
+
+`filter()` works on rows of a data.frame.
 
 **Warning**: Filter using logic... and humans are very bad at logic... Make sure to be very certain that you think your logic is what the code reads as logic... Lots of mistakes can be made at this stage! Especially with complex logic situations.
 
@@ -304,39 +331,20 @@ table1_rate %>%
     group_by(year) %>%
     summarise(cum_cases = sum(cases),
               max = max(cases))
+
+# What happens if you group by year and country? How is this different from your table?
+table1_rate %>%
+    group_by(year, country) %>%
+    summarise(cum_cases = sum(cases),
+              max = max(cases))
 ```
 
-## Converting to long form: `gather()`
-
-Compare how `table1` looks normally and after converting to the long form with `gather()`.
-
-```{r}
-table1
-
-# convert to long form by stacking all cases with all population
-table1 %>% 
-    gather(variable, value, -country, -year)
-
-# this does the same:
-table1 %>%
-    gather(variable, value, cases, population)
-```
-
-Converting to long form makes other types of exploration much much easier. For instance, combined with `group_by()` and `summarise()`:
-
-```{r}
-table1 %>% 
-    gather(variables, values, cases, population) %>% 
-    group_by(year, variables) %>% 
-    summarise(cum_sum = sum(values),
-              max = sum(values))
-```
 
 ## Final exercise: Try to replicate an output.
 
 Time: Until end of the session.
+Copy and paste the following code to obtain the database economics data. 
 
-Copy the code below and run it to get the dataset to use for this exercise. Using everything you learned in this session, try to recreate the table below from the dataset given.
 
 ```{r}
 library(ggplot2)
@@ -347,33 +355,28 @@ economics_data <- economics %>%
 economics_data
 ```
 
+- Explore the variables in the dataset by querying the economics dataframe (`?economics`).
+
+- Using what you have learned today try to:
+    1. Create a new variable called `unemploy_rate` that calculates the unemployment rate (i.e. proportion of the population that is unemployed).
+    2. For the same decade, calculate the maximum, minimum and mean values for duration of unemployment and unemployment rate per year, then arrange these values in descending order by year.
 
 ```{r, echo=FALSE}
 economics_data %>% 
     filter(year >= 1990, year <= 2000) %>% 
     mutate(unemploy_rate = unemploy / pop) %>% 
     select(year, unemploy_rate, uempmed) %>% 
-    gather(variable, value, -year) %>% 
-    group_by(year, variable) %>% 
+    group_by(year) %>% 
     summarise(
-        Max = max(value),
-        Median = median(value),
-        Min = min(value)
+        Max_rate = max(unemploy_rate),
+        Median_rate = median(unemploy_rate),
+        Min_rate = min(unemploy_rate),
+        Max_duration = max(uempmed),
+        Median_duration = median(uempmed),
+        Min_duration = min(uempmed)
     ) %>% 
-    arrange(desc(year)) %>% 
+    arrange(desc(year)) %>%  
     knitr::kable(caption = "From the data above, try to recreate this data below in this table.")
 ```
 
 
-## (If time) Converting to wide form with `spread()`
-
-To convert from long to wide, you use `spread()`.
-
-```{r}
-# original
-table2
-
-# after spread
-table2 %>% 
-    spread(type, count)
-```
