@@ -4,6 +4,8 @@ author:
   - "Sara Tomiolo"
   - "Luke W. Johnston"
 date: "2019-11-01"
+description: >
+  Learn the basics of creating visualizations of your data using the ggplot2 package.
 categories:
   - Beginner
   - R

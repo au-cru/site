@@ -4,6 +4,9 @@ author:
   - "Sara Tomiolo"
   - "Luke W. Johnston"
 date: "2019-11-15"
+description: >
+  Learn about the basics of managing and wrangling your data using the powerful
+  dplyr package.
 categories:
   - Beginner
   - R
@@ -14,14 +17,8 @@ tags:
   - data management
 ---
 
-> NOTE: This is still in development.
-
 ```{r setup, echo=FALSE}
 source(here::here("R/utils-for-content.R"))
-```
-
-```{r, eval=FALSE}
-install.packages("dplyr")
 ```
 
 ### Objectives
@@ -38,6 +35,11 @@ install.packages("dplyr")
 4. To order data by variable using dplyr function `arrange()`.
 5. To provide a simple data summary using dplyr functions `group_by()` and `summarise()`.
 
+Make sure to install:
+
+```{r, eval=FALSE}
+install.packages("dplyr")
+```
 
 ## Resources for learning and help
 
