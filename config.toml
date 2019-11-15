@@ -105,6 +105,11 @@ paginate = 10
     latitude = "-12.043333"
     longitude = "-77.028333"
 
+    highlightjsVersion = "9.16.0"
+    highlightjsCDN = "//cdnjs.cloudflare.com/ajax/libs"
+    highlightjsLang = ["r", "markdown", "yaml"]
+    highlightjsTheme = "github"
+
 [Permalinks]
     blog = "/material/:year/:month/:day/:filename/"
 
@@ -129,7 +134,7 @@ paginate = 10
     enable = true
     title = "Upcoming events"
     subtitle = """
-NOTE: We're still updating this website, so please bare with us :)
+Check out the <a href="/past-events/">Past Events</a> page for a listing of what we've done so far.
 <br><br>Sessions are subject to change depending on instructor or room availability and any other unforeseen events, but we'll send out emails about any changes about the event as soon as we are able.
 <br><br>We are always looking for instructors, so please
 <a href='https://docs.google.com/spreadsheets/d/15QptbsH4z1efB_LFG6vTq631iy_lUoQccdYWVm389QU/edit?usp=sharing'>sign yourself up</a> if you are interested.
