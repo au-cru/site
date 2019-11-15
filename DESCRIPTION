@@ -5,4 +5,6 @@ Encoding: UTF-8
 Imports: 
     blogdown,
     here,
-    ggplot2
+    ggplot2,
+    dplyr,
+    tidyr
