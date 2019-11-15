@@ -4,19 +4,29 @@ description: >
   The meeting will hopefully end with some light drinks and snacks.
 
 
-  **Modelling with H20**
+  **Enabling H2O deep learning models in R**
 
+  See H2O modeling in action on real life example.
+
+  Don't know H2O - well you really should:
+  "H2O is an open source, in-memory, distributed, fast, and scalable machine learning and predictive analytics platform that allows you to build machine learning models on big data and provides easy productionalization of those models in an enterprise environment" (http://docs.h2o.ai/h2o/latest-stable/h2o-docs/welcome.html)
+
+  Presentation objective is to introduce audience to H2O platform and to hopefully show how easy it is to enable the very powerful H2O deep learning models in R. Using R as your control syntax you are able to massage your data and create deep learning models such as neural nets, random forrest, gradient boosting and "true" deep learning models.
 
   John Westberg
+  Data Scientist at Telenor Danmark
 
 
-  **(To be announced)**
 
+  **How we came to use R at the Royal Library — and what we use it for.**
 
-  Per Møldrup-Dalum
+  A look back at how a pure Java-shop came to adopt R. 
+  Also a bit about how we use R for analyzing multiple terabytes of data, and why not use e.g. Java or FORTRAN (did anyone say Python)?
+
+  Per Møldrup-Dalum, Det Kgl. Bibliotek
 
 location: "AU Library in Nobelparken, main floor, left from entrance behind glass wall"
 start_date: 2019-12-03T19:30:00+01:00
-end_date: 2019-12-03T20:30:00+01:00
+end_date: 2019-12-03T21:00:00+01:00
 level: "advanced"
 software: ["R"]

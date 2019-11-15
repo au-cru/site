@@ -13,20 +13,19 @@ tags:
   - data visualization
 ---
 
-> NOTE: This is still in development.
-
 ```{r setup, echo=FALSE}
 source(here::here("R/utils-for-content.R"))
-knitr::opts_chunk$set(eval = FALSE)
 ```
 
-- Package to install:
+## Preparation
+
+Please install the ggplot2 package:
 
 ```{r, eval=FALSE}
 install.packages("ggplot2")
 ```
 
-### Objectives
+## Objectives
 
 1. To become aware of the powerful features of ggplot2.
 2. To learn about some of the fundamentals of easily creating amazing graphics.
@@ -43,6 +42,9 @@ boxplots.
 - That has some changes to the look and feel of the plot, ie. `theme()`, so that
 it is publication ready.
 
+**Resources** for continuing learning and help are available on
+the [More Info](/more-info/#resources) page.
+
 ## Best practices for creating graphs in R
 
 It is relatively easy to create complex graphs in R, but all the features available can become quite distracting and lead to overly complicated and confusing graphs.
@@ -54,13 +56,6 @@ When creating graphs there are a few golden rules that should be kept in mind:
 
 - Use colour in a meaningful way
 
-## Resources for learning and help
-
-<!-- -->
-<!-- Because I can't teach everything... -->
-
-[Here for resources](/more-info/#resources)
-
 <!-- Quickly go over RStudio IDE in relation to plotting -->
 <!-- Get them to open two R scripts, name and save as "code-along" and "exercise" -->
 
@@ -68,7 +63,6 @@ When creating graphs there are a few golden rules that should be kept in mind:
 
 A simple way to create a self-contained project in R is to make use of the function "Projects" in R Studio.
 Create a new project, name it "Code_along_sessions" and create two R scripts in it.
-
 
 ## Quickly get familiar with data to plot
 
@@ -119,8 +113,11 @@ str(___)
 summary(___)
 ```
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 4dae32f5cbed7b84c1f7a8da5e9d295b1e8d6e11
 ## Basic structure of using ggplot2
 
 ggplot2 uses the "Grammar of Graphics" (gg). This is a powerful approach to

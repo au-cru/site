@@ -10,8 +10,8 @@ library(gmailr)
 send_to <- Sys.getenv("TINYLETTER_ADDRESS")
 
 current_date <- today()
-in_two_weeks <- current_date + weeks(2)
-date_range <- seq(current_date, in_two_weeks, by = "days") %>%
+in_future_weeks <- current_date + weeks(3)
+date_range <- seq(current_date, in_future_weeks, by = "days") %>%
   as.character()
 
 # Extract only relevant event files ---------------------------------------
@@ -31,10 +31,12 @@ table_of_events <- event_files %>%
   }) %>%
   map_dfr(as_tibble) %>%
   mutate(
+    software = if_else(!is.na(software) & software != "", glue::glue(" ({software})"), ""),
+    What = glue::glue("{name}{software} for {str_to_lower(level)}"),
     When = as_datetime(start_date, tz = "Europe/Copenhagen"),
     When = stamp("March 1, 1999 at 22:10", quiet = TRUE)(When)
   ) %>%
-  select(What = name, When, Where = location) %>%
+  select(What, When, Where = location) %>%
   knitr::kable(format = "html") %>%
   kableExtra::kable_styling("condensed") %>%
   str_flatten("\n")
@@ -48,7 +50,8 @@ email_body <- read_lines(here::here("R/email-template.html")) %>%
 email <- gm_mime() %>%
   gm_to(send_to) %>%
   gm_from("lwjohnst@gmail.com") %>%
-  gm_subject("[AU CRU] Updates on mailing list and upcoming events") %>%
+  gm_subject("[AU CRU] Upcoming events in the next three weeks.") %>%
   gm_html_body(email_body)
 
+gm_auth(path = Sys.getenv("GMAILR_APP"), scope = "compose")
 gm_create_draft(email)

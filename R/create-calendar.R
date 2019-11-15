@@ -1,4 +1,5 @@
 library(tidyverse)
+library(lubridate)
 library(calendar)
 library(assertr)
 library(glue)
@@ -26,19 +27,30 @@ event_data <-
   ) %>%
   transmute(
     UID = map_chr(1:n(), ~ ic_guid()),
-    DTSTART = lubridate::as_datetime(start_date, tz = "Europe/Copenhagen"),
-    DTEND = lubridate::as_datetime(end_date, tz = "Europe/Copenhagen"),
+    DTSTART = ymd_hms(start_date, tz = "Europe/Copenhagen"),
+    DTEND = ymd_hms(end_date, tz = "Europe/Copenhagen"),
     DESCRIPTION = as.character(glue(
       "A {type} for {str_to_lower(level)}"
     )),
+    # For next round, add beginner level to summary
     SUMMARY = as.character(glue("{name}{software}")),
     LOCATION = location
   )
 
-ic_write(ical(event_data), here::here("R/calendar.ics"))
+public_calendar_link <- "https://calendar.google.com/calendar/ical/2ss4h917ttbik93jp4n7kkto5o%40group.calendar.google.com/public/basic.ics"
+current_calendar <- ic_read(public_calendar_link) %>%
+  mutate(
+    DTSTART = with_tz(ymd_hms(DTSTART), "Europe/Copenhagen"),
+    DTEND = with_tz(ymd_hms(DTEND), "Europe/Copenhagen")
+  ) %>%
+  arrange(DTSTART) %>%
+  select(DTSTART, DTEND, SUMMARY) %>%
+  mutate_at(
+    vars(SUMMARY),
+    ~ str_replace_all(., "\\\\,", ",") %>%
+      str_replace_all("\\\\", "")
+  )
 
-# TODO: Fix this up so calendar is imported, results are compared to new schedule,
-# and new events are added.
-# public_calendar_link <- "https://calendar.google.com/calendar/ical/2ss4h917ttbik93jp4n7kkto5o%40group.calendar.google.com/public/basic.ics"
-# ic_read(public_calendar_link) %>%
-#   glimpse()
+new_calendar_data <- anti_join(event_data, current_calendar)
+
+ic_write(ical(new_calendar_data), here::here("R/calendar.ics"))

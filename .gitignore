@@ -5,3 +5,5 @@
 public
 docs
 content/material/*.html
+static/material/
+
