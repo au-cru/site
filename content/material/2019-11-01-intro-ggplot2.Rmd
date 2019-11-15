@@ -113,11 +113,6 @@ str(___)
 summary(___)
 ```
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 4dae32f5cbed7b84c1f7a8da5e9d295b1e8d6e11
 ## Basic structure of using ggplot2
 
 ggplot2 uses the "Grammar of Graphics" (gg). This is a powerful approach to
