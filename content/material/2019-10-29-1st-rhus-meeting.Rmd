@@ -1,12 +1,15 @@
 ---
 title: "First Rhus meeting"
-author: "Stefan McKinnon Høj-Edwards <smhe@kamstrup.dk>"
+author: 
+  - "Stefan McKinnon Høj-Edwards"
 date: "2019-10-29"
 output: 
   ioslides_presentation: 
     logo: Rhus_logo.png
 categories:
-  - Rhus meeting
+  - Rhus
+  - Advanced
+  - Lectures
 ---
 
 ```{r setup, include=FALSE}
@@ -35,7 +38,7 @@ Voluntary contributors. Notable mentions:
 
 - Max Odsbjerg Pedersen (Kgl. Bibliotek)
 - Luke Johnston (Postdoc, Department of Public Health)
-- Stefan McKinnon Høj-Edwards (Kamstrup A/S) <== Me
+- Stefan McKinnon Høj-Edwards (Kamstrup A/S) <== Me (<smhe@kamstrup.dk>)
 
 
 
@@ -74,5 +77,5 @@ Two questionnaires:
 <div class="smaller">
 Snacks and refreshments sponsored by Kamstrup.
 
-![](/img/kamstrup.png)
+![](/img/kamstrup.png){width=30%}
 </div>
