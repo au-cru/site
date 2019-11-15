@@ -4,12 +4,12 @@ description: >
   The meeting will hopefully end with some light drinks and snacks.
 
 
-  **Accessing digital cultural heritage as data – Solr and R**
+  **Accessing digital cultural heritage as data using Solr and R**
 
-  Digitalisation of cultural heritage is a part of almost all cultural institutions strategies. 
-  This typically results in graphic search interfaces making the cultural heritage accessible for everyone with an internet connection.  
-  But what if we want to access our digital cultural heritage as data? 
-  What options do we then have? Downloads? APIs? 
+  Digitalisation of cultural heritage is a part of almost all cultural institutions strategies.
+  This typically results in graphic search interfaces making the cultural heritage accessible for everyone with an internet connection.
+  But what if we want to access our digital cultural heritage as data?
+  What options do we then have? Downloads? APIs?
   This presentation's focus lies on extracting data from Solr-databases into R with the package "solrium".
 
   Max Odsbjerg Pedersen
@@ -17,14 +17,11 @@ description: >
 
   **Predicting milk production using R**
 
-  In a dairy company like Arla Foods it is crucial to know how much milk our cows will produce in order to do production planning. 
-  In this talk I will present how we have used R to build a forecasting model, 
+  In a dairy company like Arla Foods it is crucial to know how much milk our cows will produce in order to do production planning.
+  In this talk I will present how we have used R to build a forecasting model,
   and how we have taken that model from proof-of-concept to production where it is now producing weekly forecasts for our planning department.
 
   Johannes Tang Kristensen, Senior Data Scientist, Arla Foods
-
-
-
 location: "AU Library in Nobelparken, main floor, left from entrance behind glass wall"
 start_date: 2019-11-13T19:30:00+01:00
 end_date: 2019-11-13T21:00:00+01:00
