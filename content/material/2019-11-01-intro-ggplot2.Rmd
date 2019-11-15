@@ -86,7 +86,7 @@ summary(CO2)
 str(CO2)
 ```
 
-### Exercise: Choose a dataset and check it out
+### Exercise: Choose a dataset and check out the different classes of variables
 
 There are several exercises in this session. Choose one of the below datasets
 and use that dataset for all later exercises.
@@ -102,7 +102,11 @@ For more confident R users, use one of these:
 - `msleep`
 - `txhousing`
 
-Check out the contents of the dataset you choose using:
+Check out the contents of the dataset you choose using.
+
+Often the type of graph you decide to use, depends on the type of variable you want to represent. 
+
+What type of variables do you see in your dataset? What is the meaning of different variable types? 
 
 ```{r, eval=FALSE}
 # variable names of dataset
@@ -114,6 +118,7 @@ str(___)
 # summary of dataset
 summary(___)
 ```
+
 
 
 ## Basic structure of using ggplot2
