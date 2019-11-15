@@ -13,4 +13,6 @@ Imports:
     stringr,
     yaml,
     glue,
-    kableExtra
+    kableExtra,
+    lubridate
+
