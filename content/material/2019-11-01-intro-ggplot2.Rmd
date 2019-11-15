@@ -197,7 +197,7 @@ co2_plot_nums + geom_line()
 
 
 # Connects data as they appear in the dataset
-co2_plot_nums + geom_path()
+#co2_plot_nums + geom_path()
 
 # Runs a smoothing line with confidence interval
 co2_plot_nums + geom_smooth()
@@ -256,7 +256,7 @@ co2_plot_colour <- ggplot(CO2, aes(x = conc, y = uptake, colour = Treatment))
 co2_plot_colour + geom_point()
 
 # Line plot
-co2_plot_colour + geom_line()
+#co2_plot_colour + geom_line()
 
 # Smoothing
 co2_plot_colour + geom_smooth()
@@ -273,7 +273,7 @@ co2_plot_colour + geom_jitter(aes(alpha = Type))
  #discuss the warning here: alpha better used for continuous variables
 
 # Another line plot
-co2_plot_colour + geom_path(aes(linetype = Type))
+#co2_plot_colour + geom_path(aes(linetype = Type))
 
 # Smoothing plot
 co2_plot_colour + geom_smooth(aes(linetype = Type))
