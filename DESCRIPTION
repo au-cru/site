@@ -7,4 +7,10 @@ Imports:
     here,
     ggplot2,
     dplyr,
-    tidyr
+    tidyr,
+    fs,
+    purrr,
+    stringr,
+    yaml,
+    glue,
+    kableExtra

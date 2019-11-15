@@ -3,7 +3,9 @@ title: "Past events"
 ---
 
 ```{r setup, include=FALSE}
-library(tidyverse)
+library(stringr)
+library(dplyr)
+library(purrr)
 library(lubridate)
 options(knitr.kable.NA = "")
 ```
