@@ -156,7 +156,7 @@ that your arguments are used appropriately.
 Alright, let's try with making a graph. We'll use the NHANES dataset from the NHANES
 package, plus we're going to use ggplot2, so let's load them up!
 
-```{r setup}
+```{r load-packages}
 library(NHANES)
 library(ggplot2)
 ```
