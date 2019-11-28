@@ -15,234 +15,308 @@ tags:
   - don't repeat yourself
 ---
 
-> NOTE: This is still in development.
-
-```{r setup, echo=FALSE}
+```{r setup, include=FALSE}
 source(here::here("R/utils-for-content.R"))
-knitr::opts_chunk$set(eval = FALSE)
 ```
 
 ## Resources for learning and help
 
 [Here for resources](/more-info/#resources)
 
-
 ## Session content
 
-> This is the code used during the session. I've added some comments and more 
-explanation to the code.
+Before we begin, we'll set up an R project, create a folder named `R/`, and then
+create a new file in the `R/` folder of the project.
 
-### All actions in R are functions
+In R, all actions are functions. For instance, the `+` is a function, `mean()`
+is a function, `[]` is a function, and so on. So creating your functions can
+make doing your work easier and more efficient. Making functions always has a
+basic structure of:
 
-The `+` is a function, `mean()` is a function, `[]` is a function... everything 
-that does something is called a function in R. So this to add 1 with 1:
+1. Giving a name to the function (e.g. `mean`).
+2. Starting the function call using `function()`, assigning it to the name with
+`<-`. This tells R that the name is a function object.
+3. Optionally providing arguments to give to the function call, for instance
+`function(arg1, arg2, arg3)`. 
+4. Filling out the body of the function, with the arguments (if any) contained
+inside, that does some action.
+5. Optionally, but strongly encouraged, use `return` to indicate what you want 
+the function to output.
 
-```{r}
-1 + 1
+While there is no minimum or maximum number of arguments you can provide for a
+function (e.g. you could have zero or dozens of arguments), its good practice
+for yourself and for others if you have as few arguments as possible to get
+the job done.
+
+So, the structure is:
+
+```{r function-structure, eval=FALSE}
+name <- function(arg1, arg2) {
+  # body of function
+  ... code ....
+  return(output)
+}
 ```
 
-... is a function that takes 1 and adds 1 to it. Functions have the basic 
-structure of:
+... and an example:
 
-- the name of the new function `add_nums <-`
-- the function to create the new function `function()`, along with the arguments
-`num1`, `num2`
-- the code to do the action of the function, everything between `{}`
-    - should have a `return()` at the bottom that says what the function creates
-
-```{r}
+```{r create-add-function}
 add_nums <- function(num1, num2) {
-    stopifnot(is.numeric(num1), is.numeric(num2))
-    added <- num1 + num2
-    return(added)
+  added <- num1 + num2
+  return(added)
 }
 ```
 
 You can use the new function by running the above code and writing out your new 
 function, with arguments to give it.
 
-```{r}
+```{r call-function}
 add_nums(1, 2)
-add_nums(c(1:10), 2)
-# Two numbers should be the same length vector (same number of numbers) or one
-# should be only one number.
-add_nums(c(1:10), c(1, 4, 6))
-add_nums(c(1:10), c(11:20))
 ```
 
-There are a few things to consider. In R there are different "methods" of functions.
-This is way above what is necessary for this session, but if you are curious
-[this website](http://adv-r.had.co.nz/S3.html) has a great explanation of the
-different methods (e.g. S3 methods). Be warned, the website is fairly advanced!
+The function name is fairly good... `add_nums` can be read as "add numbers".
+It's also good practice to add some formal documentation to the function. Use
+the "Insert Roxygen Skeleton" in the "Code" menu list of RStudio (or by typing
+`Ctrl-Shift-Alt-R`) and you can add template documentation right above the
+function. It looks like:
 
-You can always look at the contents of all functions in R. So an example of an
-S3 function:
-
-```{r}
-# Generic S3
-print
-# Printing for data.frames
-print.data.frame
+```{r roxygen-docs-1}
+#' Title
+#'
+#' @param num1 
+#' @param num2 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+add_nums <- function(num1, num2) {
+  added <- num1 + num2
+  return(added)
+}
 ```
 
-Ok, let's get to something a bit more interesting. Usually we create plots that
-are more or less the same each time, but with different variables or data.
-So this is a great example of using a function to simplify your code. Let's load
-up the ggplot2 package for plotting and the
-[gapminder](https://github.com/jennybc/gapminder) dataset.
+In the `Title` area, this is where you type out a brief sentence or several words 
+that describe the function. Creating a new paragraph below this line allows you 
+to add a more detailed description. The other items are:
 
-```{r}
+- `@param num` lines are to describe what each argument is for.
+- `@return` describes what output the function provides. Is it a data.frame? A plot? 
+What else does the output give?
+- `@export` tells R that this function should be accessible to the user of your
+package. Delete it for non-package functions.
+- `@examples` lines below this are used to show examples of how to use the function.
+Very useful when making packages, but not really in this case.
+
+```{r roxygen-docs-2}
+#' Add two numbers together.
+#'
+#' This is just an example function to show how to create one.
+#'
+#' @param num1 A number here.
+#' @param num2 A number here.
+#'
+#' @return Returns the sum of the two numbers.
+#'
+add_nums <- function(num1, num2) {
+  added <- num1 + num2
+  return(added)
+}
+```
+
+This is the very basics of making a function. But let's get to something more
+useful!
+
+### Functions to wrangle
+
+Let's do something you might actually do in a data analysis project. Let's 
+suppose you want to create a scatter plot of two variables in a dataset, that you may
+want to include as a figure in a report or maybe to use while you explore the
+data. 
+
+A typical workflow for creating a function is to:
+
+1. Write the code as you normally would and make sure it does what you want.
+1. Set up the function structure and put the code into the function. Make sure
+the function name explains what the function does.
+1. Create the arguments you want and replace the variables in the code with the
+arguments. Make sure the argument names explain what they are used for.
+1. Append `packagename::` to any function inside your function that comes from a
+package (e.g. if the function comes from ggplot2, it will look like `ggplot2::geom_point()`).
+This ensures that R doesn't mistake the function for one in another package.
+1. Add a return command to the end.
+1. Run the function and test it out to see if it works. If not, try to debug the
+code by adding `print()` commands inside the function to see what is happening.
+1. Once it all works as you want it, try the function using different arguments.
+If it doesn't work, try 5 again.
+1. Finally, add the documentation to the function so you remember what it was for.
+1. To make your function more "secure", you could be "defensive" and add checks 
+that your arguments are used appropriately.
+
+Alright, let's try with making a graph. We'll use the NHANES dataset from the NHANES
+package, plus we're going to use ggplot2, so let's load them up!
+
+```{r setup}
+library(NHANES)
 library(ggplot2)
-library(gapminder)
-head(gapminder)
 ```
 
-Let's plot year by life expectancy:
+Then we create a basic scatter plot:
 
-```{r}
-ggplot(gapminder, aes(x = year, y = lifeExp)) +
-    geom_smooth()
+```{r scatter-plot}
+ggplot(NHANES, aes(x = Height, y = Weight)) +
+  geom_point()
 ```
 
-What if we wanted to see another plot by pop over time:
+If we wanted to make another scatter plot of some of variables, we would normally
+have to type out all that code again. But instead, we could make a function of
+it! So let's get it into function form:
 
-```{r}
-ggplot(gapminder, aes(x = year, y = pop)) +
-    geom_smooth()
-```
-
-Or another plot... and so on. This starts getting a bit tedious, as you are just
-copying and pasting. There is a better way! Convert it into a function! The
-typical process for converting code into a function is first to write the code
-and make sure it works. Then wrap it in a function. And start replacing the
-variable names with the arguments. So:
-
-```{r, eval=FALSE}
-# First this:
-ggplot(gapminder, aes(x = year, y = pop)) +
-    geom_smooth()
-
-# Then this:
-plot_smooth <- function() {
-    plot <- ggplot(gapminder, aes(x = year, y = pop)) +
-        geom_smooth()
-    return(plot)
-}
-
-# Then lastly this:
-plot_smooth <- function(data, xvar, yvar) {
-    plot <- ggplot(data, aes(x = xvar, y = yvar)) +
-        geom_smooth()
-    return(plot)
+```{r plot-function-template, eval=FALSE}
+scatter_plot <- function() {
+  scatter <- ggplot(NHANES, aes(x = Height, y = Weight) +
+    geom_point()
+  return(scatter)
 }
 ```
 
-But, this function won't work! That's because there is a tricky bit that you
-will quickly encounter in R... And that is called non-standard evaluation (NSE; check
-out [here](https://cran.r-project.org/web/packages/lazyeval/vignettes/lazyeval.html)
-or [here](https://dplyr.tidyverse.org/articles/programming.html) for more indepth
-look at what non-standard evaluation is). Because ggplot2 uses NSE, you will
-have to do things slightly differently. The `aes` in ggplot2 uses NSE. So you have 
-to use `aes_string` instead.
+Then let's add in the arguments and try it out!
 
-```{r}
-plot_smooth <- function(data, xvar, yvar) {
-    plot <- ggplot(data, aes_string(x = xvar, y = yvar)) +
-        geom_smooth()
-    return(plot)
+```{r plot-function-arguments}
+scatter_plot <- function(.dataset, .xvar, .yvar) {
+  scatter <- ggplot(.dataset, aes(x = .xvar, y = .yvar)) +
+    geom_point()
+  return(scatter)
 }
-plot_smooth(gapminder, "year", "lifeExp")
-plot_smooth(gapminder, "year", "pop")
+```
+
+I created arguments that begin with `.`. This is mostly personal preference, but
+I like it because it makes it easier to see in the code what is an argument for
+this function. But you could just as easily not use the `.`. Ok, let's try out the
+function.
+
+```{r try-out-function, error=TRUE}
+scatter_plot(NHANES, Height, Weight)
+```
+
+Oops! What happened? We had an error... We've actually encountered a problem from
+something called "[non-standard evaluation]" (or NSE). NSE is very commonly used
+in most tidyverse packages like ggplot2, as well as throughout base R. When
+creating functions, NSE can be difficult to work around, but for everyday use 
+it is incredibly useful! 
+
+[non-standard evaluation]: http://adv-r.had.co.nz/Computing-on-the-language.html
+
+For instance, NSE is what allows you to use formulas
+(e.g. `y ~ x + x2` in modelling) or allows you to type out `library(ggplot2)`.
+In other programming languages, it would be `library("ggplot2")` and the use of
+formulas wouldn't work. So it gives a lot of flexibility when doing data
+analysis, but can give some headaches when programming in R. 
+
+The reason it doesn't work here is R thinks that it needs to look for the `Height`
+variable as an object in R... but what we *mean* is to use the `Height` as a
+variable *in the dataset*. This applies for `Weight` as well. In normal ggplot2,
+it uses NSE to see `Height` and interpret it was us meaning *Height in the dataset*.
+
+To work around this, thankfully the developers of tidyverse created a way to
+easily work with NSE in functions, with the "curly-curly" (`{{`) function. We
+fix the problem by wrapping the arguments in the function with curly-curly:
+
+```{r plot-function-curly-curly}
+scatter_plot <- function(.dataset, .xvar, .yvar) {
+  scatter <- ggplot(.dataset, aes(x = {{.xvar}}, y = {{.yvar}})) +
+    geom_point()
+  return(scatter)
+}
+scatter_plot(NHANES, Height, Weight)
+
+# Try with different variables
+scatter_plot(NHANES, Age, Height)
+```
+
+Nice! Ok, next step is to be explicit about using ggplot2 for functions. This is
+a good practice to use after you've created your function. Explicitly
+indicating which functions come from which package is important, since you
+shouldn't use `library()` calls in your function. We be explicit by using the
+`packagename::function_name()` format (you don't need to do this for base R
+functions, only those from packages). 
+
+```{r plot-function-ggplot2-explicit}
+scatter_plot <- function(.dataset, .xvar, .yvar) {
+  scatter <- ggplot2::ggplot(.dataset, ggplot2::aes(x = {{.xvar}}, y = {{.yvar}})) +
+    ggplot2::geom_point()
+  return(scatter)
+}
+# Check that it still works.
+scatter_plot(NHANES, Height, Weight)
+```
+
+Then, let's add the roxygen documentation (`Ctrl-Alt-Shift-R`) and fill it in:
+
+```{r plot-function-documentation}
+#' Create a scatter plot of two continuous variables.
+#'
+#' @param .dataset Data to plot.
+#' @param .xvar Variable for the x axis.
+#' @param .yvar Variable for the y axis.
+#'
+#' @return Creates a ggplot.
+#'
+scatter_plot <- function(.dataset, .xvar, .yvar) {
+  scatter <- ggplot2::ggplot(.dataset, ggplot2::aes(x = {{.xvar}}, y = {{.yvar}})) +
+    ggplot2::geom_point()
+  return(scatter)
+}
 ```
 
 If you want to make sure that who ever uses your function will not use a wrong 
 argument, you can use "defensive programming" via the `stopifnot()` function.
-This forces the code to only work if `xvar` and `yvar` are character (e.g. `"this"`)
-argument.
+For instance, for this function you can say, always include the x and y variables
+(don't have them missing):
 
-```{r}
-plot_smooth <- function(data, xvar, yvar) {
-    stopifnot(is.character(xvar), is.character(yvar))
-    plot <- ggplot(data, aes_string(x = xvar, y = yvar)) +
-        geom_smooth()
-    return(plot)
+```{r plot-function-stopifnot}
+#' Create a scatter plot of two continuous variables.
+#'
+#' @param .dataset Data to plot.
+#' @param .xvar Variable for the x axis.
+#' @param .yvar Variable for the y axis.
+#'
+#' @return Creates a ggplot.
+#'
+scatter_plot <- function(.dataset, .xvar, .yvar) {
+  stopifnot(!missing(.xvar), !missing(.yvar))
+  scatter <- ggplot2::ggplot(.dataset, ggplot2::aes(x = {{.xvar}}, y = {{.yvar}})) +
+    ggplot2::geom_point()
+  return(scatter)
 }
+scatter_plot(NHANES, Height, Weight)
 ```
 
-This NSE evaluation also happens in a popular package called dplyr. If we wanted
-to do a common analysis or data wrangling like so:
+There are many more tools for "defensive programming" and it could be a session
+on its own, but here we just introduce it.
 
-```{r}
-library(dplyr)
-gapminder %>% 
-    select(continent, year, pop) %>% 
-    group_by(continent, year) %>% 
-    summarise(mean(pop))
-```
+A massive advantage of using functions is that if you want to make a change to all
+your code, you can very easily do it in the R function and it will change all 
+your other code too! So let's say we want to change the plot theme, so it looks
+better:
 
-... and do this again but change `pop` to another variable, we can create a function.
-
-```{r}
-# First:
-gapminder %>% 
-    select(continent, year, pop) %>% 
-    group_by(continent, year) %>% 
-    summarise(mean(pop))
-
-# Then:
-mean_by_continent <- function() {
-    by_continent <- gapminder %>%
-        select(continent, year, pop) %>%
-        group_by(continent, year) %>%
-        summarise(mean(pop))
-    return(by_continent)
+```{r plot-function-add-more}
+#' Create a scatter plot of two continuous variables.
+#'
+#' @param .dataset Data to plot.
+#' @param .xvar Variable for the x axis.
+#' @param .yvar Variable for the y axis.
+#'
+#' @return Creates a ggplot.
+#'
+scatter_plot <- function(.dataset, .xvar, .yvar) {
+  stopifnot(!missing(.xvar), !missing(.yvar))
+  scatter <- ggplot2::ggplot(.dataset, ggplot2::aes(x = {{.xvar}}, y = {{.yvar}})) +
+    ggplot2::geom_point() +
+    ggplot2::theme_minimal()
+  return(scatter)
 }
-
-# Finally:
-mean_by_continent <- function(data, variable) {
-    by_continent <- data %>%
-        select(continent, year, variable) %>%
-        group_by(continent, year) %>%
-        summarise(mean(variable))
-    return(by_continent)
-}
+scatter_plot(NHANES, Height, Weight)
 ```
 
-... then use dplyr's standard evaluation functions, which are usually the function
-with a `_at` or `_if` or other variation of that at the end...
-
-```{r}
-mean_by_continent <- function(data, variable) {
-    by_continent <- data %>%
-        select_at(c("continent", "year", variable)) %>%
-        group_by(continent, year) %>%
-        # This needs to change order a bit, since the mean will be applied to
-        # the variable.
-        summarise_at(variable, mean)
-    return(by_continent)
-}
-```
-
-And we can use it:
-
-```{r}
-mean_by_continent(gapminder, "lifeExp")
-mean_by_continent(gapminder, "pop")
-mean_by_continent(gapminder, c("pop", "lifeExp"))
-```
-
-Send the output to create a table!
-
-```{r}
-mean_by_continent(gapminder, "lifeExp") %>% 
-    head() %>% 
-    knitr::kable(caption = "Table caption here")
-```
-
-We can even use both our functions together!
-
-```{r}
-mean_by_continent(gapminder, "lifeExp") %>% 
-    plot_smooth("year", "lifeExp")
-```
-
+You now have an idea on how to make a basic function!
