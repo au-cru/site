@@ -13,6 +13,10 @@ tags:
   - efficiency
   - tidy code
   - don't repeat yourself
+description: >
+  Do you write code multiple times that only slightly changes each time you write
+  (or copy and paste) it? Learn how to not repeat yourself by writing your own
+  functions!
 ---
 
 ```{r setup, include=FALSE}
@@ -219,7 +223,7 @@ variable *in the dataset*. This applies for `Weight` as well. In normal ggplot2,
 it uses NSE to see `Height` and interpret it was us meaning *Height in the dataset*.
 
 To work around this, thankfully the developers of tidyverse created a way to
-easily work with NSE in functions, with the "curly-curly" (`{{`) function. We
+easily work with NSE in functions, with the "curly-curly" (`{{ }}`) function. We
 fix the problem by wrapping the arguments in the function with curly-curly:
 
 ```{r plot-function-curly-curly}
