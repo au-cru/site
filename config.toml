@@ -41,13 +41,12 @@ paginate = 10
     url  = "/surveys/"
     weight = 4
 
-# Top bar social links menu
-
-[[menu.topbar]]
-    weight = 1
-    name = "GitHub"
+[[menu.main]]
+    pre = "<i class='fab fa-github'></i>"
     url = "https://github.com/au-cru"
-    pre = "<i class='fab fa-2x fa-github'></i>"
+    weight = 5
+
+# Top bar social links menu
 
 #[[menu.topbar]]
 #    weight = 2
