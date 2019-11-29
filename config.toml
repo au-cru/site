@@ -64,7 +64,7 @@ paginate = 10
     viewMorePostLink = "/material/"
     author = "AU CRU"
     defaultKeywords = ["au-cru", "programming", "rstats", "r"]
-    defaultDescription = "Site for the AU Community of Research Software Users."
+    defaultDescription = "Site for the AU Community of Researchers Using Open Software."
 
     # Twitter
     twitter = ""
