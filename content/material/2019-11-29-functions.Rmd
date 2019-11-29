@@ -32,6 +32,8 @@ source(here::here("R/utils-for-content.R"))
 Before we begin, we'll set up an R project, create a folder named `R/`, and then
 create a new file in the `R/` folder of the project.
 
+### Basic structure of a function
+
 In R, all actions are functions. For instance, the `+` is a function, `mean()`
 is a function, `[]` is a function, and so on. So creating your functions can
 make doing your work easier and more efficient. Making functions always has a
@@ -129,16 +131,12 @@ add_nums <- function(num1, num2) {
 ```
 
 This is the very basics of making a function. But let's get to something more
-useful!
-
-### Functions to wrangle
-
-Let's do something you might actually do in a data analysis project. Let's 
+useful! Let's do something you might actually do in a data analysis project. Let's 
 suppose you want to create a scatter plot of two variables in a dataset, that you may
 want to include as a figure in a report or maybe to use while you explore the
 data. 
 
-A typical workflow for creating a function is to:
+### Typical workflow for creating functions
 
 1. Write the code as you normally would and make sure it does what you want.
 1. Set up the function structure and put the code into the function. Make sure
@@ -156,6 +154,8 @@ If it doesn't work, try 5 again.
 1. Finally, add the documentation to the function so you remember what it was for.
 1. To make your function more "secure", you could be "defensive" and add checks 
 that your arguments are used appropriately.
+
+### More practical example
 
 Alright, let's try with making a graph. We'll use the NHANES dataset from the NHANES
 package, plus we're going to use ggplot2, so let's load them up!
@@ -323,4 +323,23 @@ scatter_plot <- function(.dataset, .xvar, .yvar) {
 scatter_plot(NHANES, Height, Weight)
 ```
 
-You now have an idea on how to make a basic function!
+You now have an idea on how to make a basic function! Try it out in this exercise:
+
+## Exericse
+
+Copy and paste this code into your R script and rearrange the code and create
+it into its own function. Name the four arguments `.dataset`, `.xvar`, `.yvar`,
+and `.groupvar`.
+
+```{r exercise-code, eval=FALSE}
+ggplot(NHANES, aes(x = Height, y = Weight, colour = Gender)) +
+  geom_point(size = 2, alpha = 0.3) +
+  scale_colour_viridis_d(option = "B", begin = 0.2, end = 0.7) +
+  theme_minimal() +
+  theme(text = element_text(colour = "grey40"))
+
+scatter_by_group <- ___(___, ___, ___, ___) {
+  
+}
+```
+
