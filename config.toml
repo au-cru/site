@@ -28,23 +28,35 @@ paginate = 10
 [[menu.main]]
     identifier = "material"
     name = "Content"
+    pre = ""
     url  = "/material/"
     weight = 2
 
 [[menu.main]]
     name = "More Info"
+    pre = ""
     url  = "/more-info/"
     weight = 3
 
 [[menu.main]]
     name = "Surveys"
+    pre = ""
     url  = "/surveys/"
     weight = 4
 
 [[menu.main]]
+    identifier = "github"
+    name = ""
     pre = "<i class='fab fa-github'></i>"
     url = "https://github.com/au-cru"
     weight = 5
+
+[[menu.main]]
+    identifier = "twitter"
+    name = ""
+    pre = "<i class='fab fa-twitter'></i>"
+    url = "https://twitter.com/aucru"
+    weight = 6
 
 # Top bar social links menu
 
@@ -53,12 +65,6 @@ paginate = 10
 #    name = "Facebook"
 #    url = "http://facebook.com"
 #    pre = "<i class='fa fa-2x fa-facebook'></i>"
-
-#[[menu.topbar]]
-#    weight = 3
-#    name = "Twitter"
-#    url = "http://twitter.com"
-#    pre = "<i class='fa fa-2x fa-twitter'></i>"
 
 [params]
     viewMorePostLink = "/material/"

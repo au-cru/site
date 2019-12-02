@@ -31,10 +31,8 @@
                         <li><a href="{{ .URL }}">{{ .Name }}</a></li>
                       {{ end }}
                     </ul>
-                    {{ else if .Pre }}
-                    <a href="{{ .URL }}">{{ .Pre }}</a>
                     {{ else }}
-                    <a href="{{ .URL }}">{{ .Name }}</a>
+                    <a href="{{ .URL }}">{{ .Pre }}{{ .Name }}</a>
                     {{ end  }}
                   </li>
                   {{ end }}
