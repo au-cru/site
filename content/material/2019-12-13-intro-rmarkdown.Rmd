@@ -77,7 +77,37 @@ coding and putting your results in the document, or in searching where you put y
 actually got from the analysis.
 4. Its actually a lot of fun! ;)
 
-Let's get to learning about R Markdown!
+
+## What is R Markdown?
+
+A [markup syntax](https://en.wikipedia.org/wiki/Markup_language) that allows you to write a plain text (e.g. R code and scripts) document that can convert to a range of document formats, such as Word, PDF, html.
+
+In R Markdown it is possible to write text and integrate it with code. In R scripts you would need to use `#`so that your comments are not read as code. 
+
+In R and R Markdown, the software that allows the conversion from R code into different document formats is called [pandoc](http://pandoc.org/index.html).  
+
+
+Let's get to learning how to use R Markdown!
+
+
+
+## The best part! Inserting R code
+
+One of the most powerful and useful features of Rmarkdown, is its ability to
+combine text and code in the same document! You can insert plots by including a
+code chunk like below. The options added to the code chunk tell it to add a
+caption, and set the height and width of the figure.
+
+<pre class="markdown"><code>&#96;&#96;&#96;{r plot_sepal, fig.cap="Figure title here", fig.height=8, fig.width=8, echo=FALSE}
+plot(Sepal.Length ~ Sepal.Width, data = iris)
+&#96;&#96;&#96;
+</code></pre>
+
+```{r intro_rmd_plot_sepal, fig.cap="Figure title here", fig.height=8, fig.width=8, echo=FALSE}
+plot(Sepal.Length ~ Sepal.Width, data = iris)
+```
+
+
 
 ## Markdown syntax
 
