@@ -3,6 +3,7 @@ title: "Reproducible reports with R Markdown"
 author:
   - "Luke W. Johnston"
   - "Maria Izabel Cavassim Alves (contributed)"
+  - "Sara Tomiolo"
 date: "2019-12-13"
 categories:
   - Beginner
@@ -51,23 +52,30 @@ install.packages("rmarkdown")
 
 ## Why try to be reproducible?
 
-Well, first thing, reproducibility and replicability is a cornerstone of doing
-science. However, the current concept of reproducibility relates more to
-computational reproducibility: Hypothetically, if you gave someone your data,
+First of a couple of definitions to avoid confusion: 
+
+**Replicability**: Repeating a study by performing independently an identical study.
+
+**Reproducibility**: Generating the same exact results when using the same data and code. Hypothetically, if you gave someone your data,
 your code, and your paper, would they be able to generate the exact same numbers
-you report in your manuscript and in your tables and figures? Research shows
+you report in your manuscript and in your tables and figures
+
+
+Research shows
 that this is not at all the case... even when the same researcher tries to
-reproducible their own paper!
+reproducible their own paper! A recent [survey](https://www.nature.com/news/polopoly_fs/1.19970!/menu/main/topColumns/topLeftColumn/pdf/533452a.pdf) indicated that 70% of researchers failed to reproduce another scientist's experiment and more than 50% was not able to reproduce their own results.  
+
+
 
 Being reproducible and writing a reproducible document/manuscript does several
 things for you:
 
 1. Makes your science better.
-1. Makes you more efficient and productive, since less time is spent between
-coding and putting your results in the document.
-1. Makes you more confident in your results, since what you report is what you 
+2. [Makes you more efficient and productive](https://twitter.com/kcranstn/status/370914072511791104), since less time is spent between
+coding and putting your results in the document, or in searching where you put your code, your graphs and your manuscript. 
+3. Makes you more confident in your results, since what you report is what you 
 actually got from the analysis.
-1. Its actually a lot of fun! ;)
+4. Its actually a lot of fun! ;)
 
 Let's get to learning about R Markdown!
 
