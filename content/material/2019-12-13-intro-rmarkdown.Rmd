@@ -34,10 +34,10 @@ install.packages("rmarkdown")
 ### Objectives
 
 1. To become aware of the importance of reproducibility of data analyses.
-1. To learn how to generate high quality reports that can be shared with a broader audience.
-1. To create reproducible documents interwoven with R code that can be run on updated or different data sets.
-1. To use Rstudio not as a data science tool but also as a text editor and compiler!
-1. To know where to go for continued learning.
+2. To learn how to generate high quality reports that can be shared with a broader audience.
+3. To create reproducible documents interwoven with R code that can be run on updated or different data sets.
+4. To use Rstudio not as a data science tool but also as a text editor and compiler!
+5. To know where to go for continued learning.
 
 **At the end of this session you will be able**:
 
@@ -98,6 +98,10 @@ combine text and code in the same document! You can insert plots by including a
 code chunk like below. The options added to the code chunk tell it to add a
 caption, and set the height and width of the figure.
 
+We do this by inserting a `code chunk`. A code chunk can be inserted pressing 
+`Ctrl + Alt + I` or `Cmd + Option + I` for Mac users.
+
+
 <pre class="markdown"><code>&#96;&#96;&#96;{r plot_sepal, fig.cap="Figure title here", fig.height=8, fig.width=8, echo=FALSE}
 plot(Sepal.Length ~ Sepal.Width, data = iris)
 &#96;&#96;&#96;
@@ -109,7 +113,87 @@ plot(Sepal.Length ~ Sepal.Width, data = iris)
 
 
 
+You can also hide the code chunk but keep the output by using the `echo=FALSE` option:
+
+<pre class="markdown"><code>&#96;&#96;&#96;{r, echo=FALSE}
+cor(iris$Sepal.Length, iris$Sepal.Width)
+&#96;&#96;&#96;
+</code></pre>
+
+```{r, echo=FALSE}
+cor(iris$Sepal.Length, iris$Sepal.Width)
+```
+
+In this case we want to keep the code chunk visible and we also want to add some comments
+regarding our graph. 
+
+You can also create tables by using the `kable()` function in the knitr package.
+
+<pre class="markdown"><code>&#96;&#96;&#96;{r}
+knitr::kable(head(iris), caption = "Table caption here")
+&#96;&#96;&#96;
+</code></pre>
+
+```{r, echo=FALSE}
+knitr::kable(head(iris), caption = "Table caption here")
+```
+
+The `knitr::` part of the code tells R where the `kable` function comes from. So
+the `::` is telling R "hey, look in the knitr package for the kable function".
+
+For small and not too complex tables, you can also create it outside of a R
+chunk using the Markdown syntax:
+
+```
+|       &nbsp;       | diverged | polymorphic |
+|:------------------:|:--------:|:-----------:|
+|   **synonymous**   |   1300   |    2109     |
+| **non-synonymous** |   700    |     891     |
+```
+
+gives...
+
+|       &nbsp;       | diverged | polymorphic |
+|:------------------:|:--------:|:-----------:|
+|   **synonymous**   |   1300   |    2109     |
+| **non-synonymous** |   700    |     891     |
+
+
+
+
+### Exercise: Create a plot and add a table to your R Markdown document
+
+Time: 10 min
+
+Open RStudio and create an `R Markdown` document:
+
+**File -> New File -> R Markdown**
+Save the file and call the file `exercise.Rmd`
+
+Create a chunck of code and create a plot using the database `CO2`. 
+
+
+1. Use `names(CO2)` to find the names of columns from the CO2 dataset. Choose
+two columns. Create a code chunk with a caption `fig.cap` option and the
+`fig.width` of 10 and a `fig.height` of 6. Include in the code chunk the
+function, replacing the `__` with the two columns you chose:
+
+    ```{r, eval=FALSE}
+    ggplot(CO2, aes(x =___, y = ___)) +
+      geom____()
+    ```
+
+2. Create a table of the `head()` of the `CO2` dataset using the R function
+`knitr::kable()`.
+
+3. Add a few lines of text underneath your graph
+
+Compile your document by pressing the icon `Knit to HTML` or by typing `Ctrl-Shift-K`.
+
 ## Markdown syntax
+
+Similarly to a text editor, R Markdown allows you to modify and customize the syntax.
+
 
 ### Headers 
 
@@ -187,12 +271,9 @@ One can also create quotes:
 
 Time: 10 min
 
-Open RStudio and create an `R Markdown` document:
 
-**File -> New File -> R Markdown**
-
-Save the file and call the file `exercise.Rmd`. In the R Markdown document,
-include the following "Header 1" `#` sections:
+In your R Markdown document, add the sections of your future manuscript.
+Include the following "Header 1" `#` sections:
 
 - Abstract
 - Introduction
@@ -201,7 +282,7 @@ include the following "Header 1" `#` sections:
 - Discussion
 - Conclusion
 
-Compile it by pressing the icon `Knit to HTML` or by typing `Ctrl-Shift-K`. Then:
+
 
 - Write some random words below the **Abstract section**, while using bold and
 italics.
@@ -210,7 +291,7 @@ objectives.
 - Include a "Header 2" (`##`) called "Statistical analysis" below "Material and
 Methods".
 
-Compile ("knit"") the document again and see what happens.
+Compile it by pressing the icon `Knit to HTML` or by typing `Ctrl-Shift-K`. 
 
 ### Adding footnotes, pictures, and links to your document
 
@@ -259,64 +340,8 @@ find in your PC).
 2. Include a footnote.
 3. Include the link of the AUOC webpage (`https://au-oc.github.io`) in your document.
  
-## The best part! Inserting R code
 
-One of the most powerful and useful features of Rmarkdown, is its ability to
-combine text and code in the same document! You can insert plots by including a
-code chunk like below. The options added to the code chunk tell it to add a
-caption, and set the height and width of the figure.
-
-<pre class="markdown"><code>&#96;&#96;&#96;{r plot_sepal, fig.cap="Figure title here", fig.height=8, fig.width=8, echo=FALSE}
-plot(Sepal.Length ~ Sepal.Width, data = iris)
-&#96;&#96;&#96;
-</code></pre>
-
-```{r intro_rmd_plot_sepal, fig.cap="Figure title here", fig.height=8, fig.width=8, echo=FALSE}
-plot(Sepal.Length ~ Sepal.Width, data = iris)
-```
-
-
-You can also create tables by using the `kable()` function in the knitr package.
-
-<pre class="markdown"><code>&#96;&#96;&#96;{r}
-knitr::kable(head(iris), caption = "Table caption here")
-&#96;&#96;&#96;
-</code></pre>
-
-```{r, echo=FALSE}
-knitr::kable(head(iris), caption = "Table caption here")
-```
-
-The `knitr::` part of the code tells R where the `kable` function comes from. So
-the `::` is telling R "hey, look in the knitr package for the kable function".
-
-For small and not too complex tables, you can also create it outside of a R
-chunk using the Markdown syntax:
-
-```
-|       &nbsp;       | diverged | polymorphic |
-|:------------------:|:--------:|:-----------:|
-|   **synonymous**   |   1300   |    2109     |
-| **non-synonymous** |   700    |     891     |
-```
-
-gives...
-
-|       &nbsp;       | diverged | polymorphic |
-|:------------------:|:--------:|:-----------:|
-|   **synonymous**   |   1300   |    2109     |
-| **non-synonymous** |   700    |     891     |
-
-You can hide the code chunk but keep the output by using the `echo=FALSE` option:
-
-<pre class="markdown"><code>&#96;&#96;&#96;{r, echo=FALSE}
-cor(iris$Sepal.Length, iris$Sepal.Width)
-&#96;&#96;&#96;
-</code></pre>
-
-```{r, echo=FALSE}
-cor(iris$Sepal.Length, iris$Sepal.Width)
-```
+**Starting from here I feel that we are adding too much stuff.... i.e. inline code, citing literature and adding themes**
 
 ### Inline R code
 
@@ -329,33 +354,6 @@ numbers into the text of the document. By using something like:
 >
 > The mean of the sepal length is `r round(mean(iris$Sepal.Length), 2)`.
 
-### Exercise: Add a plot and table to "Results"
-
-Time: 10 min
-
-You now need to create a chunck of code in the **Results section**. If you have
-any plot from your own research that you want to create feel free to do it so.
-Otherwise you can just use the iris data:
-
-1. Use `names(CO2)` to find the names of columns from the CO2 dataset. Choose
-two columns. Create a code chunk with a caption `fig.cap` option and the
-`fig.width` of 10 and a `fig.height` of 6. Include in the code chunk the
-function, replacing the `__` with the two columns you chose:
-
-    ```{r, eval=FALSE}
-    plot(___ ~ ___, data = CO2)
-    ```
-
-2. Create a table of the `head()` of the `CO2` dataset using the R function
-`knitr::kable()`.
-3. Create an inline R code that shows the sum of 2 plus 2 (`2 + 2`).
-4. Try to make a similar table as the one below, but using your own Markdown
-syntax in your document.
-
-| Weather | Activity |
-|---------|----------|
-| Sunny | Beach or biking |
-| Snowy | Movies or reading |
 
 ## Other features
 
@@ -386,6 +384,8 @@ output:
         theme: sandstone
 ---
 ```
+
+
 
 Check out the R Markdown
 [documentation](https://bookdown.org/yihui/rmarkdown/html-document.html#appearance-and-style)
