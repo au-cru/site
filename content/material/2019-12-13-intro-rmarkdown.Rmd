@@ -341,49 +341,49 @@ find in your PC).
 3. Include the link of the AUOC webpage (`https://au-oc.github.io`) in your document.
  
 
-**Starting from here I feel that we are adding too much stuff.... i.e. inline code, citing literature and adding themes**
+<!-- **Starting from here I feel that we are adding too much stuff.... i.e. inline code, citing literature and adding themes** -->
 
-### Inline R code
+<!-- ### Inline R code -->
 
-You can also include R code within the text. You can use this to directly insert
-numbers into the text of the document. By using something like:
+<!-- You can also include R code within the text. You can use this to directly insert -->
+<!-- numbers into the text of the document. By using something like: -->
 
-> The mean of the sepal length is <code>&#96;r round(mean(iris$Sepal.Length), 2)&#96;</code>.
->
-> Gives...
->
-> The mean of the sepal length is `r round(mean(iris$Sepal.Length), 2)`.
+<!-- > The mean of the sepal length is <code>&#96;r round(mean(iris$Sepal.Length), 2)&#96;</code>. -->
+<!-- > -->
+<!-- > Gives... -->
+<!-- > -->
+<!-- > The mean of the sepal length is `r round(mean(iris$Sepal.Length), 2)`. -->
 
 
-## Other features
+<!-- ## Other features -->
 
-### Citing literature with Rmarkdown
+<!-- ### Citing literature with Rmarkdown -->
 
-If you want to insert a citation use `[@Hoejsgaard2006a]` to get it to look
-like: [@Hoejsgaard2006a]... the reference is then inserted onto the bottom of
-the document. You need to add a line to the YAML header like this:
+<!-- If you want to insert a citation use `[@Hoejsgaard2006a]` to get it to look -->
+<!-- like: [@Hoejsgaard2006a]... the reference is then inserted onto the bottom of -->
+<!-- the document. You need to add a line to the YAML header like this: -->
 
-```
----
-title: "My report"
-author: "Me!"
-bibliography: my_references.bib
----
-```
+<!-- ``` -->
+<!-- --- -->
+<!-- title: "My report" -->
+<!-- author: "Me!" -->
+<!-- bibliography: my_references.bib -->
+<!-- --- -->
+<!-- ``` -->
 
-### Making your report prettier
+<!-- ### Making your report prettier -->
 
-This really only applies to HTML and PDF[^tinytex] documents. If you want to change the 
-theme, add an option to the YAML header so it looks like:
+<!-- This really only applies to HTML and PDF[^tinytex] documents. If you want to change the  -->
+<!-- theme, add an option to the YAML header so it looks like: -->
 
-```
----
-title: "My report"
-output:
-    html_document:
-        theme: sandstone
----
-```
+<!-- ``` -->
+<!-- --- -->
+<!-- title: "My report" -->
+<!-- output: -->
+<!--     html_document: -->
+<!--         theme: sandstone -->
+<!-- --- -->
+<!-- ``` -->
 
 
 
