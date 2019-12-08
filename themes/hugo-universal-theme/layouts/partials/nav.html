@@ -32,14 +32,8 @@
                       {{ end }}
                     </ul>
                     {{ else }}
-                    <a href="{{ .URL }}">{{ .Name }}</a>
+                    <a href="{{ .URL }}">{{ .Pre }}{{ .Name }}</a>
                     {{ end  }}
-                  </li>
-                  {{ end }}
-
-                  {{ range .Site.Menus.topbar.ByWeight }}
-                  <li>
-                    <a href="{{ .URL }}" target="_blank" style="opacity: 1;">{{ .Pre }}</a>
                   </li>
                   {{ end }}
                 </ul>

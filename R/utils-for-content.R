@@ -5,5 +5,6 @@ knitr::opts_chunk$set(
   fig.height = 5,
   fig.width = 5,
   fig.align = "center",
-  collapse = TRUE
+  collapse = TRUE,
+  warning = FALSE
 )

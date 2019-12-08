@@ -4,6 +4,9 @@ author:
   - "Sara Tomiolo"
   - "Luke W. Johnston"
 date: "2019-11-15"
+description: >
+  Learn about the basics of managing and wrangling your data using the powerful
+  dplyr package.
 categories:
   - Beginner
   - R
@@ -14,15 +17,8 @@ tags:
   - data management
 ---
 
-> NOTE: This is still in development.
-
 ```{r setup, echo=FALSE}
 source(here::here("R/utils-for-content.R"))
-knitr::opts_chunk$set(eval = FALSE)
-```
-
-```{r, eval=FALSE}
-install.packages("dplyr")
 ```
 
 ### Objectives
@@ -39,6 +35,11 @@ install.packages("dplyr")
 4. To order data by variable using dplyr function `arrange()`.
 5. To provide a simple data summary using dplyr functions `group_by()` and `summarise()`.
 
+Make sure to install:
+
+```{r, eval=FALSE}
+install.packages("dplyr")
+```
 
 ## Resources for learning and help
 
@@ -111,16 +112,13 @@ ___ <- as_tibble(___)
 - Each observation has its own row
 - Each value has its own cell
 
-```{r}
-library(tidyr)
-library(dplyr)
-```
-
 Look at the structure of the toy tidyr datasets `table1`, `table3`, and `table4a`. Which is tidy? 
 
 ```{r}
 table1
+
 table3
+
 table4a
 ```
 
@@ -144,12 +142,13 @@ You can run multiple lines of code, which may clutter your workspace.
 You can nest multiple operations using parentheses, which is doable but may become complicated to read and follow
 
 ```{r}
-
 # normal R way of nesting functions
 head(glimpse(table1))
 
 # the pipe way of linking functions
-table1 %>% glimpse() %>% head()
+table1 %>% 
+  glimpse() %>% 
+  head()
 ```
 
 - This operator, called pipe, takes the output of one function  and sends it directly to the next one. This is particularly useful when you are doing many operations on the same dataset.
@@ -164,7 +163,9 @@ In this case glimpse table1 and **then** visualize the first 10 lines.
 head(glimpse(table1))
 
 # the pipe way of linking functions
-table1 %>% glimpse() %>% head()
+table1 %>% 
+  glimpse() %>% 
+  head()
 ```
 
 ## Transforming or adding variables: `mutate()`

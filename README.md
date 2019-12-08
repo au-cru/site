@@ -1,4 +1,4 @@
-# Aarhus University Community of Research Software Users
+# Aarhus University Community of Researchers Using Open Software
 
 <!-- badges: start -->
 [![Travis build status](https://travis-ci.org/au-cru/site.svg?branch=master)](https://travis-ci.org/au-cru/site)

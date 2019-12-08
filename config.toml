@@ -28,26 +28,37 @@ paginate = 10
 [[menu.main]]
     identifier = "material"
     name = "Content"
+    pre = ""
     url  = "/material/"
     weight = 2
 
 [[menu.main]]
     name = "More Info"
+    pre = ""
     url  = "/more-info/"
     weight = 3
 
 [[menu.main]]
     name = "Surveys"
+    pre = ""
     url  = "/surveys/"
     weight = 4
 
-# Top bar social links menu
-
-[[menu.topbar]]
-    weight = 1
-    name = "GitHub"
+[[menu.main]]
+    identifier = "github"
+    name = ""
+    pre = "<i class='fab fa-github'></i>"
     url = "https://github.com/au-cru"
-    pre = "<i class='fab fa-2x fa-github'></i>"
+    weight = 5
+
+[[menu.main]]
+    identifier = "twitter"
+    name = ""
+    pre = "<i class='fab fa-twitter'></i>"
+    url = "https://twitter.com/aucru"
+    weight = 6
+
+# Top bar social links menu
 
 #[[menu.topbar]]
 #    weight = 2
@@ -55,17 +66,11 @@ paginate = 10
 #    url = "http://facebook.com"
 #    pre = "<i class='fa fa-2x fa-facebook'></i>"
 
-#[[menu.topbar]]
-#    weight = 3
-#    name = "Twitter"
-#    url = "http://twitter.com"
-#    pre = "<i class='fa fa-2x fa-twitter'></i>"
-
 [params]
     viewMorePostLink = "/material/"
     author = "AU CRU"
     defaultKeywords = ["au-cru", "programming", "rstats", "r"]
-    defaultDescription = "Site for the AU Community of Research Software Users."
+    defaultDescription = "Site for the AU Community of Researchers Using Open Software."
 
     # Twitter
     twitter = ""
@@ -105,6 +110,11 @@ paginate = 10
     latitude = "-12.043333"
     longitude = "-77.028333"
 
+    highlightjsVersion = "9.16.0"
+    highlightjsCDN = "//cdnjs.cloudflare.com/ajax/libs"
+    highlightjsLang = ["r", "markdown", "yaml"]
+    highlightjsTheme = "github"
+
 [Permalinks]
     blog = "/material/:year/:month/:day/:filename/"
 
@@ -129,7 +139,7 @@ paginate = 10
     enable = true
     title = "Upcoming events"
     subtitle = """
-NOTE: We're still updating this website, so please bare with us :)
+Check out the <a href="past-events/">Past Events</a> page for a listing of what we've done so far.
 <br><br>Sessions are subject to change depending on instructor or room availability and any other unforeseen events, but we'll send out emails about any changes about the event as soon as we are able.
 <br><br>We are always looking for instructors, so please
 <a href='https://docs.google.com/spreadsheets/d/15QptbsH4z1efB_LFG6vTq631iy_lUoQccdYWVm389QU/edit?usp=sharing'>sign yourself up</a> if you are interested.

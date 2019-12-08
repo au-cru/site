@@ -1,0 +1,47 @@
+---
+title: "Past events"
+---
+
+```{r setup, include=FALSE}
+library(stringr)
+library(dplyr)
+library(purrr)
+library(lubridate)
+options(knitr.kable.NA = "")
+```
+
+```{r past-events, echo=FALSE, message=FALSE}
+current_date <- today()
+first_date <- ymd("2019-10-01")
+date_range <- seq(first_date, current_date, by = "days") %>%
+  as.character()
+
+# Extract only relevant event files ---------------------------------------
+
+pattern <-  str_c("^.*(", date_range, ").*.yaml$", collapse = "|")
+past_events <- fs::dir_ls(here::here("data/events"), regex = pattern)
+
+# Import event data and create table --------------------------------------
+
+# table_of_events <- 
+  past_events %>%
+  map(yaml::read_yaml) %>%
+  # Collapse multiple software values.
+  map(~ {
+    .x$software <- str_c(.x$software, collapse = ", ")
+    .x
+  }) %>%
+  map_dfr(as_tibble) %>% 
+  mutate(
+    software = if_else(!is.na(software) & software != "", glue::glue(" ({software})"), ""),
+    Title = glue::glue("{name}{software}"),
+    Level = str_to_title(level),
+    Time = as_datetime(start_date, tz = "Europe/Copenhagen"),
+    Time = stamp("March 1, 1999 at 22:10", quiet = TRUE)(Time),
+    Material = if_else(!is.na(link), glue::glue("[Link]({link})"), link)
+  ) %>%
+  select(Title, Level, Time, Where = location, Material) %>%
+  knitr::kable(format = "html") %>%
+  kableExtra::kable_styling(c("condensed", "striped"))
+```
+

@@ -66,6 +66,12 @@ Please use [the GitHub flow style][github-flow] to manage changes:
 7. If you receive feedback on your pull request, make further commits to the new
 branch on your fork. These will automatically be added to your pull request.
 
+For more reading and learning on creating and developing teaching material, see:
+
+- [The Carpentries Curriculum Development Handbook](https://cdh.carpentries.org/)
+- [Ten quick tips for creating an effective lesson](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1006915)
+- [Ten simple rules for collaborative lesson development](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005963)
+
 ## Teaching in class :information_desk_person: :speech_balloon:
 
 The Mozilla Science Study Group
@@ -106,6 +112,10 @@ try. :smile:
 Note: The lead organizer may provide feedback on your teaching. It isn't
 criticism, but rather are areas to improve and become a better teacher!
 :smiley_cat:
+
+For more reading and learning on teaching programming:
+
+- [Teaching Tech Together](http://teachtogether.tech/)
 
 ### More on "Participatory Live-Coding"
 
