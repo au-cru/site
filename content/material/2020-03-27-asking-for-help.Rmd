@@ -1,0 +1,144 @@
+---
+title: "Asking help in R"
+author:
+   - "Sara Tomiolo"
+   - "Luke W. Johnston"
+
+date: "2020-03-27"
+categories:
+  - Beginner
+  - R
+  - Code-along
+tags:
+  - R
+  - asking for help
+  - error messages
+  - reproducible examples
+  - reprex
+  - R Documentation
+  - Stackoverflow
+---
+
+> NOTE: This is still in development.
+
+```{r setup, echo=FALSE}
+source(here::here("R/utils-for-content.R"))
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+```{r, eval=FALSE}
+install.packages("rmarkdown")
+```
+
+
+### Objectives
+
+1. To become aware of the importance of reproducibility of data analyses.
+2. To learn how to generate high quality reports that can be shared with a broader audience.
+3. To create reproducible documents interwoven with R code that can be run on updated or different data sets.
+4. To use Rstudio not as a data science tool but also as a text editor and compiler!
+5. To know where to go for continued learning.
+
+**At the end of this session you will be able**:
+
+- Seek and find help using R studio interface.
+- Find answer to your R question in the internet.
+- Ask your peers help with your issue.
+- Create a reproducible example of your code using the package "reprex".
+
+## Resources for learning and help
+
+[Here for resources](/more-info/#resources)
+
+## Are expert coders supernatural?
+
+One often daunting aspect of learning R, or anything new for that matter, is getting 
+stuck and not knowing how and where to find help. It can be incredibly frustrating and time 
+consuming to find out what is the meaning of an error message we keep getting instead of our desired output, or navigating the internet searching for that function to tweak your graph, or just understanding why your code doesn't work.
+
+We often assume that experienced programmers and coders are supernatural creatures
+capable of retaining the entire R universe in their head, However, if you asked a skilled
+programmer or coder she will tell you that rather than being good at memorizing 
+(although that helps too), she is very good at google searching.
+
+Here we are sharing with you some resources and tips on how to ask help with R, that will jumpstart your learning journey.
+
+## There are several situations in which we may want to ask help with R
+
+### 1. You know what a function is for but you are not sure what are the arguments you need to use
+
+There are several ways to do that:
+
+- If you are working in R Studio, everytime you write the name of a function you want to use you will see several things happening:
+Say you want to work with the function `round()`. When you type it, you will see that if you hoover with the mouse on the function a small window pops up with some short information on your function, additionally, if you position the cursor inside the parenthesis and hit the `Tab` key, a brownish window will pop up with some more information about your function. In the window, you will be prompted to "Press F1 for additional help"
+
+
+- A similar result can be achieved by typing your function preceded by a question mark `?round()`
+
+- If you want to specifically inquire about the argument of a function, for example the function lm(), you can use the query `args(lm)`
+
+- Finally, if you want to take a peek behind the scenes, and see the code that makes your function run, you can type in the console the name of the function without the parentheses e.g. `round` or `lm`
+
+### 2. You want to do something in R but you do not remember the name of the function you need to use to get the job done
+
+- One solution is to query the name of the function or analysis you want to carry out preceded by two question marks ??function_name, however this method is a hit or miss and sometime you get a lot of results that are not easy to navigate
+
+- An alternative is to run a google search. Be smart about it, and make your search as clear as possible. If you know the name of the package you want/need to work with insert that into the search.
+So for example, say that you are producing a graph with ggplot2 and you want to show the axis labels at a 45 degrees angle to avoid overlap.
+
+One potential search would be " How do I modify the angle of axis labels?"
+This will generate several results showing how to rotate axis labels in several programs (excel, Matlab etc etc).
+One better search could be "R ggplot2 rotate axis labels"
+
+- Chances are that someone else has dealt with the same or a similar problem to the one you are experiencing now and likely have asked the question. Some very useful advice can be found on Stackoverflow.
+
+### Group exercise
+
+In groups find different ways to query about some stuff you are curious about or stuck with
+and discuss if and how a tartgeted search has improven your search results.
+
+### 3. You keep on getting that obscure error message and you have no idea what that means
+
+- Copy and paste your error message in google
+
+### 4. You are stuck with your work and you cannot find any answer online. You need to ask for help
+
+- if you have searched the R help, interrogated google, parsed questions and answers in Stackoverflow and still came up empty ended, you may have a problem that need more targeted help.
+
+One quick solution is to ask some peers or colleagues in your lab, or office or come visit us for Hacky hours ;)
+
+If this is not an option, then you should consider asking a question to the R community.
+Similarly to the questions you ask google, the ones you ask online to experts are more likely to be successful when they are concise and clear. This can be achieved by writing a **reproducible example**.
+
+A reproducible example is a *replica* of the code you are trying to run which 
+
+1. Is self-contained, meaning that it actually runs when in a fresh, separate R session, 
+
+1. One does not have to run it to understand what is happening: meaning that who reads your reproducible example sees the code and the output and can think of a solution or advice without having to run it themselves,
+
+1. it can be easily run: if someone wants to try and run your code they can copy-paste it into their console easily. this means that it loads automatically all the necessary packages, creates all the necessary objects and can be easily copy-paste  (avoid posting screenshots of your Rstudio window!) 
+
+1. Finally, you might be working on a complex and hefty database, and rather than uploading several megabites of data, you want to create a mirror example using some built-in databases of R. For example `iris` or `mpg`. The more boring the better!!
+
+At this point, you may think that this is a lot of work. And you are right, it is.
+Creating a reproducible example takes some thinking and effort, but if the asker is not ready to put in some effort, why should the answerer be boethered with it at all?
+
+One great advantage of creating reproducible examples is that in itself they are excellent debugging tools, and in thinking about a mirror example of your problem you often figure out the solution on your own.
+
+Another great advantage is that there is a dedicated package that can help you creating a reproducble example: the reprex package.
+
+
+
+There are several articles on how to ask questions to experts online, http://adv-r.had.co.nz/Reproducibility.html
+
+
+
+
+
+
+
+## Ending remarks
+
+.....
+
+# References (add this at end to separate the ref list)
