@@ -129,16 +129,58 @@ Another great advantage is that there is a dedicated package that can help you c
 
 
 
-There are several articles on how to ask questions to experts online, http://adv-r.had.co.nz/Reproducibility.html
+### Let's make a reproducible example using the package reprex
+
+Let's say we want to create a scatterplot using variable of a very big database
+We want the axis labels to be rotated by 45 degrees to aid readability and we also want them to be bold, but we cannot get this to render properly and we get an error message. 
+
+(for some reason we have not read through the R documentation on the function `theme()` or googled the error message, otehrwise we would probably have figured the answer out...)
+
+- First, we install the package reprex.
+
+- Then we create a reproducible version of our problem in a clean, untitled R file. To this end we will used the built-in database `iris`,
+
+We reduce our code to the bone, removing all the unnecessary stuff (e.g. colour scale customization, customization of shape and size of my points, prior wrangling of the data, etc etc...). This makes it easier to point the problem and formulate a question and reduces the number of dependencies we have to call. For example a reproducible example may look like this:
+
+```{r}
+library(tidyverse)
+
+ggplot(iris, aes(x = Petal.Length, y = Sepal.Length, colour = Species)) +
+    geom_point() +
+    theme_minimal() +
+    theme(axis.title = element_text(angle = 45,
+                                    fontface = "bold"))
+```
+
+- Once the code is ready, we select it and copy it. Then in the console we type `reprex()`
+
+
+- reprex will render in the Viewer pane a reproducible example that we can paste.
+We can do further customization depending on the website where we want to paste our reproducible example. For this we will use a package addin called `render reprex...`
+![render repred addin window](images/reprex_addin.png)
+
+We will select to work on the current selection (make sure the code is selected),
+then we will choose the target venue, this will format the example in a different way depending on whether we intend to post on Stackoverflow, Github or other destinations.
+Finally we will tick the option of showing Session Info, which will generate a dropdown option where people can view information regarding the session, e.g. all packages loaded and their version (an exception is represented for the rendering of Stackoverflow examples where session info are shown in full and there is no option to hide them).
+
+- Now we are ready to paste our formatted reproducible example.
+
+- We want to add some lines explaining what we are trying to do and how we are stuck. Be kind and be succint. 
 
 
 
 
 
 
-
+The
+S I decide to post a request for help on Stackoverflow and on the Github page of ggplot2.
 ## Ending remarks
 
 .....
 
 # References (add this at end to separate the ref list)
+Hadley Wickham wrote a [short article](http://adv-r.had.co.nz/Reproducibility.html) on good reproducible examples
+
+If you want to know more about making reproducible examples using the reprex package, you can find a tutorial by Jenny Brian in this [video](https://reprex.tidyverse.org/articles/articles/learn-reprex.html)
+
+Some of the material used for this lesson follows the content of the Ecology curriculum of [Data Carpentry](https://datacarpentry.org/), lesson on "Data visualization and analsys in R for ecologists" section [Before we start](https://datacarpentry.org/R-ecology-lesson/00-before-we-start.html#seeking_help) 
