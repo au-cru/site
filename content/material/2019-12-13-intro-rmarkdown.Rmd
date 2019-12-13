@@ -17,9 +17,10 @@ tags:
   - dynamic document generation
   - markdown
   - report writing
+description: >
+  Do you copy and paste your R output like figures or numbers into Word? Learn
+  how to use R Markdown so you no longer have to copy and paste... let R do it for you!
 ---
-
-> NOTE: This is still in development.
 
 ```{r setup, echo=FALSE}
 source(here::here("R/utils-for-content.R"))
