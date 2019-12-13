@@ -56,14 +56,14 @@ First of a couple of definitions to avoid confusion:
 
 **Replicability**: Repeating a study by performing independently an identical study.
 
-**Reproducibility**: Generating the same exact results when using the same data and code. Hypothetically, if you gave someone your data,
-your code, and your paper, would they be able to generate the exact same numbers
-you report in your manuscript and in your tables and figures
+**Reproducibility**: Generating the same exact results when using the same data and code. This means that if you gave someone your data,
+your code, and your paper, they should be able to generate the exact same numbers
+you reported.
 
 
 Research shows
-that this is not at all the case... even when the same researcher tries to
-reproducible their own paper! A recent [survey](https://www.nature.com/news/polopoly_fs/1.19970!/menu/main/topColumns/topLeftColumn/pdf/533452a.pdf) indicated that 70% of researchers failed to reproduce another scientist's experiment and more than 50% was not able to reproduce their own results.  
+that often this is the case... even when the researchers try to
+reproduce their own results! A recent [survey](https://www.nature.com/news/polopoly_fs/1.19970!/menu/main/topColumns/topLeftColumn/pdf/533452a.pdf) indicated that 70% of researchers failed to reproduce another scientist's results and more than 50% of researchers were not able to reproduce their own results.  
 
 
 
@@ -89,7 +89,15 @@ In R and R Markdown, the software that allows the conversion from R code into di
 
 Let's get to learning how to use R Markdown!
 
+## YAML Header
 
+Every R Markdown documents starts with a section at the top called YAML Header.
+In this section you want to indicate the desired output of your document.
+Today we will output our R Markdown documents in html format, but you can also choose PDF, and Word documents.
+
+If you want to produce a PDF document, you will need to install [tinytex](https://yihui.org/tinytex/).
+
+If you want to convert to Word and set up some features of your document (suck as line spacing and styles) you should create a reference style document. For this you can follow this very detailed [tutorial](https://rmarkdown.rstudio.com/articles_docx.html) or watch this [video](https://vimeo.com/110804387)
 
 ## The best part! Inserting R code
 
@@ -406,4 +414,6 @@ reproducibility and for creating beautiful reports! There are many other amazing
 features of R Markdown that you can learn about from the resources above. Try it
 out and learn more about it!
 
-# References (add this at end to separate the ref list)
+
+
+
