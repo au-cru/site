@@ -320,12 +320,12 @@ Footnotes can be done using the following command:
 A .png .jpeg or .pdf image can be attached in the following way:
 
 > ```
-> ![image caption](images/au_coders.jpeg)
+> ![image caption](img/logo-original.png)
 > ```
 >
 > gives...
 >
-> ![image caption](images/au_coders.jpeg)
+> ![image caption](img/logo-original.png)
 
 And a link can be linked in the following format:
 
