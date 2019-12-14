@@ -4,7 +4,7 @@ description: >
   Do you have a massive dataset of a couple gigabytes or bigger and want it to run faster?
   Come to this session to learn about the powerful data.table package to write speedy code.
 location: "AU Library, Main Floor, Nobelparken, Universitetsparken 461, 8000 Aarhus"
-start_date: 2020-03-13T13:00:00+01:00
-end_date: 2020-03-13T14:15:00+01:00
+start_date: 2020-03-20T13:00:00+01:00
+end_date: 2020-03-20T14:15:00+01:00
 level: "Intermediate"
 software: ["R"]
