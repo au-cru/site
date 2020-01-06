@@ -14,11 +14,8 @@ categories:
 tags:
   - tidyr
   - dplyr
-  - forcats
-  - stringr
   - lubridate
   - data manipulation
-  - factors
   - dates
 ---
 
@@ -33,6 +30,7 @@ Please install the tidyverse package:
 
 ```{r, eval=FALSE}
 install.packages("tidyverse")
+library(tidyverse)
 library(lubridate)
 ```
 
@@ -76,6 +74,13 @@ To show how these functions work, we are going to use the built-in dataframe `po
 #### Familiarize with the dataframe
 
 Using the function View() inspect the dataframe population, which shows the populations census in different countries across multiple years.
+
+We are going to load tidyverse
+
+```{r}
+library(tidyverse)
+```
+
 
 ```{r}
 View(population)
