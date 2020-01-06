@@ -81,6 +81,8 @@ Using the function View() inspect the dataframe population, which shows the popu
 View(population)
 ```
 
+
+### Pivot_wider()
 Say that we want to explore how the population varies across years in each country. To do this we may want to show each single country as a separate variable (i.e. column). 
 
 To do this we will need to reshape your data, so that the single countries now listed under the variable `country` become each a different variable, under which the population number, now listed under the variable `population`, are listed.
@@ -99,7 +101,9 @@ population_wide <- population %>%
   pivot_wider(names_from = country, values_from = population) 
 ```
 
-we can also do  the opposite, shift from a wide format to a long one. 
+### Pivot_longer()
+
+We can also do  the opposite, shift from a wide format to a long one. 
 Let's consider our `population_wide` dataframe as the starting point, and say we want to reshape to data to a format in which all countries are listed under a single variable, e.g. "country_name", and the population data are listed under a variable called "population_data". For this operation we need to use the function `pivot_longer()`
 
 In this case we want to specify:
@@ -124,3 +128,5 @@ population_wide %>%
   pivot_longer(-year, names_to = "Country", values_to = "Population")
 ```
 
+
+### Use pivot_** functions in combination with 
