@@ -129,4 +129,40 @@ population_wide %>%
 ```
 
 
-### Use pivot_** functions in combination with 
+### Use pivot_** functions in combination with group_by() and summarize() functions
+
+For this example we are going to use the built-in dataframe "storms"
+
+Once again, explore the data using the function `View()`
+
+```{r}
+View(storms)
+```
+
+In this dataframe, information about storms are classified  in long format. Storms are categorized across years and information on wind, latitude, longitude and pressure are presented as columns.
+
+Let's say that we want to see how wind speed and storm category vary across different storms (name) across years. 
+
+This means that we want to apply the function pivot_longer() to visualize each storm name as a separate variable.
+
+However, before doing this we need to do some extra work. Take another look at the "storms" dataframe. Each storm property is measured multiple times across time within each year, but if you want to have informations by storm name and storm status for each single year it means that we need to get a mean value of wind for each year. 
+
+We are going to call this new dataframe "storm_wide"
+
+```{r}
+storms_wide <- storms %>% 
+  #first we select the variable of interest to avoid an overcrowded dataframe
+  select(name, year, status, wind) %>% 
+  #second we tell R according to which criteria we want to summarize our data, i.e. we want to know the mean value of wind speed for each storm according to storm status and year
+  group_by(name, year, status) %>% 
+  summarize(mean_wind = mean(wind)) %>% 
+  #We can ceck using the function View() if we have summarized the data correctly
+  #Finally, we reshape the dataframe to show mean wind speed for each storm  (each storm name becomes a separate column), and information on wind speed will be organized according to year and storm status within each storm name.
+  pivot_wider(names_from = name, values_from = mean_wind)  
+```
+
+
+In this case we need to do a little bit more work
+
+
+
