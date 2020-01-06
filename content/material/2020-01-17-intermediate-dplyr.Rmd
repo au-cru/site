@@ -57,3 +57,12 @@ I know the cognitive load is insane, I am just jotting down ideas and the how ca
 2. To manage and reorder the level of factorial variables.
 3. Reformat dates with lubridate
 
+### Why learning to reformat and reshape data?
+
+Often we receive databases that have been created by others, and in  whcih information is organized in a "messy" way. Some other time, we simply need to reorder the structure of the data to be able to carry out certain data analysis or data visualization. Tidyverse, provide some very powerful packages that can allow for complete reorganization of our data in a few lines of codes. Using these packages and their functions has several advantages:
+
+- It makes our lives easier and our work faster, because we  can jump between different formats of our data in an agile and easy to track way;
+
+- It makes our work enterely reproducible.
+
+
