@@ -117,9 +117,10 @@ population_wide %>%
 
 There is one variable in the dataframe population_wide that we have not dealt with: "year". We do not want to change the arrangement of this variable, and R detects that this is a different variable from the other columns that we want to reshape but not knowing what to do with it, it throws an error. 
 
-We need to specify that the variable "year", because there is a variable "year", that we do not want to involve in the reshaping.
+We need to specify that the variable "year" is not to be involved in the reshaping.
 
 ```{r}
 population_wide %>%
   pivot_longer(-year, names_to = "Country", values_to = "Population")
 ```
+
