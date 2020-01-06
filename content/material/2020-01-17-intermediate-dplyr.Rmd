@@ -190,3 +190,34 @@ str(storms_with_date)
 ```
 
 
+<!-- ### Working with factors -->
+<!-- Dataframe often contain factors. Factors are categorical variables that are assigned different levels, but are read by R as numbers.  -->
+<!-- The package forcats provide some useful functions that facilitate working with factors.  -->
+<!-- Here we illustrate just a few of them -->
+
+
+<!-- ### convert categorical variables into factors -->
+
+<!-- ```{r} -->
+<!-- storms_cat <- storms %>%  -->
+<!--   mutate(category_factor = as_factor(category))  -->
+<!-- ``` -->
+
+<!-- ### Group levels of a factor together with fct_collapse -->
+
+<!-- ```{r} -->
+<!-- storms_cat <- storms_cat %>%  -->
+<!--   mutate(broad_category = fct_collapse(category_factors,  -->
+<!--                                        storm = c("-1","0"), -->
+<!--                                        hurricane = c("1","2","3","4","5"))) -->
+<!-- ``` -->
+
+<!-- ### Change the name of the levels of a factor with fct_recode -->
+
+<!-- ```{r} -->
+<!-- storms_cat <- storms_cat %>%  -->
+<!--   mutate(category_factor_long = fct_recode(broad_category, -->
+<!--                                            "tropical storm" = "storm", -->
+<!--                                            "hurricane" = "hurricane")) -->
+<!-- ``` -->
+
