@@ -46,15 +46,13 @@ In this lesson we assume you are familiar with the basic functions of dplyr (esp
 I know the cognitive load is insane, I am just jotting down ideas and the how can I make them work together, then I will select 3 objectives out of all this and cut the rest. 
 1. To learn to restructure your data between long and wide format with pivot_longer() and pivot_wider() functions from tidyr package.
 2. Learn to combine group_by() and summarize() function with pivot_longer() and pivot_wider() functions.
-3. Handle factor variables using functions.... from the forcacts package.
-4. Manage dates with lubridate functions.
-5. Create new variables by joining or separating previously existing variables using the functions of the package stringr.
+3. Manage dates with lubridate functions.
+
     
 **At the end of this session you will be able:**
 
 1. To restructure your data in long or wide format.
 2. To reshape data by using grouping, summarizing and reshaping dataframes.
-2. To manage and reorder the level of factorial variables.
 3. Reformat dates with lubridate
 
 ### Why learning to reformat and reshape data?
