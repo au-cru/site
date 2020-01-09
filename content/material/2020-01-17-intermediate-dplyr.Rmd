@@ -159,12 +159,13 @@ population_wide %>%
 
 ... but we get an error message!
 
-There is one variable in the dataframe `population_wide` that we have not dealt with: `year`. 
+This is because we did not specify which columns to shift into a long format.
 
-We do not want to change the arrangement of this variable, and R detects that this is a different variable 
-from the other columns that we want to reshape but not knowing what to do with it, it throws an error. 
+  > In `pivot_wider()`, if no argument is given to `id_cols` it defaults to select all columns. However, `pivot_longer` has no default for `cols`, and will throw an error if no argument is given.
 
-So, we need to specify that the variable `year` is not to be involved in the reshaping.
+We could select every column, with the tidyselect function `everything()`. This is not what want (..., but you shold try it, to see why!). 
+
+We want to keep the row-wise relation between year and population, So we specify that the variable `year` is not to be involved in the reshaping.
 
 ```{r}
 population_wide %>%
