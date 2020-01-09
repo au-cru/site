@@ -163,7 +163,7 @@ This is because we did not specify which columns to shift into a long format.
 
   > In `pivot_wider()`, if no argument is given to `id_cols` it defaults to select all columns. However, `pivot_longer` has no default for `cols`, and will throw an error if no argument is given.
 
-We could select every column, with the tidyselect function `everything()`. This is not what want (..., but you shold try it, to see why!). 
+We could select every column, with the tidyselect function `everything()`. This is not what want (..., but you should try it to see why!). 
 
 We want to keep the row-wise relation between year and population, So we specify that the variable `year` is not to be involved in the reshaping.
 
