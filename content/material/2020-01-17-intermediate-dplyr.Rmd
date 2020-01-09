@@ -36,13 +36,14 @@ library(lubridate)
 
 ### Prerequisites
 
-In this lesson we assume a bit of familiarity with the basic functions of dplyr (especially group-by() and summarize()), which we covered in the [intro_dplyr lesson](https://au-cru.github.io/site/material/2019-11-15-intro-dplyr/) 
+In this lesson we assume a bit of familiarity with the basic functions of dplyr (especially group-by() and `summarize()`), which we covered in the [intro_dplyr lesson](https://au-cru.github.io/site/material/2019-11-15-intro-dplyr/) 
 
 
 ### Objectives
 
-1. To learn to restructure your data between long and wide format with pivot_longer() and pivot_wider() functions from tidyr package.
-2. Learn to combine group_by() and summarize() function with pivot_longer() and pivot_wider() functions.
+1. To learn to restructure your data between long and wide format with 
+`pivot_longer()` and `pivot_wider()` functions from tidyr package.
+2. Learn to combine `group_by()` and `summarize()` function with `pivot_longer()` and `pivot_wider()` functions.
 3. Manage dates with lubridate functions.
 
     
@@ -67,13 +68,13 @@ formats of our data in an agile and easy-to-track way;
 
 One of the most common operations that we may need to do is to change the way our data is organized from a long (few columns, many rows) to a wide (few rows, many columns) format.
 
-The functions we want to use for these operations are `pivot_longer()` and `pivot_wider()` from the tidyr package (Those of you already familiar with this package may know these functions as spread() and gather(). Although these two functions still work, they are being slowly replaced by the pivot_** functions).
+The functions we want to use for these operations are `pivot_longer()` and `pivot_wider()` from the tidyr package (Those of you already familiar with this package may know these functions as `spread()` and `gather()`. Although these two functions still work, they are being slowly replaced by the `pivot_**` functions).
 
 To show how these functions work, we are going to use the built-in dataframe `population`.
 
 #### Familiarize with the dataframe
 
-Using the function View() inspect the dataframe population, which shows the populations census in different countries across multiple years.
+Using the function `View()` inspect the dataframe population, which shows the populations census in different countries across multiple years.
 
 We are going to load tidyverse
 
@@ -87,7 +88,7 @@ View(population)
 ```
 
 
-### Pivot_wider()
+### `Pivot_wider()`
 Say that we want to explore how the population varies across years in each country. 
 To do this we may want to show each single country as a separate variable (i.e. column). 
 
@@ -98,8 +99,8 @@ now listed under the variable `population`, are listed.
 To do so, we will use the function `pivot_wider()` because we want to create 
 a wider dataframe with more columns (the single countries), and less rows.
 
-We will call this new dataframe "population_wide".
-In the function pivot_wider() we want to specify three arguments: 
+We will call this new dataframe `population_wide`.
+In the function `pivot_wider()` we want to specify three arguments: 
 
 - the dataframe to work on,
 - the argument `names_from`: where we indicate the name of the "long" variable that we will use to create the new "wide" variables 
@@ -115,7 +116,7 @@ that we showed in the intro session. If the memory is foggy, imagine this operat
 arrow that connects consecutive functions in a smooth way. 
 
 When using the pipe operator we are indicating that the functions will be applied to the 
-dataframe "population", so we do not need to indicate that into the pivot_wider() function arguments.
+dataframe `population`, so we do not need to indicate that into the `pivot_wider()` function arguments.
 
 ```{r}
 population_wide <- population %>% 
@@ -124,7 +125,7 @@ population_wide <- population %>%
 
 
 #### Exercise 1
-Use the dataframe "us_rent_income" for this exercise. This dataframe shows the estimate value and the 90%
+Use the dataframe `us_rent_income` for this exercise. This dataframe shows the estimate value and the 90%
 margin of error for yearly income and monthly rent of each state in the US.
 
 In this case you want to display the data in wide form to see how estimated income varies across states.
@@ -139,11 +140,11 @@ us_income_wide <- us_rent_income %>%
   pivot_wider(names_from = ______, values_from = _____)
 ```
 
-### Pivot_longer()
+### `Pivot_longer()`
 
 We can also do  the opposite, as shift from a dataframe in wide format to a dataframe in long format. 
 Let's consider the `population_wide` dataframe that we just created as the starting point. 
-Let's say that we want to reshape this data to a format in which all countries are listed under a single variable, e.g. "country_name", and the population data are listed under a variable called "population_data". For this operation we need to use the function `pivot_longer()`
+Let's say that we want to reshape this data to a format in which all countries are listed under a single variable, e.g. `country_name`, and the population data are listed under a variable called `population_data`. For this operation we need to use the function `pivot_longer()`
 
 In this case we want to specify:
 - the argument `names_to`: the name of the new variable under which we want to group our columns, 
@@ -158,12 +159,12 @@ population_wide %>%
 
 ... but we get an error message!
 
-There is one variable in the dataframe population_wide that we have not dealt with: "year". 
+There is one variable in the dataframe `population_wide` that we have not dealt with: `year`. 
 
 We do not want to change the arrangement of this variable, and R detects that this is a different variable 
 from the other columns that we want to reshape but not knowing what to do with it, it throws an error. 
 
-So, we need to specify that the variable "year" is not to be involved in the reshaping.
+So, we need to specify that the variable `year` is not to be involved in the reshaping.
 
 ```{r}
 population_wide %>%
@@ -177,9 +178,9 @@ Instead, in the function `pivot_wider` we are giving the arguments `names_from` 
 
 #### Exercise
 
-We will use again the "us_rent_income" dataframe for this exercise.
-In this case we want the values of "estimate" and "moe" to be stacked in one single column called "value", 
-while the respective categories of "estimate" and "moe" should be described in a variable called "calculation"
+We will use again the `us_rent_income` dataframe for this exercise.
+In this case we want the values of `estimate` and `moe` to be stacked in one single column called `value`, 
+while the respective categories of `estimate` and `moe` should be described in a variable called `calculation`
 
 ```{r, eval = FALSE}
 us_rent_income_long <- us_rent_income %>% 
@@ -192,9 +193,9 @@ us_rent_income_long <- us_rent_income %>%
 
 
 
-### Use pivot_** functions in combination with group_by() and summarize() functions
+### Use `pivot_**` functions in combination with `group_by()` and `summarize()` functions
 
-For this example we are going to use the built-in dataframe "storms"
+For this example we are going to use the built-in dataframe `storms`
 
 Once again, explore the data using the function `View()`
 
@@ -212,10 +213,10 @@ different storms (name and status) and across years.
 This means that we want to apply the function `pivot_longer()` to visualize each storm name as a separate variable.
 
 However, before reshaping the dataframe in long form, we need to do some extra work. 
-Take another look at the "storms" dataframe. Variables are measured multiple times within each year. 
-So if we want to have a mean value of wind speed for each year, we need to use the functions group_by() and summarize() that we showed in the intro session. 
+Take another look at the `storms` dataframe. Variables are measured multiple times within each year. 
+So if we want to have a mean value of wind speed for each year, we need to use the functions `group_by()` and `summarize()` that we showed in the intro session. 
 
-We are going to call this new dataframe "storm_wide"
+We are going to call this new dataframe `storm_wide`
 
 First we will calculate the mean value of wind speed for each storm, across years 
 and discriminating across storm status
@@ -236,8 +237,8 @@ storms_wide <- storms_wide %>%
 ```
 
 #### Exercise
-Using the dataframe "us_rent_income" use the functions group_by() and summarize() in combination with
-pivot_longer(), pivot_wider() to reshape a database in which different values of cut correspond to mean values of x, y, z (tip: you need to use both pivot_longer and pivot_wider!)
+Using the dataframe `us_rent_income` use the functions `group_by()` and `summarize()` in combination with
+`pivot_longer()`, `pivot_wider()` to reshape a database in which different values of cut correspond to mean values of x, y, z (tip: you need to use both pivot_longer and pivot_wider!)
 
 The reshaped dataframe should look like this:
 
@@ -291,14 +292,14 @@ library(lubridate)
 
 The best way to input dates (if you are the one doing the data input), is to create three separate columns for day, month, year.
 
-Then we can use the function `ymd()` from the package lubridate in combination with the function paste() to create a date variable
+Then we can use the function `ymd()` from the package lubridate in combination with the function `paste()` to create a date variable
 
 ```{r}
 storms_with_date <- storms %>% 
   mutate(date = ymd(paste(year, month, day, sep = "-") )) 
 ```
 
-if you query the new dataframe using the function View() you can see that the new variable date is specifically formatted as a Date data type.
+if you query the new dataframe using the function `View()` you can see that the new variable date is specifically formatted as a Date data type.
 
 ```{r}
 str(storms_with_date)
