@@ -70,7 +70,7 @@ One of the most common operations that we may need to do is to change the way ou
 
 The functions we want to use for these operations are `pivot_longer()` and `pivot_wider()` from the tidyr package (Those of you already familiar with this package may know these functions as `spread()` and `gather()`. Although these two functions still work, they are being slowly replaced by the `pivot_**` functions).
 
-To show how these functions work, we are going to use the built-in dataframe `population`.
+To show how these functions work, we are going to use the dataframe `population` which is built-in the package `tidyr`.
 
 #### Familiarize with the dataframe
 
