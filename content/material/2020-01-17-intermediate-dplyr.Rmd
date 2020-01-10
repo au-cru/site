@@ -168,9 +168,14 @@ This is because we did not specify which columns to shift into a long format.
 
   > In `pivot_wider()`, if no argument is given to `id_cols` it defaults to select all columns. However, `pivot_longer` has no default for `cols`, and will throw an error if no argument is given.
 
-We could select every column, with the tidyselect function `everything()`. This is not what want (..., but you should try it to see why!). 
+We could select every column, with the [tidyselect](https://r4ds.had.co.nz/transform.html#select) helper function `everything()`. 
 
-We want to keep the row-wise relation between year and population, So we specify that the variable `year` is not to be involved in the reshaping.
+```{r}
+population_wide %>%
+  pivot_longer(everything(), names_to = "Country", values_to = "Population")
+```
+
+This breaks the row-wise relation between year and population, and is clearly not what we are want. Instead, we specify that the variable `year` is not to be involved in the reshaping. Columns not involved in the reshape will be copied, to preserve the row-wise relations in the data. 
 
 ```{r}
 population_wide %>%
