@@ -315,6 +315,46 @@ if you query the new dataframe using the function `View()` you can see that the 
 str(storms_with_date)
 ```
 
+# Extra: Tidying messing data
+
+So far, we have only reshaped "clean" datasets, but at major usecase for the `pivot_**` functions is tidying up messy data. In the example below, we will tidy a made up (but very realistic) table.
+
+```{r}
+blood_pressure <- tibble(
+  id = 1:3, 
+  bp_Sys_week1 = rnorm(3, 130, 5), bp_Dia_week1 = rnorm(3, 90, 5), weight_week1 = rnorm(3, 80, 10),
+  bp_Sys_week2 = rnorm(3, 130, 5), bp_Dia_week2 = rnorm(3, 90, 5), weight_week2 = weight_week1 + rnorm(3),
+  bp_Sys_week3 = rnorm(3, 130, 5), bp_Dia_week3 = rnorm(3, 90, 5), weight_week3 = weight_week2 + rnorm(3)
+)
+
+blood_pressure
+
+```
+
+The main problem in this table is that the variable names also inclue a value (week number). We want to pivot this wide dataframe into a longer one, with each row containg an id, a week number, a systolic and a diastolic blood pressure and a weigth. For this we use `pivot_longer()`.
+
+We do not want to include `id` in the reshape, so we select every column except this with `-id` as the first argument. We then seperate the variable names (e.g. 'bp_Dia_week1') into the actual variable name ( 'bp_Dia') and the value of the week variable ('1'). This is donw by setting the `names_sep` parameter to the string that seperates the variable name from the week value (here '_week'). Because we split each variable name into two, we must set `names_to` for both. We do this with the character vector `c('.value', 'week')`. The special value `'.value'` indicates that the corresponding substring of the original variable name will itself become a variable name for the values in the new dataframe (This makes a lot more sense when you look at the output of the function). The parameter `names_ptypes` convertes the variable `week` from a character to an integer.
+
+```{r}
+blood_pressure_long <- blood_pressure %>% 
+  pivot_longer(-id, names_sep = '_week', names_to = c('.value', 'week'), names_ptypes = list(week = integer()))
+
+blood_pressure_long
+```
+
+In some cases you may want only on column with blood pressures, and a seperate column indicating if the pressue is diastolic or systolic. We could pivot our `blood_pressure_long` even longer, but for the sake of demonstration, we will do it in one function call. As `weight` cannot be seperated in diastolic and systolic, we will first exclude this variable. 
+
+```{r}
+blood_pressure_longer <- blood_pressure %>% 
+  select(-starts_with('weight')) %>% 
+  pivot_longer(-id, 
+               names_sep = '_(week)?', # Regular expression indicating to seperate by '_' and '_week'.
+               names_to = c('.value','pressure_type', 'week'), 
+               names_ptypes = list(week = integer()))
+
+blood_pressure_longer
+```
+
 
 <!-- ### Working with factors -->
 <!-- Dataframe often contain factors. Factors are categorical variables that are assigned different levels, but are read by R as numbers.  -->
