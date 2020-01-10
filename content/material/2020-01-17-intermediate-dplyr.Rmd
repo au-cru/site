@@ -68,6 +68,11 @@ formats of our data in an agile and easy-to-track way;
 
 One of the most common operations that we may need to do is to change the way our data is organized from a long (few columns, many rows) to a wide (few rows, many columns) format.
 
+The illustrations below shows how the same information can be represented in a long and a wide format. Notice that the value (a-f) of each variable/key (x,y,z) can be read for each id (1, 2) in both formats.
+
+![](https://github.com/gadenbuie/tidyexplain/raw/master/images/static/png/original-dfs-tidy.png)
+*Img: https://github.com/gadenbuie/tidyexplain*
+
 The functions we want to use for these operations are `pivot_longer()` and `pivot_wider()` from the tidyr package (Those of you already familiar with this package may know these functions as `spread()` and `gather()`. Although these two functions still work, they are being slowly replaced by the `pivot_**` functions).
 
 To show how these functions work, we are going to use the built-in dataframe `population`.
