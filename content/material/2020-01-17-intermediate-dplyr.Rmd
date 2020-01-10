@@ -57,7 +57,7 @@ In this lesson, we assume a bit of familiarity with the basic functions of dplyr
 
 Often we receive databases that have been created by others, and in which information is organized in a "messy" way. Some other times, we simply need to reorder the structure of the data to be able to carry out certain data analysis or data visualization that require a specific data structure. 
 
-The tidyverse, provides some very powerful packages (e.g. dplyr, tidyr) that can allow for complete reorganization of our data in a few lines of code. Using these packages and their functions have several advantages:
+The tidyverse provides some very powerful packages (e.g. dplyr, tidyr) that can allow for complete reorganization of our data in a few lines of code. Using these packages and their functions have several advantages:
 
 - It makes our lives easier and our work faster because we can jump between different 
 formats of our data in an agile and easy-to-track way;
