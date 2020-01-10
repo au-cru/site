@@ -3,7 +3,7 @@ title: "2020-01-19-intermediate-dplyr"
 author: 
 - "Sara Tomiolo"
 - "Luke Johnston"
-
+- "Johannes Enevoldsen"
 date: "1/17/2020"
 description: >
   Learn to reshape data in long or wide form, manage factors and dates using the packages dplyr, tidyr, lubridate, forcats and stringr.
@@ -57,7 +57,7 @@ In this lesson, we assume a bit of familiarity with the basic functions of dplyr
 
 Often we receive databases that have been created by others, and in which information is organized in a "messy" way. Some other times, we simply need to reorder the structure of the data to be able to carry out certain data analysis or data visualization that require a specific data structure. 
 
-The tidyverse, provides some very powerful packages (e.g. dplyr, tidyr) that can allow for complete reorganization of our data in a few lines of codes. Using these packages and their functions have several advantages:
+The tidyverse, provides some very powerful packages (e.g. dplyr, tidyr) that can allow for complete reorganization of our data in a few lines of code. Using these packages and their functions have several advantages:
 
 - It makes our lives easier and our work faster because we can jump between different 
 formats of our data in an agile and easy-to-track way;
@@ -75,7 +75,7 @@ The illustrations below shows how the same information can be represented in a l
 
 The functions we want to use for these operations are `pivot_longer()` and `pivot_wider()` from the tidyr package (Those of you already familiar with this package may know these functions as `spread()` and `gather()`. Although these two functions still work, they are being slowly replaced by the `pivot_**` functions).
 
-To show how these functions work, we are going to use the built-in dataframe `population`.
+To show how these functions work, we are going to use the dataframe `population` which is built-in the package `tidyr`.
 
 #### Familiarize with the dataframe
 
@@ -88,12 +88,12 @@ library(tidyverse)
 ```
 
 
-```{r}
+```{r, eval = FALSE}
 View(population)
 ```
 
 
-### `Pivot_wider()`
+### Reshape a daframe from a long to a wide format with  `pivot_wider()`
 Say that we want to explore how the population varies across years in each country. 
 To do this we may want to show each single country as a separate variable (i.e. column). 
 
@@ -129,7 +129,7 @@ population_wide <- population %>%
 ```
 
 
-#### Exercise 1
+#### Exercise 1: reshaping a dataframe from long to wide format
 Use the dataframe `us_rent_income` for this exercise. This dataframe shows the estimated value and the 90%
 margin of error for yearly income and monthly rent of each state in the US.
 
@@ -145,7 +145,7 @@ us_income_wide <- us_rent_income %>%
   pivot_wider(names_from = ______, values_from = _____)
 ```
 
-### `Pivot_longer()`
+### Reshape a dataframe from a wide to a long format using `pivot_longer()`
 
 We can also do the opposite: a shift from a dataframe in wide format to a dataframe in long format. 
 Let's consider the `population_wide` dataframe that we just created as the starting point. 
@@ -186,7 +186,7 @@ population_wide %>%
 **Notice that** in the function `pivot_longer()` the arguments `names_to` and `values_to` require "" because we are providing names of variables that need to be created. 
 Instead, in the function `pivot_wider()` we are giving the arguments `names_from` and `values_from` variables that already exist, hence  the "" are not needed.
 
-#### Exercise
+#### Exercise: reshaping a dataframe from wide to long format
 
 We will use again the `us_rent_income` dataframe for this exercise.
 In this case we want the values of `estimate` and `moe` to be stacked in one single column called `value`, 
@@ -209,7 +209,7 @@ For this example we are going to use the built-in dataframe `storms`
 
 Once again, explore the data using the function `View()`
 
-```{r}
+```{r, eval = FALSE}
 View(storms)
 ```
 
@@ -246,7 +246,7 @@ storms_wide <- storms_wide %>%
    pivot_wider(names_from = name, values_from = mean_wind)  
 ```
 
-#### Exercise
+#### Exercise: using `group_by()` and `summarize()` in combination with `pivot_**()` functions to reshape a data frame
 Using the dataframe `us_rent_income` use the functions `group_by()` and `summarize()` in combination with
 `pivot_longer()`, `pivot_wider()` to reshape a database in which different values of cut correspond to mean values of x, y, z (tip: you need to use both pivot_longer and pivot_wider!)
 
@@ -386,4 +386,3 @@ blood_pressure_longer
 <!--                                            "tropical storm" = "storm", -->
 <!--                                            "hurricane" = "hurricane")) -->
 <!-- ``` -->
-
