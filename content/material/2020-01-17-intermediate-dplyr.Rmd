@@ -92,7 +92,7 @@ View(population)
 ```
 
 
-### Reshape a daframe from a long to a wide format with  `pivot_wider()`
+### Reshape a dataframe from a long to a wide format with  `pivot_wider()`
 Say that we want to explore how the population varies across years in each country. 
 To do this we may want to show each single country as a separate variable (i.e. column). 
 
