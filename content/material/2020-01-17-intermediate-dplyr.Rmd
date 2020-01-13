@@ -286,37 +286,10 @@ diamonds_reshaped <- diamonds_means %>%
 diamonds_reshaped
 ```
 
+### Tidying messy data
 
-### Handle dates with lubridate
-
-Often enough, data are collected on the same subjects (in this case storm names) across time, this implied the use of dates. However, handling dates can become a bit of a headache if R does not recognize the format. 
-The package lubridate helps specifically with this problem and allows to format dates in a way that can be unequivocally recognized by R.
-
-
-Although lubridate is part of the tidyverse (and we do not need to install it separately), we need to call it separately because it does not get loaded when we load the tidyverse library.
-
-```{r}
-library(lubridate)
-```
-
-The best way to input dates (if you are the one doing the data input), is to create three separate columns for day, month, year.
-
-Then we can use the function `ymd()` from the package lubridate in combination with the function `paste()` to create a date variable
-
-```{r}
-storms_with_date <- storms %>% 
-  mutate(date = ymd(paste(year, month, day, sep = "-") )) 
-```
-
-if you query the new dataframe using the function `View()` you can see that the new variable date is specifically formatted as a Date data type.
-
-```{r}
-str(storms_with_date)
-```
-
-# Extra: Tidying messing data
-
-So far, we have only reshaped "clean" datasets, but a major use case for the `pivot_**` functions is tidying up messy data. In the example below, we will tidy a made up (but very realistic) table.
+So far, we have only reshaped "clean" datasets, but a major use case for the `pivot_**` functions is tidying up messy data. 
+In the example below, we will tidy a made up (but very realistic) table.
 
 ```{r}
 blood_pressure <- tibble(
@@ -367,6 +340,35 @@ blood_pressure_longer <- blood_pressure %>%
 
 blood_pressure_longer
 ```
+
+
+### Handle dates with lubridate
+
+Often enough, data are collected on the same subjects (in this case storm names) across time, this implied the use of dates. However, handling dates can become a bit of a headache if R does not recognize the format. 
+The package lubridate helps specifically with this problem and allows to format dates in a way that can be unequivocally recognized by R.
+
+
+Although lubridate is part of the tidyverse (and we do not need to install it separately), we need to call it separately because it does not get loaded when we load the tidyverse library.
+
+```{r}
+library(lubridate)
+```
+
+The best way to input dates (if you are the one doing the data input), is to create three separate columns for day, month, year.
+
+Then we can use the function `ymd()` from the package lubridate in combination with the function `paste()` to create a date variable
+
+```{r}
+storms_with_date <- storms %>% 
+  mutate(date = ymd(paste(year, month, day, sep = "-") )) 
+```
+
+if you query the new dataframe using the function `View()` you can see that the new variable date is specifically formatted as a Date data type.
+
+```{r}
+str(storms_with_date)
+```
+
 
 
 <!-- ### Working with factors -->
