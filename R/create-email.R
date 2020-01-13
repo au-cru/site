@@ -32,7 +32,7 @@ table_of_events <- event_files %>%
   map_dfr(as_tibble) %>%
   mutate(
     software = if_else(!is.na(software) & software != "", glue::glue(" ({software})"), ""),
-    What = glue::glue("{name}{software} for {str_to_lower(level)}"),
+    What = glue::glue("{name}{software} for **{str_to_lower(level)}**"),
     When = as_datetime(start_date, tz = "Europe/Copenhagen"),
     When = stamp("March 1, 1999 at 22:10", quiet = TRUE)(When)
   ) %>%
@@ -50,7 +50,7 @@ email_body <- read_lines(here::here("R/email-template.html")) %>%
 email <- gm_mime() %>%
   gm_to(send_to) %>%
   gm_from("lwjohnst@gmail.com") %>%
-  gm_subject("[AU CRU] Two events before Christmas holidays: Intro to R Markdown and an Rhus meeting.") %>%
+  gm_subject("[AU CRU] Three events in January to: Learn more about data wrangling, visualization, and a hacky-hour.") %>%
   gm_html_body(email_body)
 
 gm_auth(path = Sys.getenv("GMAILR_APP"), scope = "compose")
