@@ -332,7 +332,14 @@ blood_pressure
 
 The main problem in this dataset is that the variable names also include data (week number). We want to pivot this wide dataframe into a longer one, with each row containg an id, a week number, a systolic and a diastolic blood pressure and a weight. For this we use `pivot_longer()`.
 
-We do not want to include `id` in the reshape, so we select every column except this with `-id` as the first argument. We then seperate the variable names (e.g. 'bp_Dia_week1') into the actual variable name ( 'bp_Dia') and the value of the week variable ('1'). This is donw by setting the `names_sep` parameter to the string that seperates the variable name from the week value (here '_week'). Because we split each variable name into two, we must set `names_to` for both. We do this with the character vector `c('.value', 'week')`. The special value `'.value'` indicates that the corresponding substring of the original variable name will itself become a variable name for the values in the new dataframe (This makes a lot more sense when you look at the output of the function). The parameter `names_ptypes` convertes the variable `week` from a character to an integer.
+We do not want to include `id` in the reshape, so we select every column except this with `-id` as the first argument.
+We then separate the variable names (e.g. 'bp_Dia_week1') into the actual variable name ('bp_Dia') and the value of the week variable ('1'). 
+
+This is done by setting the `names_sep` parameter to the string that seperates the variable name from the week value (here '_week'). 
+Because we split each variable name into two, we must set `names_to` for both. We do this with the character vector `c('.value', 'week')`. 
+The special value `'.value'` indicates that the corresponding substring of the original variable name will itself become a variable name for the values in the new dataframe.
+This makes a lot more sense when you look at the output of the function. 
+The parameter `names_ptypes` converts the variable `week` from a character to an integer.
 
 ```{r}
 blood_pressure_long <- blood_pressure %>% 
