@@ -353,7 +353,9 @@ blood_pressure_long <- blood_pressure %>%
 blood_pressure_long
 ```
 
-In some cases you may want only on column with blood pressures, and a seperate column indicating if the pressue is diastolic or systolic. We could pivot our `blood_pressure_long` even longer, but for the sake of demonstration, we will do it in one function call. As `weight` cannot be seperated in diastolic and systolic, we will first exclude this variable. 
+In some cases you may want only one column with blood pressures, and a separate column indicating if the pressure is diastolic or systolic. 
+We could pivot our `blood_pressure_long` even longer, but for the sake of demonstration, we will do it in one function call. 
+Since `weight` cannot be separated in diastolic and systolic, we will first exclude this variable. 
 
 ```{r}
 blood_pressure_longer <- blood_pressure %>% 
