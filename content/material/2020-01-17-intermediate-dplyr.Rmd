@@ -167,7 +167,7 @@ This is because we did not specify which columns to shift into a long format.
 
   > In `pivot_wider()`, if no argument is given to `id_cols` it defaults to select all columns. However, `pivot_longer` has no default for `cols`, and will throw an error if no argument is given.
 
-We could select every column, with the [tidyselect](https://r4ds.had.co.nz/transform.html#select) helper function `everything()`. 
+We could select every column, with the [tidyselect](https://r4ds.had.co.nz/transform.html#select) helper function `everything()`. This function tells `pivot_longer()` to use all the columns in the dataset when converting to long form.
 
 ```{r}
 population_wide %>%
