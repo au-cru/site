@@ -343,7 +343,12 @@ The parameter `names_ptypes` converts the variable `week` from a character to an
 
 ```{r}
 blood_pressure_long <- blood_pressure %>% 
-  pivot_longer(-id, names_sep = '_week', names_to = c('.value', 'week'), names_ptypes = list(week = integer()))
+  pivot_longer(
+    -id, 
+    names_sep = '_week', 
+    names_to = c('.value', 'week'), 
+    names_ptypes = list(week = integer())
+  )
 
 blood_pressure_long
 ```
