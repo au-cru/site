@@ -72,7 +72,7 @@ The illustrations below shows how the same information can be represented in a l
 
 ![Img: https://github.com/gadenbuie/tidyexplain](https://github.com/gadenbuie/tidyexplain/raw/master/images/static/png/original-dfs-tidy.png)
 
-The functions we want to use for these operations are `pivot_longer()` and `pivot_wider()` from the tidyr package (Those of you already familiar with this package may know these functions as `spread()` and `gather()`. Although these two functions still work, they are being slowly replaced by the `pivot_**` functions).
+The functions we want to use for these operations are `pivot_longer()` and `pivot_wider()` from the tidyr package. Those of you already familiar with this package may know the older functions as `spread()` and `gather()`. Although these two functions still work, they are being slowly replaced by the `pivot_**` functions.
 
 To show how these functions work, we are going to use the dataframe `population` which is built-in the package `tidyr`.
 
@@ -174,7 +174,7 @@ population_wide %>%
   pivot_longer(everything(), names_to = "Country", values_to = "Population")
 ```
 
-This breaks the row-wise relation between year and population, and is clearly not what we are want. Instead, we specify that the variable `year` is not to be involved in the reshaping. Columns not involved in the reshape will be copied, to preserve the row-wise relations in the data. 
+This breaks the row-wise relation between year and population, and is clearly not what we want. Instead, we specify that the variable `year` is not to be involved in the reshaping. Columns not involved in the reshape will be copied, to preserve the row-wise relations in the data. 
 
 ```{r}
 population_wide %>%
@@ -316,7 +316,7 @@ str(storms_with_date)
 
 # Extra: Tidying messing data
 
-So far, we have only reshaped "clean" datasets, but at major usecase for the `pivot_**` functions is tidying up messy data. In the example below, we will tidy a made up (but very realistic) table.
+So far, we have only reshaped "clean" datasets, but a major use case for the `pivot_**` functions is tidying up messy data. In the example below, we will tidy a made up (but very realistic) table.
 
 ```{r}
 blood_pressure <- tibble(
@@ -330,7 +330,7 @@ blood_pressure
 
 ```
 
-The main problem in this table is that the variable names also inclue a value (week number). We want to pivot this wide dataframe into a longer one, with each row containg an id, a week number, a systolic and a diastolic blood pressure and a weigth. For this we use `pivot_longer()`.
+The main problem in this dataset is that the variable names also include data (week number). We want to pivot this wide dataframe into a longer one, with each row containg an id, a week number, a systolic and a diastolic blood pressure and a weight. For this we use `pivot_longer()`.
 
 We do not want to include `id` in the reshape, so we select every column except this with `-id` as the first argument. We then seperate the variable names (e.g. 'bp_Dia_week1') into the actual variable name ( 'bp_Dia') and the value of the week variable ('1'). This is donw by setting the `names_sep` parameter to the string that seperates the variable name from the week value (here '_week'). Because we split each variable name into two, we must set `names_to` for both. We do this with the character vector `c('.value', 'week')`. The special value `'.value'` indicates that the corresponding substring of the original variable name will itself become a variable name for the values in the new dataframe (This makes a lot more sense when you look at the output of the function). The parameter `names_ptypes` convertes the variable `week` from a character to an integer.
 
