@@ -341,6 +341,45 @@ blood_pressure_longer <- blood_pressure %>%
 blood_pressure_longer
 ```
 
+#### Exercise: Tidy this!
+
+Your friend is doing a research project on lab mice. He is weighing the mice daily, and noting whether they are agitated. A sample of his dataset is shown below.
+
+```{r}
+mouse_weight <- tibble(
+  day = 1:4, 
+  mouse1.weight = rnorm(4, 90, 10), 
+  mouse1_agitated = c(TRUE, TRUE, TRUE, TRUE),
+  mouse2.weight = rnorm(4, 90, 10), 
+  mouse2_agitated = c(TRUE, TRUE, FALSE, TRUE),
+  mouse3.weight = rnorm(4, 90, 10),
+  mouse3_agitated = c(FALSE, FALSE, FALSE, FALSE),
+)
+
+mouse_weight
+```
+
+He wants to convert this to a format that is appropriate for creating a line graph in ggplot2 (long format; columns: `id`, `day`, `weight`, `agitated`). You are asked to help. 
+
+> Note that while this format is 'messy' and not optimal for programatic analysis, i t may be a convenient, and less error prone, way of recording the data. That said, there is no excuse for the inconsistent column name seperator.
+
+```{r}
+mouse_weight_long <- ____
+
+mouse_weight_long
+```
+
+> Tip: Try excluding the 'agitated' columns with select(-ends_with('agitated')), and pivot just the weight columns. Then tweak the function to accept both '.' and '_' as name seperators.
+
+Also, try creating a line graph with one line per mouse, day on the x-axis, weight on the y-axis and nodes coloured by whether the mouse is agitated.
+
+```{r}
+mouse_weight_plot <- ggplot(mouse_weight_long, aes(____)) + 
+  geom_line(____) +
+  geom_point(____)
+
+mouse_weight_plot
+```
 
 ### Handle dates with lubridate
 
