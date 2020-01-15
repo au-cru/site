@@ -5,14 +5,9 @@ Encoding: UTF-8
 Imports: 
     blogdown,
     here,
-    ggplot2,
-    dplyr,
-    tidyr,
+    tidyverse,
     fs,
-    purrr,
-    stringr,
     yaml,
     glue,
     kableExtra,
-    lubridate,
     NHANES
