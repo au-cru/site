@@ -47,7 +47,7 @@ restructure your data between long and wide formats (and vice versa).
 wrangling techniques to your skills.
 3. (If enough time) To apply common lubridate functions to easily wrangle pesky date variables.
 
-## Why learning to reformat and reshape data?
+## Why learn to reformat and reshape data?
 
 Often we receive databases that have been created by others, and in which information is organized in a "messy" way. Some other times, we simply need to reorder the structure of the data to be able to carry out certain data analysis or data visualization that require a specific data structure. 
 
@@ -68,9 +68,9 @@ The illustrations below shows how the same information can be represented in a l
 
 The functions we want to use for these operations are `pivot_longer()` and `pivot_wider()` from the tidyr package. Those of you already familiar with this package may know the older functions as `spread()` and `gather()`. Although these two functions still work, they are being slowly replaced by the `pivot_**` functions.
 
-To show how these functions work, we are going to use the dataframe `population` which is built-in the package `tidyr`.
+### Get familiar with the data
 
-### Get familiar with the dataframe
+Using the function `View()`, inspect the dataframe `population`, which shows the population census in different countries across multiple years.
 
 Using the function `View()` inspect the dataframe population, which shows the population census in different countries across multiple years.
 
@@ -217,14 +217,14 @@ Once again, explore the data using the function `View()`
 View(storms)
 ```
 
-In this dataframe, information about storms are classified  in long format. 
+In this dataframe, information about storms are classified in long format. 
 Storms are categorized across years and information on wind, latitude, longitude and pressure 
 are presented as columns.
 
 Let's say that we want to see how mean wind speed vary across 
 different storms (name and status) and across years. 
 
-This means that we want to apply the function `pivot_longer()` to visualize each storm name as a separate variable.
+This means that we want to apply the function `pivot_wider()` to visualize each storm category as a separate variable.
 
 However, before reshaping the dataframe in long form, we need to do some extra work. 
 Take another look at the `storms` dataframe. Variables are measured multiple times within each year. 
@@ -257,7 +257,7 @@ storms_wide
 
 #### Exercise 3: using `group_by()` and `summarize()` in combination with `pivot_**()` functions to reshape a data frame
 
-Using the dataframe `us_rent_income` use the functions `group_by()` and `summarize()` in combination with
+Using the dataframe `diamonds` use the functions `group_by()` and `summarize()` in combination with
 `pivot_longer()`, `pivot_wider()` to reshape a database in which different values of cut correspond to mean values of x, y, z (tip: you need to use both pivot_longer and pivot_wider!)
 
 The reshaped dataframe should look like this:
@@ -370,7 +370,7 @@ mouse_weight
 
 He wants to convert this to a format that is appropriate for creating a line graph in ggplot2 (long format; columns: `id`, `day`, `weight`, `agitated`). You are asked to help. 
 
-> Note that while this format is 'messy' and not optimal for programatic analysis, i t may be a convenient, and less error prone, way of recording the data. That said, there is no excuse for the inconsistent column name seperator.
+> Note that while this format is 'messy' and not optimal for programatic analysis, it may be a convenient, and less error prone, way of recording the data. That said, there is no excuse for the inconsistent column name seperator.
 
 ```{r, eval=FALSE}
 mouse_weight_long <- ____
