@@ -200,9 +200,8 @@ us_rent_income_long <- us_rent_income %>%
   # this variable is a nuisance and is not giving information useful to us, 
   # so we will remove it 
   select(-GEOID) %>% 
-  # Recall that excluding a variable from reshaping, use `-` (minus symbol).
   # When we want multiple variables, we combine them with `c()`.
-  pivot_longer(-c(______, ______), names_to = ________, values_to = _________)
+  pivot_longer(c(______, ______), names_to = ________, values_to = _________)
 
 us_rent_income_long
 ```
@@ -222,7 +221,7 @@ Storms are categorized across years and information on wind, latitude, longitude
 are presented as columns.
 
 Let's say that we want to see how mean wind speed vary across 
-different storms (name and status) and across years. 
+different storm categories (`status`) and across years. 
 
 This means that we want to apply the function `pivot_wider()` to visualize each storm category as a separate variable.
 
@@ -236,21 +235,21 @@ First we will calculate the mean value of wind speed for each storm, across year
 and discriminating across storm status
 
 ```{r}
-storms_wide <- storms %>% 
+storms_sum <- storms %>% 
   #first we select the variable of interest to avoid an overcrowded dataframe
-  select(name, year, wind, status) %>% 
+  select(status, year, wind, pressure) %>% 
   #second we tell R according to which criteria we want to summarize our data, i.e. we want to know the mean value of wind speed for each storm according to storm status and year
-  group_by(name, year, status) %>% 
+  group_by(status, year) %>% 
   summarize(mean_wind = mean(wind)) 
 
-storms_wide
+storms_sum
 ```
 
 Now we can reshape the data into a wide format:
 
 ```{r}
-storms_wide <- storms_wide %>% 
-   pivot_wider(names_from = name, values_from = mean_wind)  
+storms_wide <- storms_sum %>% 
+  pivot_wider(names_from = status, values_from = mean_wind)  
 
 storms_wide
 ```
