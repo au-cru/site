@@ -1,10 +1,11 @@
 type: "code-along"
-name: "Data wrangling with data.table"
+name: "Reproducibility and project management"
 description: >
-  Do you have a massive dataset of a couple gigabytes or bigger and want it to run faster?
-  Come to this session to learn about the powerful data.table package to write speedy code.
+  Reproducibility is increasingly a requirement to have for scientific studies.
+  Learn how to manage your analysis project in a reproducible and structured way.
 location: "AU Library, Main Floor, Nobelparken, Universitetsparken 461, 8000 Aarhus"
 start_date: 2020-03-20T13:00:00+01:00
 end_date: 2020-03-20T14:15:00+01:00
-level: "Intermediate"
+level: "Beginner"
 software: ["R"]
+link: "material/2020-03-20-proj-management/"
