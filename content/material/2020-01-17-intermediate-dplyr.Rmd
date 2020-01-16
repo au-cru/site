@@ -1,21 +1,21 @@
 ---
 title: "Working with and converting between long and wide data using tidyr"
-author: 
-- "Johannes Enevoldsen"
-- "Sara Tomiolo"
-- "Luke Johnston"
+author:
+- Johannes Enevoldsen
+- Sara Tomiolo
+- Luke Johnston
 date: "1/17/2020"
-description: >
+description: |
   Learn to reshape data in long or wide form using the packages dplyr and tidyr.
-categories:
-  - Intermediate
-  - R
-  - Code-along
 tags:
-  - tidyr
-  - dplyr
-  - data manipulation
-  - reshaping
+- tidyr
+- dplyr
+- data manipulation
+- reshaping
+categories:
+- Intermediate
+- R
+- Code-along
 ---
 
 ```{r setup, echo=FALSE}
