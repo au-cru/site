@@ -64,7 +64,7 @@ One of the most common operations that we may need to do is to change the way ou
 
 The illustrations below shows how the same information can be represented in a long and a wide format. Notice that the value (a-f) of each variable/key (x,y,z) can be read for each id (1, 2) in both formats.
 
-![Img: https://github.com/gadenbuie/tidyexplain](https://github.com/gadenbuie/tidyexplain/raw/master/images/static/png/original-dfs-tidy.png){width=60%}
+![*Img: https://github.com/gadenbuie/tidyexplain*](https://github.com/gadenbuie/tidyexplain/raw/master/images/static/png/original-dfs-tidy.png){width=60%}
 
 The functions we want to use for these operations are `pivot_longer()` and `pivot_wider()` from the tidyr package. Those of you already familiar with this package may know the older functions as `spread()` and `gather()`. Although these two functions still work, they are being slowly replaced by the `pivot_**` functions.
 
