@@ -144,6 +144,8 @@ us_income_wide <- us_rent_income %>%
 us_income_wide
 ```
 
+> Advanced: Try selecting both `estimate` and `moe`, and include both in the pivot. Make the name indicate whether the value is the estimate or the moe (e.g. 'moe_Alabama'). 
+
 ### Reshape a dataframe from a wide to a long format using `pivot_longer()`
 
 We can also do the opposite: a shift from a dataframe in wide format to a dataframe in long format. 
@@ -293,6 +295,8 @@ diamonds_reshaped <- diamonds_means %>%
   
 diamonds_reshaped
 ```
+
+> Advanced: Try creating the same dataframe without using `summarize()`. Instead, apply the `mean()` function using the `values_fn` parameter in `pivot_wider()`. How does this work?
 
 ### Tidying messy data
 
