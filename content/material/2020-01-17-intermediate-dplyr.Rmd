@@ -72,8 +72,6 @@ The functions we want to use for these operations are `pivot_longer()` and `pivo
 
 Using the function `View()`, inspect the dataframe `population`, which shows the population census in different countries across multiple years.
 
-Using the function `View()` inspect the dataframe population, which shows the population census in different countries across multiple years.
-
 Let's load tidyverse:
 
 ```{r}
