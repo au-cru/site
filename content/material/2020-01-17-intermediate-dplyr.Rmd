@@ -355,7 +355,7 @@ blood_pressure_longer
 
 Your friend is doing a research project on lab mice. He is weighing the mice daily, and noting whether they are agitated. A sample of his dataset is shown below.
 
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 mouse_weight <- tibble(
   day = 1:4, 
   mouse1.weight = rnorm(4, 90, 10), 
@@ -372,6 +372,19 @@ mouse_weight
 He wants to convert this to a format that is appropriate for creating a line graph in ggplot2 (long format; columns: `id`, `day`, `weight`, `agitated`). You are asked to help. 
 
 > Note that while this format is 'messy' and not optimal for programatic analysis, it may be a convenient, and less error prone, way of recording the data. That said, there is no excuse for the inconsistent column name seperator.
+
+The reshaped dataframe should look like this:
+
+```{r, echo=FALSE}
+mouse_weight_long <- mouse_weight %>% 
+  pivot_longer(-day, names_prefix = 'mouse',
+               names_sep = '[._]',
+               names_to = c('id', '.value')) %>% 
+  select(id, everything())
+
+mouse_weight_long
+```
+
 
 ```{r, eval=FALSE}
 mouse_weight_long <- ____
