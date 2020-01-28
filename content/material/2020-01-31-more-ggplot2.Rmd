@@ -470,6 +470,62 @@ basic_scatterplot_minimal + basic_scatterplot_classic
 ```
 
 
+```{r}
+plot1 <- ggplot(NHANES, aes(x = Height, y = BPSysAve, colour = Age)) +
+    geom_point() +
+    theme_minimal() +
+    scale_colour_viridis_c()
+   
+plot2 <- ggplot(NHANES, aes(x = Height, y = Weight, colour = Age)) +
+    geom_point() +
+    theme_minimal() +
+    scale_colour_viridis_c()
+
+
+plot3 <- ggplot(NHANES, aes(x = Gender, fill = Education)) +
+    geom_bar(position = position_dodge()) +
+    facet_grid(cols = vars(Diabetes)) +
+    scale_fill_brewer()
+```
+
+
+let's try join these plots together
+```{r}
+plot1 + plot2 + plot3
+```
+
+the result is hardly readable, but fortunately we can customize how graphs are dislayed
+
+```{r}
+(plot1 | plot2) / plot3
+```
+
+Better! Now plot3 (in the bottom part of the panel) is much easier to read and 
+our panel is prettier.
+
+However, the two top graphs share the same legend which now is repeated twice.
+Using the function `plot_layout()` and its argument `guides` we can adjust that
+
+```{r}
+((plot1 | plot2) / plot3) + 
+  plot_layout(guides = 'collect')
+```
+
+
+Finally, we may want to add a title to our panel, and letters or numbers to the single figures in the panel, so we can refer to them separately when describing 
+them in text
+
+```{r}
+((plot1 | plot2) / plot3) + 
+  plot_layout(guides = 'collect') +
+  plot_annotation(
+    #adds a title to the panel
+    title = "Colourful plots for my manuscript",
+    #specifies what system to use to indicate plots in a panel
+    tag_levels = "A"
+  )
+```
+
 
 
 ## Final exercise: Putting it all together
