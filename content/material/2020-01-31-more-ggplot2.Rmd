@@ -16,6 +16,7 @@ tags:
   - ggplot2
   - data visualization
   - colour palettes
+  - patchwork
 ---
 
 ```{r setup, echo=FALSE}
@@ -30,6 +31,9 @@ Please install the ggplot2 package:
 
 ```{r, eval=FALSE}
 install.packages("ggplot2")
+install.packages("NHANES")
+install.packages("patchwork")
+install.packages("viridis")
 ```
 
 ## Objectives
