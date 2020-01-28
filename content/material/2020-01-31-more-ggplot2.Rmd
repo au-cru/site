@@ -1,0 +1,458 @@
+---
+title: "Data visualization with ggplot2, part 2"
+author:
+  - "Luke W. Johnston"
+  - "Sara Tomiolo"
+date: "2019-11-01"
+description: >
+  Dig deeper into making the most of making data visualizations with ggplot2.
+  We'll show you how to plot multiple panels within a single plot, how to append
+  multiple plots together, and how to make your plot more visually appealing.
+categories:
+  - Intermediate-Beginner
+  - R
+  - Code-along
+tags:
+  - ggplot2
+  - data visualization
+  - colour palettes
+---
+
+```{r setup, echo=FALSE}
+source(here::here("R/utils-for-content.R"))
+```
+
+> NOTE: Still in development.
+
+## Preparation
+
+Please install the ggplot2 package:
+
+```{r, eval=FALSE}
+install.packages("ggplot2")
+```
+
+## Objectives
+
+1. To become aware of the powerful features of ggplot2.
+2. To learn about some of the fundamentals of easily creating amazing graphics.
+3. To know about some resources to continue learning.
+
+At the end of this session, you will achieve this objective by creating a
+fairly simple, visually-appealing graph that shows:
+
+- At least three data values, ie. "aesthetics" or `aes()`, such as what to put
+on the x-axis, the y-axis, and or using `colour` or `size`.
+- Two layers, ie "geometries" or `geom_`, such as points, lines, or
+boxplots.
+- That has clearly labelled x and y axes, ie. `labs()`.
+- That has some changes to the look and feel of the plot, ie. `theme()`, so that
+it is publication ready.
+
+**Resources** for continuing learning and help are available on
+the [More Info](/more-info/#resources) page.
+
+## Best practices for creating graphs in R
+
+It is relatively easy to create complex graphs in R, but all the features available can become quite distracting and lead to overly complicated and confusing graphs.
+
+When creating graphs there are a few golden rules that should be kept in mind:
+- When possible use raw data
+
+- Avoid / remove unnecessary information
+
+- Use colour in a meaningful way
+
+<!-- Quickly go over RStudio IDE in relation to plotting -->
+<!-- Get them to open two R scripts, name and save as "code-along" and "exercise" -->
+
+## Create a project
+
+A simple way to create a self-contained project in R is to make use of the function "Projects" in R Studio.
+Create a new project, name it "Code_along_sessions" and create two R scripts in it.
+
+## Quickly get familiar with data to plot
+
+For this session we will be using the `CO2` dataset. Here is some code to get a
+sense of the data.
+
+```{r}
+# Variables
+names(CO2)
+
+# Quick summary
+summary(CO2)
+
+# Content
+str(CO2)
+```
+
+### Exercise: Choose a dataset and check out the different classes of variables
+
+There are several exercises in this session. Choose one of the below datasets
+and use that dataset for all later exercises.
+
+For complete R beginners, use:
+
+- `mpg`
+
+For more confident R users, use one of these:
+
+- `economics`
+- `diamonds`
+- `msleep`
+- `txhousing`
+
+Check out the contents of the dataset you choose using.
+
+Often the type of graph you decide to use, depends on the type of variable you want to represent. 
+
+What type of variables do you see in your dataset? What is the meaning of different variable types? 
+
+```{r, eval=FALSE}
+# variable names of dataset
+names(___)
+
+# contents of dataset
+str(___)
+
+# summary of dataset
+summary(___)
+```
+
+## Basic structure of using ggplot2
+
+ggplot2 uses the "Grammar of Graphics" (gg). This is a powerful approach to
+creating plots because it provides a consistent way of telling ggplot2 what to
+do. There are at least three aspects to using ggplot2 that relate to the grammar:
+
+- Aesthetics, `aes()`: How data should be mapped to the plot. Includes what to
+put on x axis, on the y axis, colours, size, etc.
+- Geometries, `geom_`: The visual representation of the data, as a layer. This
+tells ggplot2 how to show the aesthetics. Includes points, lines, boxes, etc.
+- Themes, `theme_` or `theme()`: How the plot should look like. Includes the
+text, axis lines, etc.
+
+To maximise the power of ggplot2, make heavy use of autocompletion. You can do 
+this by typing, for instance, `geom_` and then hitting the TAB key to see a list
+of all the geoms. Or after typing `theme(`, hit TAB to see all the options inside
+theme.
+
+## Axis titles and the theme
+
+Let's get to making the plot prettier. There are many many options to customise
+the plot using the `theme()`. 
+
+```{r}
+co2_plot_prettying <-
+    ggplot(CO2, aes(
+        x = conc,
+        y = uptake,
+        colour = paste(Treatment, Type)
+        )
+    ) +
+    geom_point() +
+    geom_smooth()
+
+# Some pre-defined themes
+co2_plot_prettying + theme_bw()
+co2_plot_prettying + theme_minimal()
+```
+
+```{r, fig.width=7}
+pretty_plot <- co2_plot_prettying +
+    theme_classic() +
+    scale_color_brewer(name = "Treatment and origin", palette = "Dark2") +
+    # Find this information in ?CO2
+    labs(x = "CO2 concentration (mL/L)",
+         y = "CO2 update rate (umol/m2)") +
+    theme(
+        # all axis lines, must use element_line
+        axis.line = element_line(colour = "grey50", size = 0.5),
+        # all axis text, must use element_text
+        axis.text = element_text(family = "sans"),
+        # all axis tick marks, use element_blank to remove
+        axis.ticks = element_blank()
+    )
+pretty_plot
+```
+
+### Exercise: Change theme items of the plot
+
+Time: 10 min
+
+```{r, eval=FALSE}
+# use dataset with two continuous variables
+ggplot(___, aes(x = ___, y = ___)) +
+    # finish the geom to create either a point, smooth, or line layer
+    ___ +
+    # choose either a minimal, dark, light, or classic defined theme
+    ___ +
+    theme(
+        # choose colours such as red, blue, black, grey, yellow, green
+        # choose size from 2 to 8
+        panel.grid.major = element_line(colour = ___, size = ___),
+        # choose family such as sans, serif, Arial, Times New Romans
+        axis.text = element_text(colour = ___, size = ___, family = ___)
+    )
+```
+
+
+## Basic structure of using ggplot2
+
+ggplot2 uses the "Grammar of Graphics" (gg). This is a powerful approach to
+creating plots because it provides a consistent way of expressing how you actually
+make the graph. There are at least four aspects to using ggplot2 that relate to
+"a grammar":
+
+- Aesthetics, `aes()`: How data should be mapped to the plot. For instance, what
+to put on x axis, on the y axis, whether to have colour based on a (discrete)
+variable, etc.
+- Geometries, `geom_` functions: The visual representation of the data, as a
+layer. This tells ggplot2 how to show the aesthetics, for instance as points,
+lines, boxes, hexes, bins, or bars.
+- Scales, `scale_` functions: Controls the visual properties of the data mapped 
+to the geom layers (e.g. specific colors, point size).
+- Themes, `theme_` functions or `theme()`: How the plot overall should look
+like, such as the text, axis lines, background colours, or inclusion of the
+legend.
+
+To maximise the power of ggplot2, we recommend to make heavy use of
+autocompletion to find all possible options, geoms, etc. You can do this by
+typing, for instance, `geom_` and then hitting the TAB key to see a list of all
+the geoms. Or after typing `theme(`, hit TAB to see all the options inside
+theme.
+
+## Facetting 
+
+
+You can also add another variable dimension by "facetting", which means splitting
+the data up by the variable and plot by that variable.
+
+```{r plot_facet}
+colour_plot_mixed +
+    geom_boxplot() +
+    # Cols means to have them side by side (horizontal)
+    # vars() is necessary to access variable from dataset
+    facet_grid(cols = vars(SurveyYr))
+# Or by another variable
+colour_plot_mixed +
+    geom_boxplot() +
+    # Rows means to have them stacked vertically
+    facet_grid(cols = vars(SurveyYr), rows = vars(PhysActive))
+```
+
+And you can add another geom as a layer on top of the previous one by adding
+(`+`) a geom to the next line.
+
+```{r plot_more_layers}
+# Three layers
+colour_plot_nums + 
+    geom_point() +
+    geom_smooth() +
+    facet_grid(cols = vars(SurveyYr))
+```
+
+TODO: Add some code about using pivot_ to make use of facet
+
+### Colours: Make your graph more accessible
+
+Colour blindness is common in the population, and red-green colour blindness in
+particular affects 8% of men and 0.5% of women. Making your graph more
+accessible to people affected by colour blindness will also usually improve the
+interpretability of your graphs for all people. For more detail on how colours
+look to those with colour-blindness, see this
+[documentation](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html) 
+from the [viridis] package. The viridis colour scheme and R package was
+specifically designed to represent data well to all colour visions. There is
+also a really good, informative [talk on
+YouTube](https://www.youtube.com/watch?v=xAoljeRJ3lU) on this topic.
+
+[viridis]: https://cran.r-project.org/packages=viridis
+
+When using colours, take time to think about what you are trying to convey in
+your figure and how your choice of colours will be interpreted. You can use
+built-in colour schemes, or set your own. Let's stick to using builtin ones.
+There are two, the viridis and the [ColorBrewer] colour schemes. Both are well
+designed and are colour-blind friendly.
+
+[ColorBrewer]: http://colorbrewer2.org/
+
+```{r changing_color_schemes}
+base_boxplot <- NHANES %>% 
+    ggplot(aes(x = HomeOwn, fill = Education)) +
+    geom_bar(position = position_dodge()) 
+
+# Add the viridis scheme
+base_boxplot +
+    # _d() is for discrete. _c() is for continuous.
+    scale_fill_viridis_d()
+# Use another viridis color scheme
+# Ranges from A to E
+base_boxplot +
+    scale_fill_viridis_d(option = "A")
+# Or use the brewer scheme
+base_boxplot +
+    scale_fill_brewer()
+base_boxplot +
+    scale_fill_brewer(type = "qual")
+```
+
+See all colour palettes for the Brewer palette, use
+`RColorBrewer::display.brewer.all()`. If you use a `colour = VariableName` in
+`aes()`, you'll need to use `scale_colour_*` (either brewer or viridis).
+
+### Exercise: Create a three (or more) variable plots
+
+Time: 10 min
+
+In the `exercises-visualizing.R` script, add a new Section (`Ctrl-Shift-R`) and
+copy the code below into the script. Then, create (with your own data or with
+NHANES) several plots with:
+
+1. Two continuous (x, y) and one discrete variables (colour), with another
+discrete variable as the facet. (Optionally include another layer, like
+smoothing).
+2. Three continuous variables (x, y, and colour), using the viridis colour
+palette for continuous data.
+3. Three discrete variables (x, fill, facet), using the brewer colour palette.
+
+```{r 3d-more-exercise, eval=FALSE}
+# 1. Two continuous, discrete, and one facet.
+ggplot(___, aes(x = ___, y = ___, colour = ___)) +
+    ___ +
+    facet_
+    # Optional: add another layer
+
+# 2. Three continuous, with viridis
+ggplot(___, aes(x = ___, y = ___, colour = ___)) +
+    ___ +
+    scale_
+
+# 3. Three discrete, with brewer
+ggplot(___, aes(x = ___, fill = ___)) +
+    ___ +
+    facet_ +
+    scale_
+```
+
+<details><summary><strong>Click for a possible solution</strong></summary>
+<p>
+
+```{r 3d-more-answer, eval=FALSE}
+# 1. Two continuous, discrete, and one facet.
+ggplot(NHANES, aes(x = Height, y = Weight, colour = Gender)) +
+    geom_point() +
+    facet_grid(rows = vars(Diabetes))
+    # Optional: add another layer
+
+# 2. Three continuous, with viridis
+ggplot(NHANES, aes(x = Height, y = Weight, colour = Age)) +
+    geom_point() +
+    scale_colour_viridis_c()
+
+# 3. Three discrete, with brewer
+ggplot(NHANES, aes(x = Gender, fill = Education)) +
+    geom_bar(position = position_dodge()) +
+    facet_grid(cols = vars(Diabetes)) +
+    scale_fill_brewer()
+```
+
+</p>
+</details>
+
+## Titles, axis labels, and themes
+
+There are so so so many options to modify the figure, and they are all basically
+contained in the `theme()` function. Search the help documentation using `?theme`
+or checking out the [ggplot2 website]. There are way too many customizations
+available to show in this session. So we'll instead cover a few of the options
+to give you a sense of how to customize, as well as showing some of the built-in
+themes (starting with `theme_`).
+
+[ggplot2 website]: https://ggplot2.tidyverse.org/reference/theme.html
+
+```{r plot_themes}
+basic_scatterplot <- NHANES %>% 
+    ggplot(aes(x = Height, y = Weight, colour = Age)) +
+    # use alpha (transparency) since there are so many dots
+    geom_point(alpha = 0.5) +
+    facet_grid(cols = vars(Gender)) +
+    scale_color_viridis_c()
+
+# Some pre-defined themes
+basic_scatterplot + theme_bw()
+basic_scatterplot + theme_minimal()
+basic_scatterplot + theme_classic()
+# Adding labels
+basic_scatterplot +
+    labs(title = "Height and weight by age and gender",
+         x = "Height (cm)",
+         y = "Weight (kg)")
+# Edit specific plot items
+basic_scatterplot +
+    # theme is good at warning you if something isn't right
+    # See ?theme for a full list of possible options
+    theme(
+        # background items must use element_rect
+        # panel is the base/bottom layer that all other layers add to
+        panel.background = element_rect(fill = "pink"),
+        # strip is the section showing the facets
+        strip.background = element_rect(fill = "red"),
+        # line items must use element_line
+        # axis is, well the axis
+        axis.line = element_line(colour = "grey50", size = 0.5),
+        # text items must use element_text
+        # legend is the key when using fill, colour, size, etc
+        legend.text = element_text(family = "sans", size = 20),
+        # use element_blank to remove
+        axis.ticks = element_blank()
+    )
+```
+
+TODO: Add explanation on how to make use of tab and documentation to make graph themes
+
+## Final exercise: Putting it all together
+
+Time: Until end of session
+
+In the `exercises-visualizing.R` script, add a new Section for this exercise.
+Then using the NHANES dataset, try to replicate these figures. You very likely
+won't be able to get exactly the same, but try to get close! :smile:
+
+By the end of this you will try to get the data from `NHANES` to look like the
+below figures. We don't expect you to get it exactly, but try to get close to
+them. By (getting relatively close to) replicating these figures, you will have
+achieved our learning expectations.
+
+```{r final-exercise-plot1, warning=FALSE, message=FALSE, echo=FALSE}
+NHANES %>% 
+    filter(!is.na(Diabetes)) %>% 
+    ggplot(aes(y = BMI, x = Poverty, colour = Diabetes)) +
+    geom_point(alpha = 0.4) +
+    geom_smooth(size = 2, method = "gam") +
+    facet_grid(cols = vars(SurveyYr), rows = vars(Gender)) +
+    theme_classic() +
+    scale_color_viridis_d(end = 0.8) +
+    theme(strip.background = element_blank(),
+          panel.background = element_rect(fill = "grey95"),
+          axis.line = element_line(colour = "grey80"))
+```
+
+```{r final-exercise-plot2, warning=FALSE, message=FALSE, echo=FALSE}
+NHANES %>% 
+    filter(!is.na(Diabetes), !is.na(Education)) %>% 
+    ggplot(aes(x = Education, colour = Diabetes, y = TotChol)) +
+    geom_boxplot(fill = "grey90", outlier.size = 0.5, size = 0.75) +
+    theme_minimal() +
+    scale_color_brewer(type = "qual") +
+    labs(y = "Total Cholesterol") +
+    facet_grid(cols = vars(Gender)) +
+    coord_flip()
+```
+
+```{r final-exercise-plot1, echo=FALSE}
+```
+
+```{r final-exercise-plot2, echo=FALSE}
+```
