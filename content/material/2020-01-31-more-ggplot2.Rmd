@@ -416,6 +416,62 @@ basic_scatterplot +
 
 TODO: Add explanation on how to make use of tab and documentation to make graph themes
 
+
+## Panels: join multiple figures together
+
+Often we produce single figure that will then be assembled in one panel. 
+This may happen due to journal requirements (e.g. limited number of figures 
+allowed in a manuscript), or because different figures are conceptually linked 
+and we want to show them close to one another.
+
+The package `patchwork` offers some powerful and nifty functions to join figures
+in panels with a few lines of code.
+
+First, if you have not done already make sure you have installed the 
+package `patchwork`
+
+```{r, eval = FALSE}
+library(patchwork)
+```
+
+
+let's say that we want to compare the look of the same plot "wearing" different 
+themes. We will use the scatterplot we created earlier
+
+```{r}
+basic_scatterplot <- NHANES %>% 
+    ggplot(aes(x = Height, y = Weight, colour = Age)) +
+    # use alpha (transparency) since there are so many dots
+    geom_point(alpha = 0.5) +
+    facet_grid(cols = vars(Gender)) +
+    scale_color_viridis_c()
+```
+
+First let's create the figure basic scatterplot adding a the `theme_minimal()` 
+function and the title "Theme minimal" using the function `ggtitle()`
+```{r}
+basic_scatterplot_minimal <- basic_scatterplot +
+  ggtitle("Theme minimal") +
+  theme_minimal()
+```
+
+Same procedure but using the `theme_classic()` function and the title 
+"Theme classic"
+```{r}
+basic_scatterplot_classic <- basic_scatterplot +
+  ggtitle("Theme classic") +
+  theme_classic()
+```
+
+Now let's join these figures in a panel and compare them
+
+```{r}
+basic_scatterplot_minimal + basic_scatterplot_classic 
+```
+
+
+
+
 ## Final exercise: Putting it all together
 
 Time: Until end of session
