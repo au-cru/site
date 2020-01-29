@@ -454,7 +454,6 @@ basic_scatterplot +
     )
 ```
 
-TODO: Add explanation on how to make use of tab and documentation to make graph themes
 
 
 ## Panels: join multiple figures together
@@ -464,8 +463,7 @@ This may happen due to journal requirements (e.g. limited number of figures
 allowed in a manuscript), or because different figures are conceptually linked 
 and we want to show them close to one another.
 
-The package `patchwork` offers some powerful and nifty functions to join figures
-in panels with a few lines of code.
+The package `patchwork` offers some powerful and nifty functions to join figures in panels with a few lines of code.
 
 First, if you have not done already make sure you have installed the 
 package `patchwork`
@@ -475,7 +473,7 @@ library(patchwork)
 ```
 
 
-let's say that we want to compare the look of the same plot "wearing" different 
+Let's say that we want to compare the look of the same plot "wearing" different 
 themes. We will use the scatterplot we created earlier
 
 ```{r}
@@ -495,7 +493,7 @@ basic_scatterplot_minimal <- basic_scatterplot +
   theme_minimal()
 ```
 
-Same procedure but using the `theme_classic()` function and the title 
+Same procedure but using the `theme_classic()` function and the title
 "Theme classic"
 ```{r}
 basic_scatterplot_classic <- basic_scatterplot +
@@ -503,13 +501,16 @@ basic_scatterplot_classic <- basic_scatterplot +
   theme_classic()
 ```
 
-Now let's join these figures in a panel and compare them
+Now let's join these figures in a panel and compare them:
 
 ```{r}
 basic_scatterplot_minimal + basic_scatterplot_classic 
 ```
 
 
+
+We can also join more than two graphs in the same panel.
+Let's create three simple graphs to use as an example
 ```{r}
 plot1 <- ggplot(NHANES, aes(x = Height, y = BPSysAve, colour = Age)) +
     geom_point() +
@@ -529,23 +530,27 @@ plot3 <- ggplot(NHANES, aes(x = Gender, fill = Education)) +
 ```
 
 
-let's try join these plots together
+First, let's try join these plots together as we did before
 ```{r}
 plot1 + plot2 + plot3
 ```
 
-the result is hardly readable, but fortunately we can customize how graphs are dislayed
+The result is difficult to read, because unless given further instructions `patchwork` tries and organizes plots in the same row.  Fortunately we can customize how graphs are dislayed:
+
+
 
 ```{r}
+# | means: take plot1 and plot2 and put them in the same row
+# / means: take plot 3 and put it into a separate row
+
 (plot1 | plot2) / plot3
 ```
 
-Better! Now plot3 (in the bottom part of the panel) is much easier to read and 
-our panel is prettier.
+Better! Now plot3 is given more space in the bottom part of the panel, and everything is much easier to read.
 
-However, the two top graphs share the same legend which now is repeated twice.
-Using the function `plot_layout()` and its argument `guides` we can adjust that
+However, the plot1 and plot2 share the same legend which now is repeated twice.
 
+Using the function `plot_layout()` and its argument `guides` we can adjust that:
 ```{r}
 ((plot1 | plot2) / plot3) + 
   plot_layout(guides = 'collect')
@@ -567,12 +572,23 @@ them in text
 ```
 
 
+## Exercise: Joining figures in panels.
+
+Choose figures from the past execises and join them in one panel with patchwork adding tags.
+
+Example
+```{r, eval= FALSE}
+plot1 + plot2 + plot_annotation(____)
+```
+
+**Extra:**
+Join three or more figures and experiment how to arrange them using the function `plot_layout(ncol)` , `plot_layout(ncol)` or the operators | and /
 
 ## Final exercise: Putting it all together
 
 Time: Until end of session
 
-In the `exercises-visualizing.R` script, add a new Section for this exercise.
+<!-- In the `exercises-visualizing.R` script, add a new Section for this exercise. -->
 Then using the NHANES dataset, try to replicate these figures. You very likely
 won't be able to get exactly the same, but try to get close! :smile:
 
