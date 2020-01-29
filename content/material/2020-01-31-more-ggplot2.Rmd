@@ -216,11 +216,12 @@ ggplot(___, aes(x = ___, y = ___)) +
 
 
 
-## Facetting 
+## Facetting: adding even more variables to a plot
 
 
 You can also add another variable dimension by "facetting", which means splitting
 the data up by the variable and plot by that variable.
+
 
 ```{r plot_facet}
 colour_plot_mixed +
@@ -354,16 +355,49 @@ ggplot(NHANES, aes(x = Gender, fill = Education)) +
 </p>
 </details>
 
-## Titles, axis labels, and themes
+## Themes: customize text, line, background and legends
 
 There are so so so many options to modify the figure, and they are all basically
-contained in the `theme()` function. Search the help documentation using `?theme`
-or checking out the [ggplot2 website]. There are way too many customizations
-available to show in this session. So we'll instead cover a few of the options
-to give you a sense of how to customize, as well as showing some of the built-in
-themes (starting with `theme_`).
+contained in the `theme()` function. 
+This function is extremely powerful and initially it can be daunting to navigate the documentation. 
 
-[ggplot2 website]: https://ggplot2.tidyverse.org/reference/theme.html
+Fortunately there are many sources for help:
+
+- you can search the help documentation from your console using `?theme`
+
+- and you can check out the [ggplot2 website](https://ggplot2.tidyverse.org/reference/theme.html)
+
+- if you have a specific issue, you can navigate to the website [StackOverflow](https://stackoverflow.com/) and search some key words. Say you are trying to change the font of the text in your plot, you can search "ggplot theme font family"
+
+Let's take a look together:
+
+type `?theme` on your console. In the help section of RStudio, the documentation of the function theme pops up.
+
+Scroll down to the section  "Arguments": here you can find listed all the function arguments that you can use to customize your plot. As you can see a lot of the arguments are quite intuitive, making it easier to undertand what you may be looking for, e.g. `legend.position` and `axis.text.y` etc etc...
+
+Once you find the arguments you need, remember to make your of the autocomplete function from RStudio
+
+e.g. start typing in your R file `theme(legend)` and then hit the key TAB, you will see a number of options popping up. This greatly helps because you don't have to memorize all the arguments name.
+
+
+**A USEFUL RULE OF THUMBS: **
+
+- If you want to customize some *text elements* of your graph you will need to match the selected argument with `element_text()`
+
+> example theme(axis.title = element_text(....))
+
+- If you want to customize some *line elements* of your graph you will need to match the selected argument with `element_line()`
+
+> example theme(axis.line = element_line(....))
+
+- If you want to customize some elements of the plot or legend backround of your graph you will need to match the selected argument with `element_rect()`
+
+> example theme(panel.background = element_rect(....))
+
+- If you want to remove some elements from your graph you will need to match the selected argument with `element_blank()`
+
+> example theme(panel.grid = element_blank(....))
+
 
 ```{r plot_themes}
 basic_scatterplot <- NHANES %>% 
