@@ -137,32 +137,43 @@ text, axis lines, etc.
 
 To maximise the power of ggplot2, make heavy use of autocompletion. You can do 
 this by typing, for instance, `geom_` and then hitting the TAB key to see a list
-of all the geoms. Or after typing `theme(`, hit TAB to see all the options inside
+of all the geoms. Or after typing `theme()`, hit TAB to see all the options inside
 theme.
 
 ## Axis titles and the theme
 
-Let's get to making the plot prettier. There are many many options to customise
-the plot using the `theme()`. 
+Let's get to making the plot prettier. First let's create a graph combining four different variables.
 
 ```{r}
-co2_plot_prettying <-
+co2_plot <-
     ggplot(CO2, aes(
         x = conc,
         y = uptake,
+        #represents the combination of the two variables as different         #colours
         colour = paste(Treatment, Type)
         )
     ) +
     geom_point() +
     geom_smooth()
 
-# Some pre-defined themes
-co2_plot_prettying + theme_bw()
-co2_plot_prettying + theme_minimal()
+
 ```
 
+
+Then let's change its appearance. 
+There are many many options to customise
+the plot using the `theme()`. 
+```{r}
+# Some pre-defined themes
+co2_plot + theme_bw()
+co2_plot + theme_minimal()
+```
+
+
+Another feature of plot that can greatly improve the clarity of the 
+graph is the colour palette
 ```{r, fig.width=7}
-pretty_plot <- co2_plot_prettying +
+pretty_plot <- co2_plot +
     theme_classic() +
     scale_color_brewer(name = "Treatment and origin", palette = "Dark2") +
     # Find this information in ?CO2
