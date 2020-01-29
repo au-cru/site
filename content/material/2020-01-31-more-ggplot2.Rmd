@@ -399,6 +399,20 @@ e.g. start typing in your R file `theme(legend)` and then hit the key TAB, you w
 > example theme(panel.grid = element_blank(....))
 
 
+
+Let's see an example of a graph- making workflow: 
+
+1. Decide what to put in a plot and compose it 
+
+1. Add some pre-defined theme using the function `theme_` 
+
+1. Add titles and axis labels
+
+1. Customize the plot appearance using the function `theme()`
+
+
+
+
 ```{r plot_themes}
 basic_scatterplot <- NHANES %>% 
     ggplot(aes(x = Height, y = Weight, colour = Age)) +
@@ -432,6 +446,9 @@ basic_scatterplot +
         # text items must use element_text
         # legend is the key when using fill, colour, size, etc
         legend.text = element_text(family = "sans", size = 20),
+        #use element text to change the angle and position of axis           #labels
+        #the function hjust controls the vertical alignment of labels
+        axis.text.x = element_text(angle = 45, hjust = 1),
         # use element_blank to remove
         axis.ticks = element_blank()
     )
