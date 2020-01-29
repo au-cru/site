@@ -211,30 +211,7 @@ ggplot(___, aes(x = ___, y = ___)) +
 ```
 
 
-## Basic structure of using ggplot2
 
-ggplot2 uses the "Grammar of Graphics" (gg). This is a powerful approach to
-creating plots because it provides a consistent way of expressing how you actually
-make the graph. There are at least four aspects to using ggplot2 that relate to
-"a grammar":
-
-- Aesthetics, `aes()`: How data should be mapped to the plot. For instance, what
-to put on x axis, on the y axis, whether to have colour based on a (discrete)
-variable, etc.
-- Geometries, `geom_` functions: The visual representation of the data, as a
-layer. This tells ggplot2 how to show the aesthetics, for instance as points,
-lines, boxes, hexes, bins, or bars.
-- Scales, `scale_` functions: Controls the visual properties of the data mapped 
-to the geom layers (e.g. specific colors, point size).
-- Themes, `theme_` functions or `theme()`: How the plot overall should look
-like, such as the text, axis lines, background colours, or inclusion of the
-legend.
-
-To maximise the power of ggplot2, we recommend to make heavy use of
-autocompletion to find all possible options, geoms, etc. You can do this by
-typing, for instance, `geom_` and then hitting the TAB key to see a list of all
-the geoms. Or after typing `theme(`, hit TAB to see all the options inside
-theme.
 
 ## Facetting 
 
