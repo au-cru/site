@@ -132,10 +132,13 @@ do. There are at least three aspects to using ggplot2 that relate to the grammar
 put on x axis, on the y axis, colours, size, etc.
 - Geometries, `geom_`: The visual representation of the data, as a layer. This
 tells ggplot2 how to show the aesthetics. Includes points, lines, boxes, etc.
-- Themes, `theme_` or `theme()`: How the plot should look like. Includes the
-text, axis lines, etc.
+- Themes, `theme_` or `theme()`: How the plot should look like. Using this function we can customize several components of a graph, such as axis, lines, grids, plot background, position, size and font of the axis text and labels
+- Title and labels can be added using the functions `ggtitle()` and `labs()` respectively
 
-To maximise the power of ggplot2, make heavy use of autocompletion. You can do 
+The aesthetics and the geometries are fundamental to create a graph, whereas scales, themes, and labels are feature that can be stacked in successive layers to improve the looks and the clarity of a graph.
+
+
+**Tip:** To maximise the power of ggplot2, make heavy use of autocompletion. You can do 
 this by typing, for instance, `geom_` and then hitting the TAB key to see a list
 of all the geoms. Or after typing `theme()`, hit TAB to see all the options inside
 theme.
