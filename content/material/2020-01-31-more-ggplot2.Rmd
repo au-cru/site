@@ -69,9 +69,6 @@ library(ggplot2)
 library(patchwork)
 library(viridis)
 
-# Variables
-names(NHANES)
-
 # Content
 NHANES
 ```
@@ -119,12 +116,14 @@ Let's try it out:
 ```{r plot-setup}
 # Two continuous and one discrete
 # Scatter plot
-ggplot(NHANES, aes(x = Height, y = Weight, colour = Gender)) +
+two_continuous <- ggplot(NHANES, aes(x = Height, y = Weight, colour = Gender)) +
   geom_point()
+two_continuous
 
 # One continuous and two discrete
-ggplot(NHANES, aes(x = Gender, y = BMI, colour = SmokeNow)) +
+two_discrete <- ggplot(NHANES, aes(x = Gender, y = BMI, colour = Diabetes)) +
   geom_boxplot()
+two_discrete
 ```
 
 However, something to consider when using colours is that not everyone sees how you see.
@@ -154,11 +153,6 @@ Let's try out viridis using the previous plots we made:
 
 ```{r using-viridis-discrete}
 # Two continuous and one discrete
-# Scatter plot
-two_continuous <- 
-  ggplot(NHANES, aes(x = Height, y = Weight, colour = Gender)) +
-  geom_point()
-
 # Default colour scheme
 two_continuous +
   scale_color_viridis_d()
@@ -167,18 +161,8 @@ two_continuous +
 two_continuous +
   scale_color_viridis_d(option = "magma")
 
-# Inferno colour scheme
-two_continuous +
-  scale_color_viridis_d(option = "inferno")
-
-# Inferno colour scheme
-two_continuous +
-  scale_color_viridis_d(option = "plasma")
-
 # One continuous and two discrete
-two_discrete <- ggplot(NHANES, aes(x = Gender, y = BMI, colour = SmokeNow)) +
-  geom_boxplot() 
-
+# Plasma colour scheme
 two_discrete +
   scale_color_viridis_d(option = "plasma")
 
@@ -194,11 +178,17 @@ But you'll need to use the `_c()` form of viridis: `scale_color_viridis_c()`.
 three_continuous <- ggplot(NHANES, aes(x = Height, y = Weight, colour = Age)) +
   geom_point()
 
+# Viridis colour scheme
 three_continuous +
   scale_color_viridis_c()
 
+# Inferno colour scheme
 three_continuous +
   scale_color_viridis_c(option = "inferno")
+
+# Magma colour scheme
+three_continuous +
+  scale_color_viridis_c(option = "magma")
 
 # Can change ending or beginning colour
 # Range goes from 0 for begin to 1 for end
@@ -235,201 +225,199 @@ three_continuous +
 ```
 
 ## Facetting: adding even more variables to a plot
-You can also add another variable dimension by "facetting", which means splitting
-the data up by the variable and plot by that variable.
+
+Facetting in ggplot2 is an incredibly powerful way to quickly visualize multiple
+perspectives of a dataset.
+Facets are groupings of plots by a discrete variable.
+There are two functions in ggplot2 for facetting: 
+
+- `facet_grid()`: Have on variable split by column (horizontally) and another one
+split by row (vertically).
+- `facet_wrap()` takes a variable and splits it up and arranges it for "n" number 
+of columns, after which it will wrap to the next row.
+
+Both facets must be given the `vars()` function when the variable is provided.
+Let's try it out!
 
 ```{r plot_facet}
-colour_plot_mixed +
-    geom_boxplot() +
-    # Cols means to have them side by side (horizontal)
-    # vars() is necessary to access variable from dataset
+two_discrete +
     facet_grid(cols = vars(SurveyYr))
-# Or by another variable
-colour_plot_mixed +
-    geom_boxplot() +
+
+two_discrete +
     # Rows means to have them stacked vertically
-    facet_grid(cols = vars(SurveyYr), rows = vars(PhysActive))
-```
+    facet_grid(cols = vars(SurveyYr), rows = vars(HomeOwn))
 
-And you can add another geom as a layer on top of the previous one by adding
-(`+`) a geom to the next line.
-
-```{r plot_more_layers}
-# Three layers
-colour_plot_nums + 
-    geom_point() +
-    geom_smooth() +
-    facet_grid(cols = vars(SurveyYr))
-```
-
-
-We assume you know some basics of using ggplot2, 
-for instance making scatter plots with `geom_point()` or boxplots with `geom_boxplot()`.
-We're going to ex
-
-You can also add another variable dimension by "facetting", which means splitting
-the data up by the variable and plot by that variable.
-
-
-```{r plot_facet}
-colour_plot_mixed +
-    geom_boxplot() +
-    # Cols means to have them side by side (horizontal)
-    # vars() is necessary to access variable from dataset
-    facet_grid(cols = vars(SurveyYr))
-# Or by another variable
-colour_plot_mixed +
-    geom_boxplot() +
+two_continuous +
     # Rows means to have them stacked vertically
-    facet_grid(cols = vars(SurveyYr), rows = vars(PhysActive))
+    facet_grid(cols = vars(SurveyYr), rows = vars(HomeOwn))
 ```
 
-And you can add another geom as a layer on top of the previous one by adding
-(`+`) a geom to the next line.
+If you know how to convert the data to long format using `pivot_longer()`,
+you can really take advantage of facets. 
+However, we won't be covering that in this session.
 
-```{r plot_more_layers}
-# Three layers
-colour_plot_nums + 
+## Exercise: Try out facets with the colour palettes
+
+Time: 10-15 min
+
+In the `exercises.R` script,
+copy the code below into the script. 
+Then do the following:
+
+1. Look in the NHANES dataset and choose two continuous and two discrete variables.
+1. Put the two continuous variables as the `x` and `y` in `aes()`.
+1. Put one of the discrete variables as the `colour`.
+1. Choose either `scale_color_viridis_d()` or `scale_color_brewer()` for the palette.
+1. For `facet_grid()` choose to use either `rows = ` or `cols =` for the second 
+discrete variable. Don't forget to use `vars()` when giving the variable name.
+
+Do the same thing for the other plots, 
+except choose three continuous variables for 2. and
+three discrete variables for 3. 
+For 3., use `facet_wrap()` instead to try it out.
+
+```{r exercise-facet, eval=FALSE}
+# 1. Two continuous, discrete, and one facet.
+ggplot(NHANES, aes(x = ___, y = ___, colour = ___)) +
     geom_point() +
-    geom_smooth() +
-    facet_grid(cols = vars(SurveyYr))
+    scale____ +
+    facet_grid(___)
+
+# 2. Three continuous
+ggplot(NHANES, aes(x = ___, y = ___, colour = ___)) +
+    geom_point() +
+    scale____ +
+    facet_grid(___)
+
+# 3. Three discrete
+ggplot(NHANES, aes(x = ___, fill = ___)) +
+    geom_bar(position = position_dodge()) +
+    scale____ +
+    facet_wrap(vars(___), ncol = ___)
 ```
 
-TODO: Add some code about using pivot_ to make use of facet
+## Adding together multiple plots
 
+Often we produce multiple plots that will then be assembled in one figure. 
+This may happen due to journal requirements (e.g. limited number of figures 
+allowed in a manuscript), or because different figures are conceptually linked 
+and we want to show them close to one another.
 
-## Axis titles and the theme
+The package patchwork offers some powerful and 
+nifty functions to join figures in panels with a few lines of code.
 
-Let's get to making the plot prettier. First let's create a graph combining four different variables.
+First, open up the `code-along.R` script again.
+Let's say that we want to compare the look of the same plot "wearing" different themes. 
+We'll create a scatterplot:
 
 ```{r}
-co2_plot <-
-    ggplot(CO2, aes(
-        x = conc,
-        y = uptake,
-        #represents the combination of the two variables as different         #colours
-        colour = paste(Treatment, Type)
-        )
-    ) +
-    geom_point() +
-    geom_smooth()
-
-
+basic_scatterplot <- ggplot(NHANES, aes(x = Height, y = Weight, colour = Age)) +
+    # use alpha (transparency) since there are so many dots
+    geom_point(alpha = 0.5) +
+    facet_grid(cols = vars(Gender)) +
+    scale_color_viridis_c()
 ```
 
+Now, we'll add use the `theme_minimal()` and add an appropriate title with `ggtitle()`.
 
-Then let's change its appearance. 
-There are many many options to customise
-the plot using the `theme()`. 
 ```{r}
-# Some pre-defined themes
-co2_plot + theme_bw()
-co2_plot + theme_minimal()
+basic_scatterplot_minimal <- basic_scatterplot +
+  ggtitle("Theme minimal") +
+  theme_minimal()
 ```
 
+We'll do the same thing again but with `theme_classic()`.
 
-Another feature of plot that can greatly improve the clarity of the 
-graph is the colour palette
-
-```{r, fig.width=7}
-pretty_plot <- co2_plot +
-    theme_classic() +
-    scale_color_brewer(name = "Treatment and origin", palette = "Dark2") +
-    # Find this information in ?CO2
-    labs(x = "CO2 concentration (mL/L)",
-         y = "CO2 update rate (umol/m2)") +
-    theme(
-        # all axis lines, must use element_line
-        axis.line = element_line(colour = "grey50", size = 0.5),
-        # all axis text, must use element_text
-        axis.text = element_text(family = "sans"),
-        # all axis tick marks, use element_blank to remove
-        axis.ticks = element_blank()
-    )
-pretty_plot
+```{r}
+basic_scatterplot_classic <- basic_scatterplot +
+  ggtitle("Theme classic") +
+  theme_classic()
 ```
 
-### Exercise: Change theme items of the plot
+Now let's join these figures in a panel and compare them:
 
-Time: 10 min
-
-```{r, eval=FALSE}
-# use dataset with two continuous variables
-ggplot(___, aes(x = ___, y = ___)) +
-    # finish the geom to create either a point, smooth, or line layer
-    ___ +
-    # choose either a minimal, dark, light, or classic defined theme
-    ___ +
-    theme(
-        # choose colours such as red, blue, black, grey, yellow, green
-        # choose size from 2 to 8
-        panel.grid.major = element_line(colour = ___, size = ___),
-        # choose family such as sans, serif, Arial, Times New Romans
-        axis.text = element_text(colour = ___, size = ___, family = ___)
-    )
+```{r}
+basic_scatterplot_minimal + basic_scatterplot_classic 
 ```
 
+Cool eh?
 
+But this is too easy. 
+Let's do something a bit more realistic and this time add together three plots.
+Let's create three simple graphs that each have different underlying `aes()` and `geom_` layer.
 
-
-### Exercise: Create a three (or more) variable plots
-
-Time: 10 min
-
-In the `exercises-visualizing.R` script, add a new Section (`Ctrl-Shift-R`) and
-copy the code below into the script. Then, create (with your own data or with
-NHANES) several plots with:
-
-1. Two continuous (x, y) and one discrete variables (colour), with another
-discrete variable as the facet. (Optionally include another layer, like
-smoothing).
-2. Three continuous variables (x, y, and colour), using the viridis colour
-palette for continuous data.
-3. Three discrete variables (x, fill, facet), using the brewer colour palette.
-
-```{r 3d-more-exercise, eval=FALSE}
-# 1. Two continuous, discrete, and one facet.
-ggplot(___, aes(x = ___, y = ___, colour = ___)) +
-    ___ +
-    facet_
-    # Optional: add another layer
-
-# 2. Three continuous, with viridis
-ggplot(___, aes(x = ___, y = ___, colour = ___)) +
-    ___ +
-    scale_
-
-# 3. Three discrete, with brewer
-ggplot(___, aes(x = ___, fill = ___)) +
-    ___ +
-    facet_ +
-    scale_
-```
-
-<details><summary><strong>Click for a possible solution</strong></summary>
-<p>
-
-```{r 3d-more-answer, eval=FALSE}
-# 1. Two continuous, discrete, and one facet.
-ggplot(NHANES, aes(x = Height, y = Weight, colour = Gender)) +
+```{r setup-plots-patchwork}
+plot1 <- ggplot(NHANES, aes(x = BMI, y = BPSysAve, colour = Age)) +
     geom_point() +
-    facet_grid(rows = vars(Diabetes))
-    # Optional: add another layer
-
-# 2. Three continuous, with viridis
-ggplot(NHANES, aes(x = Height, y = Weight, colour = Age)) +
+    theme_minimal() +
+    scale_colour_viridis_c()
+   
+plot2 <- ggplot(NHANES, aes(x = BMI, y = TotChol, colour = Age)) +
     geom_point() +
+    theme_minimal() +
     scale_colour_viridis_c()
 
-# 3. Three discrete, with brewer
-ggplot(NHANES, aes(x = Gender, fill = Education)) +
+plot3 <- ggplot(NHANES, aes(x = Gender, fill = Education)) +
     geom_bar(position = position_dodge()) +
     facet_grid(cols = vars(Diabetes)) +
+    theme_minimal() +
     scale_fill_brewer()
 ```
 
-</p>
-</details>
+First, let's try join these plots together as we did before.
+
+```{r arrange-plots-1}
+plot1 + plot2 + plot3
+```
+
+Hmm... The result is a bit difficult to read.
+patchwork by default adds plots horizontal on one row.
+Fortunately we can customize how graphs are put together:
+
+```{r arrange-plots-2}
+# | means: take plot1 and plot2 and put them in the same row
+# / means: take plot 3 and put it into a separate row
+(plot1 | plot2) / plot3
+```
+
+Better! Now `plot3` is given more space in the bottom part of the figure, and
+everything is much easier to read.
+However, `plot1` and `plot2` share the same legend which now is repeated twice.
+We can use the function `plot_layout()` and its argument `guides` to adjust that:
+
+```{r guide-collect}
+((plot1 | plot2) / plot3) + 
+  plot_layout(guides = 'collect')
+```
+
+Finally, we may want to add a title to our figure, 
+and letters or numbers to the single plots in the figure, so we can refer to them separately when describing 
+them in text
+
+```{r}
+((plot1 | plot2) / plot3) + 
+  plot_layout(guides = 'collect') +
+  plot_annotation(
+    # Adds a title to the figure
+    title = "Colourful plots for my manuscript",
+    # Specifies what system to use to indicate plots in a figure
+    tag_levels = "A"
+  )
+```
+
+## Exercise: Joining figures in figure.
+
+Combined the figures from the previous execise and join them into one figure with patchwork.
+
+1. A plot tags as letters.
+1. Arrange the cplots
+
+```{r, eval= FALSE}
+plot1 + plot2 + plot_annotation(____)
+```
+
+**Extra:**
+Join three or more figures and experiment how to arrange them using the function `plot_layout(ncol)` , `plot_layout(ncol)` or the operators | and /
 
 ## Themes: customize text, line, background and legends
 
@@ -530,177 +518,22 @@ basic_scatterplot +
     )
 ```
 
+### Exercise: Change theme items of the plot
 
+Time: 10 min
 
-## Panels: join multiple figures together
-
-Often we produce single figure that will then be assembled in one panel. 
-This may happen due to journal requirements (e.g. limited number of figures 
-allowed in a manuscript), or because different figures are conceptually linked 
-and we want to show them close to one another.
-
-The package `patchwork` offers some powerful and nifty functions to join figures in panels with a few lines of code.
-
-First, if you have not done already make sure you have installed the 
-package `patchwork`
-
-```{r, eval = FALSE}
-library(patchwork)
-```
-
-
-Let's say that we want to compare the look of the same plot "wearing" different 
-themes. We will use the scatterplot we created earlier
-
-```{r}
-basic_scatterplot <- NHANES %>% 
-    ggplot(aes(x = Height, y = Weight, colour = Age)) +
-    # use alpha (transparency) since there are so many dots
-    geom_point(alpha = 0.5) +
-    facet_grid(cols = vars(Gender)) +
-    scale_color_viridis_c()
-```
-
-First let's create the figure basic scatterplot adding a the `theme_minimal()` 
-function and the title "Theme minimal" using the function `ggtitle()`
-```{r}
-basic_scatterplot_minimal <- basic_scatterplot +
-  ggtitle("Theme minimal") +
-  theme_minimal()
-```
-
-Same procedure but using the `theme_classic()` function and the title
-"Theme classic"
-```{r}
-basic_scatterplot_classic <- basic_scatterplot +
-  ggtitle("Theme classic") +
-  theme_classic()
-```
-
-Now let's join these figures in a panel and compare them:
-
-```{r}
-basic_scatterplot_minimal + basic_scatterplot_classic 
-```
-
-
-
-We can also join more than two graphs in the same panel.
-Let's create three simple graphs to use as an example
-```{r}
-plot1 <- ggplot(NHANES, aes(x = Height, y = BPSysAve, colour = Age)) +
-    geom_point() +
-    theme_minimal() +
-    scale_colour_viridis_c()
-   
-plot2 <- ggplot(NHANES, aes(x = Height, y = Weight, colour = Age)) +
-    geom_point() +
-    theme_minimal() +
-    scale_colour_viridis_c()
-
-
-plot3 <- ggplot(NHANES, aes(x = Gender, fill = Education)) +
-    geom_bar(position = position_dodge()) +
-    facet_grid(cols = vars(Diabetes)) +
-    scale_fill_brewer()
-```
-
-
-First, let's try join these plots together as we did before
-```{r}
-plot1 + plot2 + plot3
-```
-
-The result is difficult to read, because unless given further instructions `patchwork` tries and organizes plots in the same row.  Fortunately we can customize how graphs are dislayed:
-
-
-
-```{r}
-# | means: take plot1 and plot2 and put them in the same row
-# / means: take plot 3 and put it into a separate row
-
-(plot1 | plot2) / plot3
-```
-
-Better! Now plot3 is given more space in the bottom part of the panel, and everything is much easier to read.
-
-However, the plot1 and plot2 share the same legend which now is repeated twice.
-
-Using the function `plot_layout()` and its argument `guides` we can adjust that:
-```{r}
-((plot1 | plot2) / plot3) + 
-  plot_layout(guides = 'collect')
-```
-
-
-Finally, we may want to add a title to our panel, and letters or numbers to the single figures in the panel, so we can refer to them separately when describing 
-them in text
-
-```{r}
-((plot1 | plot2) / plot3) + 
-  plot_layout(guides = 'collect') +
-  plot_annotation(
-    #adds a title to the panel
-    title = "Colourful plots for my manuscript",
-    #specifies what system to use to indicate plots in a panel
-    tag_levels = "A"
-  )
-```
-
-
-## Exercise: Joining figures in panels.
-
-Choose figures from the past execises and join them in one panel with patchwork adding tags.
-
-Example
-```{r, eval= FALSE}
-plot1 + plot2 + plot_annotation(____)
-```
-
-**Extra:**
-Join three or more figures and experiment how to arrange them using the function `plot_layout(ncol)` , `plot_layout(ncol)` or the operators | and /
-
-## Final exercise: Putting it all together
-
-Time: Until end of session
-
-<!-- In the `exercises-visualizing.R` script, add a new Section for this exercise. -->
-Then using the NHANES dataset, try to replicate these figures. You very likely
-won't be able to get exactly the same, but try to get close! :smile:
-
-By the end of this you will try to get the data from `NHANES` to look like the
-below figures. We don't expect you to get it exactly, but try to get close to
-them. By (getting relatively close to) replicating these figures, you will have
-achieved our learning expectations.
-
-```{r final-exercise-plot1, warning=FALSE, message=FALSE, echo=FALSE}
-NHANES %>% 
-    filter(!is.na(Diabetes)) %>% 
-    ggplot(aes(y = BMI, x = Poverty, colour = Diabetes)) +
-    geom_point(alpha = 0.4) +
-    geom_smooth(size = 2, method = "gam") +
-    facet_grid(cols = vars(SurveyYr), rows = vars(Gender)) +
-    theme_classic() +
-    scale_color_viridis_d(end = 0.8) +
-    theme(strip.background = element_blank(),
-          panel.background = element_rect(fill = "grey95"),
-          axis.line = element_line(colour = "grey80"))
-```
-
-```{r final-exercise-plot2, warning=FALSE, message=FALSE, echo=FALSE}
-NHANES %>% 
-    filter(!is.na(Diabetes), !is.na(Education)) %>% 
-    ggplot(aes(x = Education, colour = Diabetes, y = TotChol)) +
-    geom_boxplot(fill = "grey90", outlier.size = 0.5, size = 0.75) +
-    theme_minimal() +
-    scale_color_brewer(type = "qual") +
-    labs(y = "Total Cholesterol") +
-    facet_grid(cols = vars(Gender)) +
-    coord_flip()
-```
-
-```{r final-exercise-plot1, echo=FALSE}
-```
-
-```{r final-exercise-plot2, echo=FALSE}
+```{r, eval=FALSE}
+# use dataset with two continuous variables
+ggplot(___, aes(x = ___, y = ___)) +
+    # finish the geom to create either a point, smooth, or line layer
+    ___ +
+    # choose either a minimal, dark, light, or classic defined theme
+    ___ +
+    theme(
+        # choose colours such as red, blue, black, grey, yellow, green
+        # choose size from 2 to 8
+        panel.grid.major = element_line(colour = ___, size = ___),
+        # choose family such as sans, serif, Arial, Times New Romans
+        axis.text = element_text(colour = ___, size = ___, family = ___)
+    )
 ```
