@@ -3,7 +3,7 @@ title: "Data visualization with ggplot2, part 2"
 author:
   - "Luke W. Johnston"
   - "Sara Tomiolo"
-date: "2019-11-01"
+date: "2020-01-31"
 description: >
   Dig deeper into making the most of making data visualizations with ggplot2.
   We'll show you how to plot multiple panels within a single plot, how to append
@@ -23,70 +23,49 @@ tags:
 source(here::here("R/utils-for-content.R"))
 ```
 
-> NOTE: Still in development.
+# Session details
 
 ## Preparation
 
-Please install the ggplot2 package:
+Please install these packages:
 
-```{r, eval=FALSE}
-install.packages("ggplot2")
-install.packages("NHANES")
-install.packages("patchwork")
-install.packages("viridis")
+```{r pkg-install, eval=FALSE}
+install.packages(ggplot2)
+install.packages(patchwork)
+install.packages(viridis)
 ```
 
 ## Objectives
 
-1. To become aware of the powerful features of ggplot2.
-2. To learn about some of the fundamentals of easily creating amazing graphics.
-3. To know about some resources to continue learning.
+By the end of this session you will know how to:
 
-At the end of this session, you will achieve this objective by creating a visually-appealing and publication ready graph that shows:
-
-- At least three data values, ie. "aesthetics" or `aes()`, such as what to put
-on the x-axis, the y-axis, and or using `colour` or `size`.
-- Two layers, ie "geometries" or `geom_`, such as points, lines, or
-boxplots.
-- Clearly labelled x and y axes, ie. `labs()`.
-- Changes to the look and feel of the plot, ie. `theme()`.
+1. Apply facetting functions to include multiple "panels" on a single plot.
+1. Consider the challenges with using colours and to make use of appropriate colour palettes.
+1. Modify the theme settings to make visually appealling plots.
+1. Discover and use new theme settings to modify nearly all aspects of a plot.
 
 **Resources** for continuing learning and help are available on
 the [More Info](/more-info/#resources) page.
 
-## Best practices for creating graphs in R
+# Making more use out of ggplot2
 
-It is relatively easy to create complex graphs in R, but all the features available can become quite distracting and lead to overly complicated and confusing graphs.
+## First steps: Project setup and exploring the data
 
-When creating graphs there are a few golden rules that should be kept in mind:
-- When possible use raw data
+Like most teaching sessions, we'll start with creating an R project. 
+R projects are incredibly useful tools and we strongly recommend you use them.
+Create a new project, name it "more-ggplot2". 
+Once the R project has been opened, create two new files and save them as 
+"code-along.R" and "exercises.R".
 
-- Avoid / remove unnecessary information
-
-- Use colour in a meaningful way
-
-<!-- Quickly go over RStudio IDE in relation to plotting -->
-<!-- Get them to open two R scripts, name and save as "code-along" and "exercise" -->
-
-## Create a project
-
-A simple way to create a self-contained project in R is to make use of the function "Projects" in R Studio.
-Create a new project, name it "Code_along_sessions" and create two R scripts in it.
-
-## Quickly get familiar with data to plot
-
-For this session we will be using the `CO2` dataset. Here is some code to get a
-sense of the data.
+Next, let's get familiar with the data we'll be using for this session, 
+which is the `economics` dataset. 
 
 ```{r}
 # Variables
-names(CO2)
-
-# Quick summary
-summary(CO2)
+names(economics)
 
 # Content
-str(CO2)
+head(economics)
 ```
 
 ### Exercise: Choose a dataset and check out the different classes of variables
@@ -122,8 +101,10 @@ str(___)
 summary(___)
 ```
 
+
 ## Basic structure of using ggplot2
 
+As a refresher, we'll cover the basic structure of ggplot2.
 ggplot2 uses the "Grammar of Graphics" (gg). This is a powerful approach to
 creating plots because it provides a consistent way of telling ggplot2 what to
 do. There are at least three aspects to using ggplot2 that relate to the grammar:
@@ -142,6 +123,21 @@ The aesthetics and the geometries are fundamental to create a graph, whereas sca
 this by typing, for instance, `geom_` and then hitting the TAB key to see a list
 of all the geoms. Or after typing `theme()`, hit TAB to see all the options inside
 theme.
+
+## Best practices for creating graphs in R
+
+It is relatively easy to create complex graphs in R, but all the features available can become quite distracting and lead to overly complicated and confusing graphs.
+
+When creating graphs there are a few golden rules that should be kept in mind:
+- When possible use raw data
+
+- Avoid / remove unnecessary information
+
+- Use colour in a meaningful way
+
+<!-- Quickly go over RStudio IDE in relation to plotting -->
+<!-- Get them to open two R scripts, name and save as "code-along" and "exercise" -->
+
 
 ## Axis titles and the theme
 

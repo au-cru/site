@@ -10,4 +10,6 @@ Imports:
     yaml,
     glue,
     kableExtra,
-    NHANES
+    NHANES,
+    patchwork,
+    viridis
