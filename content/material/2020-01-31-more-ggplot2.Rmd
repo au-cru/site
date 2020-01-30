@@ -33,6 +33,7 @@ Please install these packages:
 install.packages(ggplot2)
 install.packages(patchwork)
 install.packages(viridis)
+install.packages(NHANES)
 ```
 
 ## Objectives
@@ -47,7 +48,7 @@ By the end of this session you will know how to:
 **Resources** for continuing learning and help are available on
 the [More Info](/more-info/#resources) page.
 
-# Making more use out of ggplot2
+# Getting more out of ggplot2
 
 ## First steps: Project setup and exploring the data
 
@@ -55,88 +56,246 @@ Like most teaching sessions, we'll start with creating an R project.
 R projects are incredibly useful tools and we strongly recommend you use them.
 Create a new project, name it "more-ggplot2". 
 Once the R project has been opened, create two new files and save them as 
-"code-along.R" and "exercises.R".
+`code-along.R` and `exercises.R`.
 
 Next, let's get familiar with the data we'll be using for this session, 
-which is the `economics` dataset. 
+which is the `NHANES` dataset. 
+Open up the `code-along.R` file and we'll add these to the file:
 
-```{r}
+```{r load-packages-see-data}
+# Import the packages we'll use
+library(NHANES)
+library(ggplot2)
+library(patchwork)
+library(viridis)
+
 # Variables
-names(economics)
+names(NHANES)
 
 # Content
-head(economics)
+NHANES
 ```
-
-### Exercise: Choose a dataset and check out the different classes of variables
-
-There are several exercises in this session. Choose one of the below datasets
-and use that dataset for all later exercises.
-
-For complete R beginners, use:
-
-- `mpg`
-
-For more confident R users, use one of these:
-
-- `economics`
-- `diamonds`
-- `msleep`
-- `txhousing`
-
-Check out the contents of the dataset you choose using.
-
-Often the type of graph you decide to use, depends on the type of variable you want to represent. 
-
-What type of variables do you see in your dataset? What is the meaning of different variable types? 
-
-```{r, eval=FALSE}
-# variable names of dataset
-names(___)
-
-# contents of dataset
-str(___)
-
-# summary of dataset
-summary(___)
-```
-
 
 ## Basic structure of using ggplot2
 
-As a refresher, we'll cover the basic structure of ggplot2.
+As a review, we'll cover the basic structure of ggplot2.
 ggplot2 uses the "Grammar of Graphics" (gg). This is a powerful approach to
-creating plots because it provides a consistent way of telling ggplot2 what to
+creating plots as it provides a consistent way of telling ggplot2 what to
 do. There are at least three aspects to using ggplot2 that relate to the grammar:
 
 - Aesthetics, `aes()`: How data should be mapped to the plot. Includes what to
 put on x axis, on the y axis, colours, size, etc.
 - Geometries, `geom_`: The visual representation of the data, as a layer. This
 tells ggplot2 how to show the aesthetics. Includes points, lines, boxes, etc.
-- Themes, `theme_` or `theme()`: How the plot should look like. Using this function we can customize several components of a graph, such as axis, lines, grids, plot background, position, size and font of the axis text and labels
-- Title and labels can be added using the functions `ggtitle()` and `labs()` respectively
+- Scales, `scale_`: Allows more direct control of how data values are visually presented.
+For instance, `scale_x_continuous()` allows setting visual properties of
+continuous values on the x-axis.
+- Themes, `theme_` or `theme()`: How the plot should look like. Using this
+function we can customize several components of a graph, such as axis, lines,
+grids, plot background, position, size and font of the axis text and labels
+- Title and labels can be added using the functions `ggtitle()` and `labs()`
+respectively
 
-The aesthetics and the geometries are fundamental to create a graph, whereas scales, themes, and labels are feature that can be stacked in successive layers to improve the looks and the clarity of a graph.
+The aesthetics and the geometries are fundamental to create a graph, whereas
+scales, themes, and labels are features that can be stacked in successive layers
+to improve the looks and the clarity of a graph.
+
+**Tip:** To maximise the power of ggplot2, make heavy use of autocompletion. You
+can do this by typing, for instance, `geom_` and then hitting the TAB key to see
+a list of all the geoms. Or after typing `theme()`, hit TAB to see all the
+options inside theme.
 
 
-**Tip:** To maximise the power of ggplot2, make heavy use of autocompletion. You can do 
-this by typing, for instance, `geom_` and then hitting the TAB key to see a list
-of all the geoms. Or after typing `theme()`, hit TAB to see all the options inside
-theme.
+### Using colours to convey information
 
-## Best practices for creating graphs in R
+You may have used colours before when making a plot.
+Adding colours isn't just for visual appeal. 
+It can also convey more information about your data and results.
+Colours can be used to represent discrete groups like male or female
+or they can be used to represent a continuity of values, like higher or lower 
+(in e.g. elevation as in maps).
+Let's try it out:
 
-It is relatively easy to create complex graphs in R, but all the features available can become quite distracting and lead to overly complicated and confusing graphs.
+```{r plot-setup}
+# Two continuous and one discrete
+# Scatter plot
+ggplot(NHANES, aes(x = Height, y = Weight, colour = Gender)) +
+  geom_point()
 
-When creating graphs there are a few golden rules that should be kept in mind:
-- When possible use raw data
+# One continuous and two discrete
+ggplot(NHANES, aes(x = Gender, y = BMI, colour = SmokeNow)) +
+  geom_boxplot()
+```
 
-- Avoid / remove unnecessary information
+However, something to consider when using colours is that not everyone sees how you see.
+Colour blindness is common in the population, 
+and red-green colour blindness in particular affects 8% of men and 0.5% of women. 
+Making your graph more accessible to people affected by colour blindness 
+will also usually improve the interpretability of your graphs for all people. 
+For more detail on how colours look to those with colour-blindness, 
+see this [documentation](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html) 
+from the [viridis] package. 
+The viridis colour scheme and R package was specifically designed to represent 
+data well to all colour visions. 
+There is also a really good, 
+informative [talk on YouTube](https://www.youtube.com/watch?v=xAoljeRJ3lU) on this topic.
 
-- Use colour in a meaningful way
+[viridis]: https://cran.r-project.org/packages=viridis
 
-<!-- Quickly go over RStudio IDE in relation to plotting -->
-<!-- Get them to open two R scripts, name and save as "code-along" and "exercise" -->
+When using colours, take time to think about what you are trying to convey in
+your figure and how your choice of colours will be interpreted. You can use
+built-in colour schemes, or set your own. Let's stick to using builtin ones.
+There are two, the viridis and the [ColorBrewer] colour schemes. Both are well
+designed and are colour-blind friendly.
+
+[ColorBrewer]: http://colorbrewer2.org/
+
+Let's try out viridis using the previous plots we made:
+
+```{r using-viridis-discrete}
+# Two continuous and one discrete
+# Scatter plot
+two_continuous <- 
+  ggplot(NHANES, aes(x = Height, y = Weight, colour = Gender)) +
+  geom_point()
+
+# Default colour scheme
+two_continuous +
+  scale_color_viridis_d()
+
+# Magma colour scheme
+two_continuous +
+  scale_color_viridis_d(option = "magma")
+
+# Inferno colour scheme
+two_continuous +
+  scale_color_viridis_d(option = "inferno")
+
+# Inferno colour scheme
+two_continuous +
+  scale_color_viridis_d(option = "plasma")
+
+# One continuous and two discrete
+two_discrete <- ggplot(NHANES, aes(x = Gender, y = BMI, colour = SmokeNow)) +
+  geom_boxplot() 
+
+two_discrete +
+  scale_color_viridis_d(option = "plasma")
+
+two_discrete +
+  scale_color_viridis_d()
+```
+
+Viridis is a colour scheme, with a range of colours.
+So you can also use the colour scheme with continuous variables.
+But you'll need to use the `_c()` form of viridis: `scale_color_viridis_c()`.
+
+```{r using-viridis-continuous}
+three_continuous <- ggplot(NHANES, aes(x = Height, y = Weight, colour = Age)) +
+  geom_point()
+
+three_continuous +
+  scale_color_viridis_c()
+
+three_continuous +
+  scale_color_viridis_c(option = "inferno")
+
+# Can change ending or beginning colour
+# Range goes from 0 for begin to 1 for end
+three_continuous +
+  scale_color_viridis_c(end = 0.8)
+
+three_continuous +
+  scale_color_viridis_c(begin = 0.2)
+```
+
+The ColorBrewer also has some good colour blind-friendly palettes.
+See all the colour palettes for the Brewer palette using
+`RColorBrewer::display.brewer.all()`.
+Check out `scale_color_brewer()` for discrete data and
+`scale_color_distiller()` for continuous data.
+We won't go over this, but here's some code to get started:
+
+```{r using-brewer, eval=FALSE}
+two_discrete +
+  scale_color_brewer(palette = "Set1")
+
+two_discrete +
+  scale_color_brewer(palette = "Dark2")
+
+# Use qual for qualitative data
+two_discrete +
+  scale_color_brewer(type = "qual", palette = "Dark2")
+
+three_continuous +
+  scale_color_distiller()
+
+three_continuous +
+  scale_color_distiller(palette = "Spectral")
+```
+
+## Facetting: adding even more variables to a plot
+You can also add another variable dimension by "facetting", which means splitting
+the data up by the variable and plot by that variable.
+
+```{r plot_facet}
+colour_plot_mixed +
+    geom_boxplot() +
+    # Cols means to have them side by side (horizontal)
+    # vars() is necessary to access variable from dataset
+    facet_grid(cols = vars(SurveyYr))
+# Or by another variable
+colour_plot_mixed +
+    geom_boxplot() +
+    # Rows means to have them stacked vertically
+    facet_grid(cols = vars(SurveyYr), rows = vars(PhysActive))
+```
+
+And you can add another geom as a layer on top of the previous one by adding
+(`+`) a geom to the next line.
+
+```{r plot_more_layers}
+# Three layers
+colour_plot_nums + 
+    geom_point() +
+    geom_smooth() +
+    facet_grid(cols = vars(SurveyYr))
+```
+
+
+We assume you know some basics of using ggplot2, 
+for instance making scatter plots with `geom_point()` or boxplots with `geom_boxplot()`.
+We're going to ex
+
+You can also add another variable dimension by "facetting", which means splitting
+the data up by the variable and plot by that variable.
+
+
+```{r plot_facet}
+colour_plot_mixed +
+    geom_boxplot() +
+    # Cols means to have them side by side (horizontal)
+    # vars() is necessary to access variable from dataset
+    facet_grid(cols = vars(SurveyYr))
+# Or by another variable
+colour_plot_mixed +
+    geom_boxplot() +
+    # Rows means to have them stacked vertically
+    facet_grid(cols = vars(SurveyYr), rows = vars(PhysActive))
+```
+
+And you can add another geom as a layer on top of the previous one by adding
+(`+`) a geom to the next line.
+
+```{r plot_more_layers}
+# Three layers
+colour_plot_nums + 
+    geom_point() +
+    geom_smooth() +
+    facet_grid(cols = vars(SurveyYr))
+```
+
+TODO: Add some code about using pivot_ to make use of facet
 
 
 ## Axis titles and the theme
@@ -171,6 +330,7 @@ co2_plot + theme_minimal()
 
 Another feature of plot that can greatly improve the clarity of the 
 graph is the colour palette
+
 ```{r, fig.width=7}
 pretty_plot <- co2_plot +
     theme_classic() +
@@ -211,86 +371,6 @@ ggplot(___, aes(x = ___, y = ___)) +
 
 
 
-
-## Facetting: adding even more variables to a plot
-
-
-You can also add another variable dimension by "facetting", which means splitting
-the data up by the variable and plot by that variable.
-
-
-```{r plot_facet}
-colour_plot_mixed +
-    geom_boxplot() +
-    # Cols means to have them side by side (horizontal)
-    # vars() is necessary to access variable from dataset
-    facet_grid(cols = vars(SurveyYr))
-# Or by another variable
-colour_plot_mixed +
-    geom_boxplot() +
-    # Rows means to have them stacked vertically
-    facet_grid(cols = vars(SurveyYr), rows = vars(PhysActive))
-```
-
-And you can add another geom as a layer on top of the previous one by adding
-(`+`) a geom to the next line.
-
-```{r plot_more_layers}
-# Three layers
-colour_plot_nums + 
-    geom_point() +
-    geom_smooth() +
-    facet_grid(cols = vars(SurveyYr))
-```
-
-TODO: Add some code about using pivot_ to make use of facet
-
-### Colours: Make your graph more accessible
-
-Colour blindness is common in the population, and red-green colour blindness in
-particular affects 8% of men and 0.5% of women. Making your graph more
-accessible to people affected by colour blindness will also usually improve the
-interpretability of your graphs for all people. For more detail on how colours
-look to those with colour-blindness, see this
-[documentation](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html) 
-from the [viridis] package. The viridis colour scheme and R package was
-specifically designed to represent data well to all colour visions. There is
-also a really good, informative [talk on
-YouTube](https://www.youtube.com/watch?v=xAoljeRJ3lU) on this topic.
-
-[viridis]: https://cran.r-project.org/packages=viridis
-
-When using colours, take time to think about what you are trying to convey in
-your figure and how your choice of colours will be interpreted. You can use
-built-in colour schemes, or set your own. Let's stick to using builtin ones.
-There are two, the viridis and the [ColorBrewer] colour schemes. Both are well
-designed and are colour-blind friendly.
-
-[ColorBrewer]: http://colorbrewer2.org/
-
-```{r changing_color_schemes}
-base_boxplot <- NHANES %>% 
-    ggplot(aes(x = HomeOwn, fill = Education)) +
-    geom_bar(position = position_dodge()) 
-
-# Add the viridis scheme
-base_boxplot +
-    # _d() is for discrete. _c() is for continuous.
-    scale_fill_viridis_d()
-# Use another viridis color scheme
-# Ranges from A to E
-base_boxplot +
-    scale_fill_viridis_d(option = "A")
-# Or use the brewer scheme
-base_boxplot +
-    scale_fill_brewer()
-base_boxplot +
-    scale_fill_brewer(type = "qual")
-```
-
-See all colour palettes for the Brewer palette, use
-`RColorBrewer::display.brewer.all()`. If you use a `colour = VariableName` in
-`aes()`, you'll need to use `scale_colour_*` (either brewer or viridis).
 
 ### Exercise: Create a three (or more) variable plots
 
