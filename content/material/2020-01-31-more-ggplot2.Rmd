@@ -239,7 +239,7 @@ of columns, after which it will wrap to the next row.
 Both facets must be given the `vars()` function when the variable is provided.
 Let's try it out!
 
-```{r plot_facet}
+```{r plot-facet}
 two_discrete +
     facet_grid(cols = vars(SurveyYr))
 
@@ -312,7 +312,7 @@ We'll create a scatterplot:
 
 ```{r}
 basic_scatterplot <- ggplot(NHANES, aes(x = Height, y = Weight, colour = Age)) +
-    # use alpha (transparency) since there are so many dots
+    # Use alpha (transparency) since there are so many dots
     geom_point(alpha = 0.5) +
     facet_grid(cols = vars(Gender)) +
     scale_color_viridis_c()
@@ -342,7 +342,7 @@ basic_scatterplot_minimal + basic_scatterplot_classic
 
 Cool eh?
 
-But this is too easy. 
+But this is too simple an example. 
 Let's do something a bit more realistic and this time add together three plots.
 Let's create three simple graphs that each have different underlying `aes()` and `geom_` layer.
 
@@ -405,135 +405,138 @@ them in text
   )
 ```
 
-## Exercise: Joining figures in figure.
+## Exercise: Joining together plots in a figure
 
-Combined the figures from the previous execise and join them into one figure with patchwork.
+Time: 10 min
 
-1. A plot tags as letters.
-1. Arrange the cplots
+Taking the plots from the previous execise,
+join them together into one figure with patchwork.
+Open the `exercise.R` file and do the following:
 
-```{r, eval= FALSE}
+1. Put the previous plots into objects called `plot1`, `plot2`, etc.
+1. Add plot tags as letters. See `?plot_annotation` and 
+the documentation on `tag_levels` to see other types of tags. 
+Use this code as a template.
+
+```{r exercise-patchwork, eval= FALSE}
 plot1 + plot2 + plot_annotation(____)
 ```
 
-**Extra:**
-Join three or more figures and experiment how to arrange them using the function `plot_layout(ncol)` , `plot_layout(ncol)` or the operators | and /
+1. Arrange the plots vertically instead using `/`. 
+You can also use the `plot_layout(ncol = 1)` to only have one column of plots.
 
 ## Themes: customize text, line, background and legends
 
-There are so so so many options to modify the figure, and they are all basically
-contained in the `theme()` function. 
-This function is extremely powerful and initially it can be daunting to navigate the documentation. 
+There are so so many options to modify the figure, 
+and they are all basically contained in the `theme()` function. 
+This function is extremely powerful and 
+initially it can be daunting to use and to navigate the documentation. 
 
 Fortunately there are many sources for help:
 
-- you can search the help documentation from your console using `?theme`
-
-- and you can check out the [ggplot2 website](https://ggplot2.tidyverse.org/reference/theme.html)
-
-- if you have a specific issue, you can navigate to the website [StackOverflow](https://stackoverflow.com/) and search some key words. Say you are trying to change the font of the text in your plot, you can search "ggplot theme font family"
+- You can search the help documentation from your console using `?theme`
+- You can check out the [ggplot2 website](https://ggplot2.tidyverse.org/reference/theme.html)
+- If you have a specific issue, 
+you can navigate to [StackOverflow](https://stackoverflow.com/) and search some key words. 
+Say you are trying to change the font of the text in your plot, 
+try searching for "ggplot theme font family".
 
 Let's take a look together:
 
-type `?theme` on your console. In the help section of RStudio, the documentation of the function theme pops up.
+Type `?theme` in your console. 
+In the help section of RStudio, 
+the documentation of the function theme pops up.
 
-Scroll down to the section  "Arguments": here you can find listed all the function arguments that you can use to customize your plot. As you can see a lot of the arguments are quite intuitive, making it easier to undertand what you may be looking for, e.g. `legend.position` and `axis.text.y` etc etc...
+Scroll down to the section "Arguments": 
+here is listed all the function arguments that you can use to customize your plot. 
+As you can see, a lot of the arguments are quite intuitive, 
+making it relatively easy to learn and undertand what you may be looking for.
+For instance, if you want to change the legend position,
+the argument is `legend.position`. 
+If you want to change the y axis text, the argument is `axis.text.y`.
+And so on.
 
-Once you find the arguments you need, remember to make your of the autocomplete function from RStudio
+Once you find the arguments you need, make use of RStudio's auto-complete.
+Let's try it with the legend position. 
+Start typing out `theme(legend` and then hit TAB to see a list of possible arguments to use.
+This helps out a lot because you don't have to memorize all the arguments name.
 
-e.g. start typing in your R file `theme(legend)` and then hit the key TAB, you will see a number of options popping up. This greatly helps because you don't have to memorize all the arguments name.
+Each argument in `theme()` usually needs to take an `element_` type function.
+The type of `element_` to use depends on the item you are wanting to modify.
+So a rule of thumb is that the element name is linked to the name of what you want to change:
 
+- To customize *text* elements of your graph,
+you'll need to match the selected argument with `element_text()`:
 
-**A USEFUL RULE OF THUMBS: **
+  ```r
+  theme(axis.title = element_text(....))
+  ```
 
-- If you want to customize some *text elements* of your graph you will need to match the selected argument with `element_text()`
+- To customize *line* elements of your graph,
+you'll need to match the selected argument with `element_line()`:
 
-> example theme(axis.title = element_text(....))
+  ```r
+  theme(axis.line = element_line(....))
+  ```
 
-- If you want to customize some *line elements* of your graph you will need to match the selected argument with `element_line()`
+- To customize elements of the plot or legend background,
+you'll need to match the selected argument with `element_rect()`:
 
-> example theme(axis.line = element_line(....))
+  ```r
+  theme(panel.background = element_rect(....))
+  ```
 
-- If you want to customize some elements of the plot or legend backround of your graph you will need to match the selected argument with `element_rect()`
+- To remove some elements from your graph,
+you'll need to match the selected argument with `element_blank()`:
 
-> example theme(panel.background = element_rect(....))
+  ```r
+  theme(panel.grid = element_blank(....))
+  ```
+  
+Let's try adding some theme items to our `basic_scatterplot`. 
+Open up the `coe-along.R` file.
 
-- If you want to remove some elements from your graph you will need to match the selected argument with `element_blank()`
-
-> example theme(panel.grid = element_blank(....))
-
-
-
-Let's see an example of a graph- making workflow: 
-
-1. Decide what to put in a plot and compose it 
-
-1. Add some pre-defined theme using the function `theme_` 
-
-1. Add titles and axis labels
-
-1. Customize the plot appearance using the function `theme()`
-
-
-
-
-```{r plot_themes}
-basic_scatterplot <- NHANES %>% 
-    ggplot(aes(x = Height, y = Weight, colour = Age)) +
-    # use alpha (transparency) since there are so many dots
-    geom_point(alpha = 0.5) +
-    facet_grid(cols = vars(Gender)) +
-    scale_color_viridis_c()
-
-# Some pre-defined themes
-basic_scatterplot + theme_bw()
-basic_scatterplot + theme_minimal()
-basic_scatterplot + theme_classic()
-# Adding labels
-basic_scatterplot +
-    labs(title = "Height and weight by age and gender",
-         x = "Height (cm)",
-         y = "Weight (kg)")
+```{r plot-themes}
 # Edit specific plot items
 basic_scatterplot +
-    # theme is good at warning you if something isn't right
+    # Theme is good at warning you if something isn't right
     # See ?theme for a full list of possible options
     theme(
-        # background items must use element_rect
-        # panel is the base/bottom layer that all other layers add to
+        # Background items must use element_rect
+        # Panel is the base/bottom layer that all other layers add to
         panel.background = element_rect(fill = "pink"),
-        # strip is the section showing the facets
+        # Strip is the section showing the facets
         strip.background = element_rect(fill = "red"),
-        # line items must use element_line
-        # axis is, well the axis
+        # Line items must use element_line
+        # Axis is, well the axis
         axis.line = element_line(colour = "grey50", size = 0.5),
-        # text items must use element_text
-        # legend is the key when using fill, colour, size, etc
+        # Text items must use element_text
+        # Legend is the key when using fill, colour, size, etc
         legend.text = element_text(family = "sans", size = 20),
-        #use element text to change the angle and position of axis           #labels
-        #the function hjust controls the vertical alignment of labels
+        # use element_text to change the angle and position of axis labels
+        # the function hjust controls the vertical alignment of labels
         axis.text.x = element_text(angle = 45, hjust = 1),
         # use element_blank to remove
         axis.ticks = element_blank()
     )
 ```
 
-### Exercise: Change theme items of the plot
+## Exercise: Change theme items of the plot
 
 Time: 10 min
 
-```{r, eval=FALSE}
-# use dataset with two continuous variables
-ggplot(___, aes(x = ___, y = ___)) +
-    # finish the geom to create either a point, smooth, or line layer
-    ___ +
-    # choose either a minimal, dark, light, or classic defined theme
-    ___ +
+Open up the `exercises.R`. 
+Using the approach to finding theme items in the help documentation,
+make changes to at least three theme items.
+Choose at least one `axis` item, one `panel` item, and one `legend` item.
+Use the below code as a template to start:
+
+```{r exercise-theme, eval=FALSE}
+ggplot(NHANES, aes(x = Age, y = BMI)) +
+    geom_point() +
     theme(
-        # choose colours such as red, blue, black, grey, yellow, green
-        # choose size from 2 to 8
-        panel.grid.major = element_line(colour = ___, size = ___),
-        # choose family such as sans, serif, Arial, Times New Romans
-        axis.text = element_text(colour = ___, size = ___, family = ___)
+      axis.___ = element_
+      panel.___ = element_
+      legend.___ = element_
     )
 ```
