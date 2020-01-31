@@ -1,0 +1,542 @@
+---
+title: "Data visualization with ggplot2, part 2"
+author:
+  - "Luke W. Johnston"
+  - "Sara Tomiolo"
+date: "2020-01-31"
+description: >
+  Dig deeper into making the most of making data visualizations with ggplot2.
+  We'll show you how to plot multiple panels within a single plot, how to append
+  multiple plots together, and how to make your plot more visually appealing.
+categories:
+  - Intermediate-Beginner
+  - R
+  - Code-along
+tags:
+  - ggplot2
+  - data visualization
+  - colour palettes
+  - patchwork
+---
+
+```{r setup, echo=FALSE}
+source(here::here("R/utils-for-content.R"))
+```
+
+# Session details
+
+## Preparation
+
+Please install these packages:
+
+```{r pkg-install, eval=FALSE}
+install.packages(ggplot2)
+install.packages(patchwork)
+install.packages(viridis)
+install.packages(NHANES)
+```
+
+## Objectives
+
+By the end of this session you will know how to:
+
+1. Apply facetting functions to include multiple "panels" on a single plot.
+1. Consider the challenges with using colours and to make use of appropriate colour palettes.
+1. Modify the theme settings to make visually appealling plots.
+1. Discover and use new theme settings to modify nearly all aspects of a plot.
+
+**Resources** for continuing learning and help are available on
+the [More Info](/more-info/#resources) page.
+
+# Getting more out of ggplot2
+
+## First steps: Project setup and exploring the data
+
+Like most teaching sessions, we'll start with creating an R project. 
+R projects are incredibly useful tools and we strongly recommend you use them.
+Create a new project, name it "more-ggplot2". 
+Once the R project has been opened, create two new files and save them as 
+`code-along.R` and `exercises.R`.
+
+Next, let's get familiar with the data we'll be using for this session, 
+which is the `NHANES` dataset. 
+Open up the `code-along.R` file and we'll add these to the file:
+
+```{r load-packages-see-data}
+# Import the packages we'll use
+library(NHANES)
+library(ggplot2)
+library(patchwork)
+library(viridis)
+
+# Content
+NHANES
+```
+
+## Basic structure of using ggplot2
+
+As a review, we'll cover the basic structure of ggplot2.
+ggplot2 uses the "Grammar of Graphics" (gg). This is a powerful approach to
+creating plots as it provides a consistent way of telling ggplot2 what to
+do. There are at least three aspects to using ggplot2 that relate to the grammar:
+
+- Aesthetics, `aes()`: How data should be mapped to the plot. Includes what to
+put on x axis, on the y axis, colours, size, etc.
+- Geometries, `geom_`: The visual representation of the data, as a layer. This
+tells ggplot2 how to show the aesthetics. Includes points, lines, boxes, etc.
+- Scales, `scale_`: Allows more direct control of how data values are visually presented.
+For instance, `scale_x_continuous()` allows setting visual properties of
+continuous values on the x-axis.
+- Themes, `theme_` or `theme()`: How the plot should look like. Using this
+function we can customize several components of a graph, such as axis, lines,
+grids, plot background, position, size and font of the axis text and labels
+- Title and labels can be added using the functions `ggtitle()` and `labs()`
+respectively
+
+The aesthetics and the geometries are fundamental to create a graph, whereas
+scales, themes, and labels are features that can be stacked in successive layers
+to improve the looks and the clarity of a graph.
+
+**Tip:** To maximise the power of ggplot2, make heavy use of autocompletion. You
+can do this by typing, for instance, `geom_` and then hitting the TAB key to see
+a list of all the geoms. Or after typing `theme()`, hit TAB to see all the
+options inside theme.
+
+
+### Using colours to convey information
+
+You may have used colours before when making a plot.
+Adding colours isn't just for visual appeal. 
+It can also convey more information about your data and results.
+Colours can be used to represent discrete groups like male or female
+or they can be used to represent a continuity of values, like higher or lower 
+(in e.g. elevation as in maps).
+Let's try it out:
+
+```{r plot-setup}
+# Two continuous and one discrete
+# Scatter plot
+two_continuous <- ggplot(NHANES, aes(x = Height, y = Weight, colour = Gender)) +
+  geom_point()
+two_continuous
+
+# One continuous and two discrete
+two_discrete <- ggplot(NHANES, aes(x = Gender, y = BMI, colour = Diabetes)) +
+  geom_boxplot()
+two_discrete
+```
+
+However, something to consider when using colours is that not everyone sees how you see.
+Colour blindness is common in the population, 
+and red-green colour blindness in particular affects 8% of men and 0.5% of women. 
+Making your graph more accessible to people affected by colour blindness 
+will also usually improve the interpretability of your graphs for all people. 
+For more detail on how colours look to those with colour-blindness, 
+see this [documentation](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html) 
+from the [viridis] package. 
+The viridis colour scheme and R package was specifically designed to represent 
+data well to all colour visions. 
+There is also a really good, 
+informative [talk on YouTube](https://www.youtube.com/watch?v=xAoljeRJ3lU) on this topic.
+
+[viridis]: https://cran.r-project.org/packages=viridis
+
+When using colours, take time to think about what you are trying to convey in
+your figure and how your choice of colours will be interpreted. You can use
+built-in colour schemes, or set your own. Let's stick to using builtin ones.
+There are two, the viridis and the [ColorBrewer] colour schemes. Both are well
+designed and are colour-blind friendly.
+
+[ColorBrewer]: http://colorbrewer2.org/
+
+Let's try out viridis using the previous plots we made:
+
+```{r using-viridis-discrete}
+# Two continuous and one discrete
+# Default colour scheme
+two_continuous +
+  scale_color_viridis_d()
+
+# Magma colour scheme
+two_continuous +
+  scale_color_viridis_d(option = "magma")
+
+# One continuous and two discrete
+# Plasma colour scheme
+two_discrete +
+  scale_color_viridis_d(option = "plasma")
+
+two_discrete +
+  scale_color_viridis_d()
+```
+
+Viridis is a colour scheme, with a range of colours.
+So you can also use the colour scheme with continuous variables.
+But you'll need to use the `_c()` form of viridis: `scale_color_viridis_c()`.
+
+```{r using-viridis-continuous}
+three_continuous <- ggplot(NHANES, aes(x = Height, y = Weight, colour = Age)) +
+  geom_point()
+
+# Viridis colour scheme
+three_continuous +
+  scale_color_viridis_c()
+
+# Inferno colour scheme
+three_continuous +
+  scale_color_viridis_c(option = "inferno")
+
+# Magma colour scheme
+three_continuous +
+  scale_color_viridis_c(option = "magma")
+
+# Can change ending or beginning colour
+# Range goes from 0 for begin to 1 for end
+three_continuous +
+  scale_color_viridis_c(end = 0.8)
+
+three_continuous +
+  scale_color_viridis_c(begin = 0.2)
+```
+
+The ColorBrewer also has some good colour blind-friendly palettes.
+See all the colour palettes for the Brewer palette using
+`RColorBrewer::display.brewer.all()`.
+Check out `scale_color_brewer()` for discrete data and
+`scale_color_distiller()` for continuous data.
+We won't go over this, but here's some code to get started:
+
+```{r using-brewer, eval=FALSE}
+two_discrete +
+  scale_color_brewer(palette = "Set1")
+
+two_discrete +
+  scale_color_brewer(palette = "Dark2")
+
+# Use qual for qualitative data
+two_discrete +
+  scale_color_brewer(type = "qual", palette = "Dark2")
+
+three_continuous +
+  scale_color_distiller()
+
+three_continuous +
+  scale_color_distiller(palette = "Spectral")
+```
+
+## Facetting: adding even more variables to a plot
+
+Facetting in ggplot2 is an incredibly powerful way to quickly visualize multiple
+perspectives of a dataset.
+Facets are groupings of plots by a discrete variable.
+There are two functions in ggplot2 for facetting: 
+
+- `facet_grid()`: Have on variable split by column (horizontally) and another one
+split by row (vertically).
+- `facet_wrap()` takes a variable and splits it up and arranges it for "n" number 
+of columns, after which it will wrap to the next row.
+
+Both facets must be given the `vars()` function when the variable is provided.
+Let's try it out!
+
+```{r plot-facet}
+two_discrete +
+    facet_grid(cols = vars(SurveyYr))
+
+two_discrete +
+    # Rows means to have them stacked vertically
+    facet_grid(cols = vars(SurveyYr), rows = vars(HomeOwn))
+
+two_continuous +
+    # Rows means to have them stacked vertically
+    facet_grid(cols = vars(SurveyYr), rows = vars(HomeOwn))
+```
+
+If you know how to convert the data to long format using `pivot_longer()`,
+you can really take advantage of facets. 
+However, we won't be covering that in this session.
+
+## Exercise: Try out facets with the colour palettes
+
+Time: 10-15 min
+
+In the `exercises.R` script,
+copy the code below into the script. 
+Then do the following:
+
+1. Look in the NHANES dataset and choose two continuous and two discrete variables.
+1. Put the two continuous variables as the `x` and `y` in `aes()`.
+1. Put one of the discrete variables as the `colour`.
+1. Choose either `scale_color_viridis_d()` or `scale_color_brewer()` for the palette.
+1. For `facet_grid()` choose to use either `rows = ` or `cols =` for the second 
+discrete variable. Don't forget to use `vars()` when giving the variable name.
+
+Do the same thing for the other plots, 
+except choose three continuous variables for 2. and
+three discrete variables for 3. 
+For 3., use `facet_wrap()` instead to try it out.
+
+```{r exercise-facet, eval=FALSE}
+# 1. Two continuous, discrete, and one facet.
+ggplot(NHANES, aes(x = ___, y = ___, colour = ___)) +
+    geom_point() +
+    scale____ +
+    facet_grid(___)
+
+# 2. Three continuous
+ggplot(NHANES, aes(x = ___, y = ___, colour = ___)) +
+    geom_point() +
+    scale____ +
+    facet_grid(___)
+
+# 3. Three discrete
+ggplot(NHANES, aes(x = ___, fill = ___)) +
+    geom_bar(position = position_dodge()) +
+    scale____ +
+    facet_wrap(vars(___), ncol = ___)
+```
+
+## Adding together multiple plots
+
+Often we produce multiple plots that will then be assembled in one figure. 
+This may happen due to journal requirements (e.g. limited number of figures 
+allowed in a manuscript), or because different figures are conceptually linked 
+and we want to show them close to one another.
+
+The package patchwork offers some powerful and 
+nifty functions to join figures in panels with a few lines of code.
+
+First, open up the `code-along.R` script again.
+Let's say that we want to compare the look of the same plot "wearing" different themes. 
+We'll create a scatterplot:
+
+```{r}
+basic_scatterplot <- ggplot(NHANES, aes(x = Height, y = Weight, colour = Age)) +
+    # Use alpha (transparency) since there are so many dots
+    geom_point(alpha = 0.5) +
+    facet_grid(cols = vars(Gender)) +
+    scale_color_viridis_c()
+```
+
+Now, we'll add use the `theme_minimal()` and add an appropriate title with `ggtitle()`.
+
+```{r}
+basic_scatterplot_minimal <- basic_scatterplot +
+  ggtitle("Theme minimal") +
+  theme_minimal()
+```
+
+We'll do the same thing again but with `theme_classic()`.
+
+```{r}
+basic_scatterplot_classic <- basic_scatterplot +
+  ggtitle("Theme classic") +
+  theme_classic()
+```
+
+Now let's join these figures in a panel and compare them:
+
+```{r}
+basic_scatterplot_minimal + basic_scatterplot_classic 
+```
+
+Cool eh?
+
+But this is too simple an example. 
+Let's do something a bit more realistic and this time add together three plots.
+Let's create three simple graphs that each have different underlying `aes()` and `geom_` layer.
+
+```{r setup-plots-patchwork}
+plot1 <- ggplot(NHANES, aes(x = BMI, y = BPSysAve, colour = Age)) +
+    geom_point() +
+    theme_minimal() +
+    scale_colour_viridis_c()
+   
+plot2 <- ggplot(NHANES, aes(x = BMI, y = TotChol, colour = Age)) +
+    geom_point() +
+    theme_minimal() +
+    scale_colour_viridis_c()
+
+plot3 <- ggplot(NHANES, aes(x = Gender, fill = Education)) +
+    geom_bar(position = position_dodge()) +
+    facet_grid(cols = vars(Diabetes)) +
+    theme_minimal() +
+    scale_fill_brewer()
+```
+
+First, let's try join these plots together as we did before.
+
+```{r arrange-plots-1}
+plot1 + plot2 + plot3
+```
+
+Hmm... The result is a bit difficult to read.
+patchwork by default adds plots horizontal on one row.
+Fortunately we can customize how graphs are put together:
+
+```{r arrange-plots-2}
+# | means: take plot1 and plot2 and put them in the same row
+# / means: take plot 3 and put it into a separate row
+(plot1 | plot2) / plot3
+```
+
+Better! Now `plot3` is given more space in the bottom part of the figure, and
+everything is much easier to read.
+However, `plot1` and `plot2` share the same legend which now is repeated twice.
+We can use the function `plot_layout()` and its argument `guides` to adjust that:
+
+```{r guide-collect}
+((plot1 | plot2) / plot3) + 
+  plot_layout(guides = 'collect')
+```
+
+Finally, we may want to add a title to our figure, 
+and letters or numbers to the single plots in the figure, so we can refer to them separately when describing 
+them in text
+
+```{r}
+((plot1 | plot2) / plot3) + 
+  plot_layout(guides = 'collect') +
+  plot_annotation(
+    # Adds a title to the figure
+    title = "Colourful plots for my manuscript",
+    # Specifies what system to use to indicate plots in a figure
+    tag_levels = "A"
+  )
+```
+
+## Exercise: Joining together plots in a figure
+
+Time: 10 min
+
+Taking the plots from the previous execise,
+join them together into one figure with patchwork.
+Open the `exercise.R` file and do the following:
+
+1. Put the previous plots into objects called `plot1`, `plot2`, etc.
+1. Add plot tags as letters. See `?plot_annotation` and 
+the documentation on `tag_levels` to see other types of tags. 
+Use this code as a template.
+
+```{r exercise-patchwork, eval= FALSE}
+plot1 + plot2 + plot_annotation(____)
+```
+
+1. Arrange the plots vertically instead using `/`. 
+You can also use the `plot_layout(ncol = 1)` to only have one column of plots.
+
+## Themes: customize text, line, background and legends
+
+There are so so many options to modify the figure, 
+and they are all basically contained in the `theme()` function. 
+This function is extremely powerful and 
+initially it can be daunting to use and to navigate the documentation. 
+
+Fortunately there are many sources for help:
+
+- You can search the help documentation from your console using `?theme`
+- You can check out the [ggplot2 website](https://ggplot2.tidyverse.org/reference/theme.html)
+- If you have a specific issue, 
+you can navigate to [StackOverflow](https://stackoverflow.com/) and search some key words. 
+Say you are trying to change the font of the text in your plot, 
+try searching for "ggplot theme font family".
+
+Let's take a look together:
+
+Type `?theme` in your console. 
+In the help section of RStudio, 
+the documentation of the function theme pops up.
+
+Scroll down to the section "Arguments": 
+here is listed all the function arguments that you can use to customize your plot. 
+As you can see, a lot of the arguments are quite intuitive, 
+making it relatively easy to learn and undertand what you may be looking for.
+For instance, if you want to change the legend position,
+the argument is `legend.position`. 
+If you want to change the y axis text, the argument is `axis.text.y`.
+And so on.
+
+Once you find the arguments you need, make use of RStudio's auto-complete.
+Let's try it with the legend position. 
+Start typing out `theme(legend` and then hit TAB to see a list of possible arguments to use.
+This helps out a lot because you don't have to memorize all the arguments name.
+
+Each argument in `theme()` usually needs to take an `element_` type function.
+The type of `element_` to use depends on the item you are wanting to modify.
+So a rule of thumb is that the element name is linked to the name of what you want to change:
+
+- To customize *text* elements of your graph,
+you'll need to match the selected argument with `element_text()`:
+
+  ```r
+  theme(axis.title = element_text(....))
+  ```
+
+- To customize *line* elements of your graph,
+you'll need to match the selected argument with `element_line()`:
+
+  ```r
+  theme(axis.line = element_line(....))
+  ```
+
+- To customize elements of the plot or legend background,
+you'll need to match the selected argument with `element_rect()`:
+
+  ```r
+  theme(panel.background = element_rect(....))
+  ```
+
+- To remove some elements from your graph,
+you'll need to match the selected argument with `element_blank()`:
+
+  ```r
+  theme(panel.grid = element_blank(....))
+  ```
+  
+Let's try adding some theme items to our `basic_scatterplot`. 
+Open up the `coe-along.R` file.
+
+```{r plot-themes}
+# Edit specific plot items
+basic_scatterplot +
+    # Theme is good at warning you if something isn't right
+    # See ?theme for a full list of possible options
+    theme(
+        # Background items must use element_rect
+        # Panel is the base/bottom layer that all other layers add to
+        panel.background = element_rect(fill = "pink"),
+        # Strip is the section showing the facets
+        strip.background = element_rect(fill = "red"),
+        # Line items must use element_line
+        # Axis is, well the axis
+        axis.line = element_line(colour = "grey50", size = 0.5),
+        # Text items must use element_text
+        # Legend is the key when using fill, colour, size, etc
+        legend.text = element_text(family = "sans", size = 20),
+        # use element_text to change the angle and position of axis labels
+        # the function hjust controls the vertical alignment of labels
+        axis.text.x = element_text(angle = 45, hjust = 1),
+        # use element_blank to remove
+        axis.ticks = element_blank()
+    )
+```
+
+## Exercise: Change theme items of the plot
+
+Time: 10 min
+
+Open up the `exercises.R`. 
+Using the approach to finding theme items in the help documentation,
+make changes to at least three theme items.
+Choose at least one `axis` item, one `panel` item, and one `legend` item.
+Use the below code as a template to start:
+
+```{r exercise-theme, eval=FALSE}
+ggplot(NHANES, aes(x = Age, y = BMI)) +
+    geom_point() +
+    theme(
+      axis.___ = element_
+      panel.___ = element_
+      legend.___ = element_
+    )
+```
