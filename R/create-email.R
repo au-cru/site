@@ -50,7 +50,7 @@ email_body <- read_lines(here::here("R/email-template.html")) %>%
 email <- gm_mime() %>%
   gm_to(send_to) %>%
   gm_from("lwjohnst@gmail.com") %>%
-  gm_subject("[AU CRU] Three events in January to: Learn more about data wrangling, visualization, and a hacky-hour.") %>%
+  gm_subject("[AU CRU] Two events in February to: Learn more about efficiency in coding and computation and a hacky-hour.") %>%
   gm_html_body(email_body)
 
 gm_auth(path = Sys.getenv("GMAILR_APP"), scope = "compose")
