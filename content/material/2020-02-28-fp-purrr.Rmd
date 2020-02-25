@@ -1,0 +1,100 @@
+---
+title: "Efficient coding when iterating"
+author:
+  - "Florian Privé"
+  - "Luke W. Johnston"
+date: "2020-01-31"
+description: >
+  Do you repeat yourself often when writing code? Do you make use of loops? Come
+  to this session to learn how to write R code more efficiently and for some best
+  practices to follow.
+categories:
+  - Beginner-Intermediate
+  - R
+  - Code-along
+tags:
+  - purrr
+  - functional programming
+  - iterations
+---
+
+```{r setup, echo=FALSE}
+source(here::here("R/utils-for-content.R"))
+```
+
+# Session details
+
+## Preparation
+
+Please install these packages:
+
+```{r pkg-install, eval=FALSE}
+install.packages(tidyverse)
+```
+
+## Objectives
+
+By the end of this session you will know how to:
+
+
+**Resources** for continuing learning and help are available on
+the [More Info](/more-info/#resources) page.
+
+# Writing R code that iterates more efficiently
+
+## First steps: Project setup and exploring the data
+
+Like most teaching sessions, we'll start with creating an R project. 
+R projects are incredibly useful tools and we strongly recommend you use them.
+Create a new project, name it "iterating-with-purrr". 
+Once the R project has been opened, create two new files and save them as 
+`code-along.R` and `exercises.R`.
+
+Next, let's get familiar with the data we'll be using for this session, 
+which is the {{DATA}} dataset. 
+Open up the `code-along.R` file and we'll add these to the file:
+
+```{r load-packages-see-data}
+# Import the packages we'll use
+library(tidyverse)
+
+# Content
+# {{DATA}}
+```
+
+## SECTION
+
+## Exercise: Try out ...
+
+Time: 10-15 min
+
+In the `exercises.R` script,
+copy the code below into the script. 
+Then do the following:
+
+1. 
+1. 
+
+```{r exercise-1, eval=FALSE}
+# ...
+```
+
+## NEXT SECTION
+
+## Exercise: ...
+
+Time: 10 min
+
+Open the `exercise.R` file and do the following:
+
+## NEXT SECTION
+
+## Exercise: ...
+
+Time: 10 min
+
+Open up the `exercises.R`. 
+
+```{r exercise-3, eval=FALSE}
+# ...
+```
