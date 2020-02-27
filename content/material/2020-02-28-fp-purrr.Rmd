@@ -24,7 +24,7 @@ source(here::here("R/utils-for-content.R"))
 
 # Session details
 
-> Source: These materials are *heavily* based on the book [*Functional Programming*](https://dcl-prog.stanford.edu/).
+Source: These materials are based on the book [*Functional Programming*](https://dcl-prog.stanford.edu/).
 
 ## Preparation
 
@@ -72,7 +72,7 @@ Once the R project has been opened, create two new files and save them as
 
 Open up the `code-along.R` file and add these to the top of the file:
 
-```{r load-packages-see-data, include=FALSE, echo=TRUE}
+```{r load-packages-see-data, message=FALSE}
 # Import the packages we'll use
 library(tidyverse)
 ```
@@ -81,7 +81,7 @@ library(tidyverse)
 
 We're going to learn about the `map*` family from package purrr.
 
-### Iterating is like an assembly line
+### When not iterating
 
 Often you many need to apply the same function to each element of a list or vector. 
 Let's use an example with a list of vectors (with randomly generated data):
@@ -90,7 +90,7 @@ Let's use an example with a list of vectors (with randomly generated data):
 set.seed(1)
 samples <- list(
   samp1 = runif(5),
-  samp2 = rnorm(10),
+  samp2 = rnorm(10, 3),
   samp3 = rgamma(7, 1)
 )
 ```
@@ -267,7 +267,7 @@ ___(economics, ___)
 
 # 4. Are there any missing?
 no_missing <- function(x) {
-  all(!is.na(x))
+  all(!is.na(x))   ## or !anyNA(x)
 }
 ___(economics, ___)
 ```
@@ -355,8 +355,7 @@ we are able to use `map_dfr()` to map over each filename
 and combine each individual tibble into one tibble.
 
 ```{r, message=FALSE}
-files <- paste0(url_folder, "/file_00", c("1.csv", "2.csv", "3.csv"))
-files
+(files <- paste0(url_folder, "/file_00", 1:3, ".csv"))
 map_dfr(files, read_csv)
 ```
 
@@ -364,6 +363,12 @@ Each individual tibble can have different numbers of rows or different columns.
 `map_dfr()` will create a new column for each unique column name.
 For those tibbles without the column, 
 `map_dfr()` will add the column and fill it with `NA` values.
+
+```{r, message=FALSE}
+read_csv(paste0(url_folder, "/file_004.csv"))
+map_dfr(paste0(url_folder, "/file_00", 1:4, ".csv"), read_csv)
+```
+
 
 ### Anonymous functions
 
@@ -497,7 +502,7 @@ After doing that, next try and:
     - `"Fertility ~ Education + Agriculture"`
     - `"Fertilitiy ~ Examination + Catholic"`
     - `"Infant.Mortality ~ Education + Fertility"`
-- Re-run the code so you get 
+- Re-run the code
 
 ## Additional comments
 
@@ -506,6 +511,6 @@ Check out the purrr [website](https://purrr.tidyverse.org/)
 for documentation on what else you can do.
 
 Another useful thing with using purrr is that if you want to,
-you can easily implement parallel processing for your computationally complex analyses.
+you can easily implement parallel processing for your computationally demanding analyses.
 All you have to do is use the [furrr package](https://github.com/DavisVaughan/furrr)
 and make minor changes to purrr code to run parallel processing.
