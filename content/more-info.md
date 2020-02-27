@@ -92,6 +92,7 @@ to install Git Bash.
     - [R Markdown](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf)
     - [R Markdown reference](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)
     - [Package development](https://github.com/rstudio/cheatsheets/raw/master/package-development.pdf)
+    - [purrr](https://github.com/rstudio/cheatsheets/blob/master/purrr.pdf)
 - General:
     - [RStudio tutorial on R Markdown](https://rmarkdown.rstudio.com/lesson-1.html)
     - [Markdown syntax guide](https://rmarkdown.rstudio.com/authoring_basics.html)
