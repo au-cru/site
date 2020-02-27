@@ -9,3 +9,4 @@ start_date: 2020-02-28T13:00:00+01:00
 end_date: 2020-02-28T14:15:00+01:00
 level: "Beginner-Intermediate"
 software: ["R"]
+link: "material/2020-02-28-fp-purrr/"
