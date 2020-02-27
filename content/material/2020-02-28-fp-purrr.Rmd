@@ -24,7 +24,7 @@ source(here::here("R/utils-for-content.R"))
 
 # Session details
 
-Source: these materials are based on the book [*Functional Programming*](https://dcl-prog.stanford.edu/).
+> Source: These materials are based on the book [*Functional Programming*](https://dcl-prog.stanford.edu/).
 
 ## Preparation
 
