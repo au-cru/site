@@ -1,0 +1,516 @@
+---
+title: "Efficient coding when iterating"
+author:
+  - "Florian Privé"
+  - "Luke W. Johnston"
+date: "2020-02-28"
+description: >
+  Do you repeat yourself often when writing code? Do you make use of loops? Come
+  to this session to learn how to write R code more efficiently and for some best
+  practices to follow.
+categories:
+  - Beginner-Intermediate
+  - R
+  - Code-along
+tags:
+  - purrr
+  - functional programming
+  - iterations
+---
+
+```{r setup, echo=FALSE}
+source(here::here("R/utils-for-content.R"))
+```
+
+# Session details
+
+Source: These materials are based on the book [*Functional Programming*](https://dcl-prog.stanford.edu/).
+
+## Preparation
+
+Please install these packages:
+
+```{r pkg-install, eval=FALSE}
+install.packages(tidyverse)
+```
+
+## Objectives
+
+By the end of this session, you will be able to:
+
+- Efficiently iterate over one or more vectors or lists by applying the `map`
+family of functions from the purrr package.
+
+**Resources** for continuing learning and help are available on
+the [More Info](/more-info/#resources) page.
+
+# Writing R code that iterates more efficiently with package purrr
+
+While in other programming languages, 
+iterating over many items in a vector or list requires using a "for loop".
+However, R has many powerful tools that simplify this iteration with the
+use of "mapping" functions.
+"Mapping" involves taking a vector 
+(a sequence of numbers, characters, or other data types) 
+and applying a function to each of the item in the vector at the same time.
+This can greatly simplify code 
+and allows the user to be quite expressive in translating analysis ideas to code.
+
+While base R has some useful functions like `apply()`,
+the purrr package bundles these "mapping" functionality into a consistent 
+and fairly intuitive interface (not to mention excellent documentation on
+their [website](https://purrr.tidyverse.org/)). 
+In this session we'll cover some of purrr's functions.
+
+## First steps: Project setup
+
+Like most teaching sessions, we'll first start with creating an R project.
+R projects are incredibly useful tools and we strongly recommend you use them.
+Create a new project, name it "iterating-with-purrr".
+Once the R project has been opened, create two new files and save them as
+`code-along.R` and `exercises.R`.
+
+Open up the `code-along.R` file and add these to the top of the file:
+
+```{r load-packages-see-data, message=FALSE}
+# Import the packages we'll use
+library(tidyverse)
+```
+
+## `map`ing with purrr
+
+We're going to learn about the `map*` family from package purrr.
+
+### When not iterating
+
+Often you many need to apply the same function to each element of a list or vector. 
+Let's use an example with a list of vectors (with randomly generated data):
+
+```{r create-example-list}
+set.seed(1)
+samples <- list(
+  samp1 = runif(5),
+  samp2 = rnorm(10, 3),
+  samp3 = rgamma(7, 1)
+)
+```
+
+What if we want to find out the number of values in each samples. 
+Using `length()` may come to mind, but `length()` only outputs a single value:
+
+```{r length-samples}
+length(samples)
+```
+
+`length(samples)` returns the number of list items in `samples`, 
+but doesn't find the length of each item in the list which is what we want to know.
+So instead, we want to apply `length()` to each vector in `samples`. 
+We could do this repeatedly on each individual item:
+
+```{r length-all-list-items}
+length(samples$samp1)
+length(samples$samp2)
+length(samples$samp3)
+```
+
+But this approach is quite tedious, too manual 
+(any change in the names of the list requires you to change the code here),
+and prone to human error.
+The problem gets worse when you have more items in the list.
+Thankfully, we can use purrr's functions to do this for us.
+
+### The map functions
+
+The `map()` function from purrr is the most general of the functions, 
+so let's cover it first.
+`map()`, like all the map functions, is fairly simple in what you give it:
+It takes a list or vector and a function as arguments.
+
+```{r fig-map-basics, echo=FALSE, fig.cap="Visual of basic usage of map arguments. Image from [purrr basics](https://dcl-prog.stanford.edu/purrr-basics.html) section."}
+knitr::include_graphics("https://raw.githubusercontent.com/dcl-docs/prog/master/images/map-step-1.png") 
+```
+
+`map()` applies the given function to each element of the input list or vector.
+
+```{r fig-map-to-each, echo=FALSE, fig.cap="Visual of function applying to each item when using map. Image from [purrr basics](https://dcl-prog.stanford.edu/purrr-basics.html) section."}
+knitr::include_graphics("https://raw.githubusercontent.com/dcl-docs/prog/master/images/map-step-2.png") 
+```
+
+After the function is applied to each element, 
+map outputs the results based on the number of elements in the list or vector.
+
+```{r fig-map-output-pre, echo=FALSE, fig.cap="Visual of output of the function from each item. Image from [purrr basics](https://dcl-prog.stanford.edu/purrr-basics.html) section."}
+knitr::include_graphics("https://raw.githubusercontent.com/dcl-docs/prog/master/images/map.png") 
+```
+
+Finally, `map()` puts these output items into a list.
+
+```{r fig-map-output-final, echo=FALSE, fig.cap="Visual of final output of using map. Image from [purrr basics](https://dcl-prog.stanford.edu/purrr-basics.html) section."}
+knitr::include_graphics("https://raw.githubusercontent.com/dcl-docs/prog/master/images/map-output.png")
+```
+
+Let's see an example of using `map()`:
+
+```{r using-map}
+map(samples, length)
+```
+
+Notice a small difference here. 
+We use `length` instead of `length()` to indicate the function to use. 
+The reason is that R evaluates `length()` first before being given to `map()`
+because the added `()` tell R it needs to do an action,
+which isn't want we want. 
+We want `map()` to take the `length` function object 
+and use the function later on each item of the list or vector given.
+
+The nice thing about purrr functions is that they are *consistent*.
+`map()` returns a list:
+
+```{r}
+typeof(map(samples, length))
+```
+
+But maybe we want something different. 
+While, by adding an ending to `map`, we can easily output something different.
+purrr also has these other variations:
+
+* `map_int()` outputs an integer vector.
+* `map_dbl()` outputs a double vector.
+* `map_chr()` outputs a character vector.
+* `map_lgl()` outputs a logical vector.
+
+So, since `length()` returns integers, 
+let's use use `map_int()` to create an integer vector instead of a list.
+
+```{r}
+map_int(samples, length)
+typeof(map_int(samples, length))
+```
+
+Here is a visual demonstration:
+
+```{r fig-mapint-basic, echo=FALSE, fig.cap="Visual of using `map_int()`. Image from [purrr basics](https://dcl-prog.stanford.edu/purrr-basics.html) section."}
+knitr::include_graphics("https://raw.githubusercontent.com/dcl-docs/prog/master/images/map-int.png")
+```
+
+Which outputs a vector instead of a list:
+
+```{r fig-mapint-output, echo=FALSE, fig.cap="Visual of output of `map_int()`. Image from [purrr basics](https://dcl-prog.stanford.edu/purrr-basics.html) section."}
+knitr::include_graphics("https://raw.githubusercontent.com/dcl-docs/prog/master/images/map-int-output.png")
+```
+
+The other versions of `map()` produce double (numeric), character, 
+and logical vectors just as `map_int()` does.
+
+Let's try using another function, like `median()`:
+
+```{r}
+map(samples, median)
+```
+
+Since the output is a numeric type (a double), we could use `map_dbl()`:
+
+```{r}
+map_dbl(samples, median)
+```
+
+### Using map on data.frames/tibbles
+
+We know `map()` works on lists or vectors, 
+and so far we've only used it on the object `samples`.
+But data.frames (also known as tibbles in the tidyverse),
+are also essentially lists, that are put together in columns.
+The elements within a tibble are the vector columns (aka lists),
+which means that `map()` can work on the data by column (not row).
+Let's use the example from the `seals` dataset that has data on seal movements.
+
+```{r}
+seals
+```
+
+We can use map to find the median of each column:
+
+```{r}
+map_dbl(seals, median)
+```
+
+### Exercise: Practice using the `map` family
+
+Time: 10-15 min
+
+Copy and paste the below code into the `exercises.R` file.
+Using the `economics` dataset, complete these tasks.
+
+1. Calculate the `range` of each column. Use the standard `map()` function.
+Notice that the function outputs multiple values (not just one).
+    a. Try the same thing, but use `map_dbl()` instead. What happens? 
+    Why do you think that is? What does the error say?
+2. Find out the standard deviation (`sd`) of each column, 
+using the `map_*` function that outputs numeric values (i.e. "double").
+3. Check that all the columns are the same `length` by using `map_int()`
+4. We've provided a function to calculate if there are no missing values in each column.
+Use this function to find out if any columns have missing values. 
+Use the `map_lgl()` family to output the results to logic.
+
+```{r exercise-practice-map, eval=FALSE}
+# 1. What's the range for each column?
+___(economics, ___)
+
+# 1a. Do the same as above, but with map_dbl()
+___(economics, ___)
+
+# 2. What are the columns SD?
+___(economics, sd)
+
+# 3. What are the columns lengths?
+___(economics, ___)
+
+# 4. Are there any missing?
+no_missing <- function(x) {
+  all(!is.na(x))   ## or !anyNA(x)
+}
+___(economics, ___)
+```
+
+### Giving arguments to the function used in map
+
+So far we've given map a single function and leave the other arguments as default.
+But we can pass the function arguments to map as well.
+For example, let's say we wanted to `sort()` the numbers.
+
+```{r}
+map(samples, sort)
+```
+
+Notice they are in increasing order. But what if we wanted it in decreasing order?
+The default for `sort()` is that `decreasing = FALSE`. 
+So to change it, we need to use `TRUE` instead, which would look like:
+
+```{r}
+sort(samples$samp1, decreasing = TRUE)
+```
+
+Within `map()`, you can put the function arguments directly after the function name
+(passed as `...` in the argument list of `map()`).
+
+```{r}
+map(samples, sort, decreasing = TRUE)
+```
+
+You can use as many arguments as you'd like in `map()`,
+and it will automatically add them to the function.
+
+```{r fig-passing-args, echo=FALSE, fig.cap="Visual of final output of using map. Image from [purrr basics](https://dcl-prog.stanford.edu/purrr-basics.html) section."}
+knitr::include_graphics("https://raw.githubusercontent.com/dcl-docs/prog/master/images/map-extra-arg.png")
+```
+
+Here's another example. 
+This code passes to two additional arguments to the `quantile()` function
+to calculate the 95th quantile for each sample and removing any missing values. 
+
+```{r}
+map_dbl(samples, quantile, probs = 0.95, na.rm = TRUE)
+```
+
+### Output tibbles with `map_dfr()` and `map_dfc()`
+
+There are also two other useful versions of map: `map_dfr()` and `map_dfc()`. 
+Both of these output a tibble rather than a vector or list.
+
+As with the other versions of map, these `_df*()` versions take a vector or list
+and a function as arguments. 
+Note, the function must output a tibble in order for `map_df*()` to work.
+
+```{r fig-map-df-process, echo=FALSE, fig.cap="Visual of process for mapping out data frames. Image from [purrr extras](https://dcl-prog.stanford.edu/purrr-extras.html) section."}
+knitr::include_graphics("https://raw.githubusercontent.com/dcl-docs/prog/master/images/map_df.png")
+```
+
+After applying the function and output a tibble, 
+`map_df*` then combines these into a single tibble.
+You combine by row with `map_dfr()` so each tibble is stacked on top of each other:
+
+```{r fig-map-df-row, echo=FALSE, fig.cap="Visual of stacking by row. Image from [purrr extras](https://dcl-prog.stanford.edu/purrr-extras.html) section."}
+knitr::include_graphics("https://raw.githubusercontent.com/dcl-docs/prog/master/images/map_dfr.png")
+```
+
+Or by column with `map_dfc()` so each tibble is stacked side by side.
+
+```{r fig-map-df-column, echo=FALSE, fig.cap="Visual of stacking by column. Image from [purrr extras](https://dcl-prog.stanford.edu/purrr-extras.html) section."}
+knitr::include_graphics("https://raw.githubusercontent.com/dcl-docs/prog/master/images/map_dfc.png")
+```
+
+`map_dfr()` is especially useful when reading in data from multiple files.
+Let's try it out. First we'll read in the csv normally.
+
+```{r, message=FALSE}
+url_folder <- "https://raw.githubusercontent.com/dcl-docs/prog/master/data/purrr-extras"
+# use paste0 to add on the url path
+read_csv(paste0(url_folder, "/file_001.csv"))
+read_csv(paste0(url_folder, "/file_002.csv"))
+read_csv(paste0(url_folder, "/file_003.csv"))
+```
+
+Since `read_csv()` outputs a tibble, 
+we are able to use `map_dfr()` to map over each filename 
+and combine each individual tibble into one tibble.
+
+```{r, message=FALSE}
+(files <- paste0(url_folder, "/file_00", 1:3, ".csv"))
+map_dfr(files, read_csv)
+```
+
+Each individual tibble can have different numbers of rows or different columns.
+`map_dfr()` will create a new column for each unique column name.
+For those tibbles without the column, 
+`map_dfr()` will add the column and fill it with `NA` values.
+
+```{r, message=FALSE}
+read_csv(paste0(url_folder, "/file_004.csv"))
+map_dfr(paste0(url_folder, "/file_00", 1:4, ".csv"), read_csv)
+```
+
+
+### Anonymous functions
+
+We've so far given `map()` **named** functions. 
+Named functions are those functions that you typically use and see.
+For instance, here is a named function that converts kilometers to miles.
+
+```{r}
+km_to_miles <- function(x) {
+  x * 0.62
+}
+```
+
+Now when we want to convert kilometers to miles, we use `km_to_miles()`.
+
+```{r}
+km_to_miles(22)
+```
+
+To apply `km_to_miles()` to the `samples` with `map()`, we do as we have done so far:
+
+```{r}
+map(samples, km_to_miles)
+```
+
+But, if we don't want to use this function again, 
+it doesn't make sense to make it a named function.
+Instead, we can use an anonymous (i.e. *unnamed*) function.
+These look like:
+
+```{r, eval=FALSE}
+function(x) x * 0.62
+```
+
+The only real difference is we don't assign the function with an object name.
+`map()` can take these anonymous functions just like named functions:
+
+```{r}
+map(samples, function(x) x * 0.62)
+```
+
+But this syntax can be cumbersome, so purrr uses a shortcut:
+
+```{r}
+map(samples, ~ . * 0.62)
+```
+
+The `~` tells `map()` the function is an anonymous one.
+The `.` tells the function to use the item given from the list `samples` when it iterates.
+
+### Using two vectors or lists as input
+
+With `map()`, you can only give it one vector or list object.
+But purrr has another function that can take two vectors or lists: `map2()`.
+If you want to use more than two vectors, the function is called `pmap()`,
+but we won't be cover it today.
+
+`map2()` is very similar to `map()`, byt takes two input vectors or lists.
+
+```{r fig-map2, echo=FALSE, fig.cap="Visual of how map2 works. Image from [purrr parallel](https://dcl-prog.stanford.edu/purrr-parallel.html) section."}
+knitr::include_graphics("https://raw.githubusercontent.com/dcl-docs/prog/master/images/map2.png")
+```
+
+For example, let's create two vectors `x` and `y`.
+
+```{r}
+x <- c(1, 2, 4)
+y <- c(6, 5, 3.5)
+```
+
+We can use `map2()` to iterate on both vectors at the same time. 
+It iterates by going on the first item of `x` *and* `y`, then the second, and so on.
+
+```{r}
+map2(x, y, min)
+```
+
+Just like `map()`, 
+`map2()` has the same variants like `map2_int()`, `map2_dfr()`, or `map2_chr()`.
+For example:
+
+```{r}
+map2_dbl(x, y, min)
+```
+
+### Final exercise:
+
+Time: 10-15 min
+
+We're going to show several pieces of code that we haven't covered, 
+but we use because it is a great example of when map is useful.
+Copy and paste the code into the `exercise.R` file.
+Here, we want to run multiple linear models (`lm()`) based on different formulas.
+But we don't want to type up each formula
+
+*Note*: All `map` functions are designed to be pipable (`%>%`), so we use that here.
+
+1. Run `map()` on the `model_formulas` and use the `economics` dataset for the `data` argument.
+2. Check the summary of all the models by applying `summary` with `map()`.
+3. Add another formula to the list checking how personal consumption (`pce`) relates
+to unemployment duration (`uempmed`) and personal savings (`psavert`) 
+(`"pce ~ psavert + psavert"`). Re-run the code and see how another model is added.
+
+```{r exercise-multiple-models, eval=FALSE}
+# Here is the list of formulas
+model_formulas <- list(
+  # Personal consumption by population and unemployment rate
+  "pce ~ pop + unemploy",
+  # Personal consumption by personal savings and unemployment rate
+  "pce ~ psavert + unemploy"
+)
+
+# 1. Run multiple models
+model_list <- ___ %>% 
+  # Use as.formula so lm recognizes the character formulas
+  ___(~ lm(as.formula(.), data = ___))
+
+# 2. Check summary of models
+model_list %>% 
+  ___(___)
+
+# 3. Extract model results and combine into dataframe
+model_list %>% 
+  ___(broom::tidy)
+```
+
+After doing that, next try and: 
+
+- Replace the `economics` data frame with the `swiss` dataset.
+- Remove the current formulas and replace them with these ones:
+    - `"Fertility ~ Education + Agriculture"`
+    - `"Fertilitiy ~ Examination + Catholic"`
+    - `"Infant.Mortality ~ Education + Fertility"`
+- Re-run the code
+
+## Additional comments
+
+There's lots of other useful things that purrr provides. 
+Check out the purrr [website](https://purrr.tidyverse.org/) 
+for documentation on what else you can do.
+
+Another useful thing with using purrr is that if you want to,
+you can easily implement parallel processing for your computationally demanding analyses.
+All you have to do is use the [furrr package](https://github.com/DavisVaughan/furrr)
+and make minor changes to purrr code to run parallel processing.
