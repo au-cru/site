@@ -468,9 +468,13 @@ But we don't want to type up each formula
 
 1. Run `map()` on the `model_formulas` and use the `economics` dataset for the `data` argument.
 2. Check the summary of all the models by applying `summary` with `map()`.
-3. Add another formula to the list checking how personal consumption (`pce`) relates
+3. Extract the model results and immediately convert the output into a data frame
+using `map_dfr()`.
+4. Add another formula to the `model_formulas` list
+that examines how personal consumption (`pce`) relates
 to unemployment duration (`uempmed`) and personal savings (`psavert`) 
-(`"pce ~ psavert + psavert"`). Re-run the code and see how another model is added.
+(`"pce ~ psavert + psavert"`). 
+Re-run the code to see how adding another model changes things.
 
 ```{r exercise-multiple-models, eval=FALSE}
 # Here is the list of formulas
@@ -514,3 +518,6 @@ Another useful thing with using purrr is that if you want to,
 you can easily implement parallel processing for your computationally demanding analyses.
 All you have to do is use the [furrr package](https://github.com/DavisVaughan/furrr)
 and make minor changes to purrr code to run parallel processing.
+
+And an explanation on why you'd use the purrr functions over the `apply()`
+family of functions can be found on this [Stack Overflow answer](https://stackoverflow.com/questions/45101045/why-use-purrrmap-instead-of-lapply).
