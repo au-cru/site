@@ -1,0 +1,9 @@
+type: "code-along"
+name: "Introduction to tidy text analysis"
+description: >
+  Learn how to analysis text in R, with a 'tidy' approach.
+location: "AU Library, Main Floor, Nobelparken, Universitetsparken 461, 8000 Aarhus"
+start_date: 2020-06-12T13:00:00+01:00
+end_date: 2020-06-12T14:15:00+01:00
+level: "Beginner"
+software: ["R"]
