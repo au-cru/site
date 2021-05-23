@@ -1,0 +1,44 @@
+/* your styles go here */
+
+.box-image-text .image {
+  min-height: 200px;
+  max-height: 200px;
+}
+
+.box-simple {
+  min-height: 230px;
+}
+
+.badge {
+  color: #ffffff;
+  background-color: #467fbf;
+}
+
+div, iframe {
+  margin: 0 auto;
+  display:block;
+}
+
+.button-div {
+  width: 50%;
+  margin: auto;
+}
+
+.button-click {
+  background-color: #36669c;
+  border: none;
+  width: 100%;
+  padding: 15px 15px;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 15px
+}
+
+.button-click:hover {
+  background-color: #467fbf;
+}
+
+.button-click a {
+  color: white;
+}
